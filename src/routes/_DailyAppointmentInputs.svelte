@@ -1,6 +1,13 @@
+<script lang="ts">
+    import type { AppointmentSurvey } from "src/model/appointment_survey";
+    import SlotCheckbox from "./_SlotCheckbox.svelte"
+
+    export let survey: AppointmentSurvey;
+</script>
+
 <fieldset>
-    <Legend>Täglich</Legend>
-    <% for(let i = 0; i < survey.slots.length; ++i) { %>
-    <%- include("slot_checkbox.ejs", {slot: survey.slots[i], i: i}) %>
-    <% }%>
+    <legend>Täglich</legend>
+    {#each survey.slots as slot, i}
+        <SlotCheckbox numberedSlot="{{slot: slot, number: i}}"></SlotCheckbox>
+    {/each}
 </fieldset>
