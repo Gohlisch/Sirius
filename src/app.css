@@ -3,6 +3,10 @@
     src: url('./fonts/JetBrainsMono-Regular.woff2') format('woff2')
 }
 
+#svelte {
+    min-height: 100vh;
+}
+
 :root{
     --main_color: #00bc7e;
     --very_bright_main_color: rgba(163, 200, 175, 0.46);
@@ -31,13 +35,15 @@ body {
 
 .grid_container {
     min-width: 100%;
+    min-height: 100vh;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: auto;
+    grid-template-rows: min-content min-content auto min-content;
     grid-template-areas:
     "headerarea"
     "navarea"
     "mainarea"
+    "footerarea"
 }
 
 header, header + nav {
@@ -141,8 +147,9 @@ form {
 }
 
 footer {
+    grid-area: footerarea;
     display: flex;
-    justify-self: end;
+    justify-self: center;
     justify-content: center;
     font-size: 0.5em;
 }
@@ -189,9 +196,11 @@ label {
 @media screen and (max-width:415px) {
     .grid_container {
         grid-template-columns: 60% 40%;
+        grid-template-rows: min-content auto min-content;
         grid-template-areas:
         "headerarea navarea"
         "mainarea mainarea"
+        "footerarea footerarea"
     }
 
     header {
