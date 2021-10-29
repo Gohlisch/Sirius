@@ -65,7 +65,7 @@ export function toDateTimeFormat(date: Date): string {
  * @param keyFunction {keyGeneratorFunction}
  * @returns {{}}
  */
-export function groupBy<T>(array: Array<T>, keyFunction: (T)=>string): Record<string, T> {
+export function groupBy<T>(array: Array<T>, keyFunction: (T)=>string): Record<string, Array<T>> {
     const groups = {};
 
     for(const x of array) {
@@ -79,10 +79,18 @@ export function groupBy<T>(array: Array<T>, keyFunction: (T)=>string): Record<st
     return groups
 }
 
-export function forInIterable(enumerable: object): Iterable<any> {
-    const iterable = [];
-    for(const key in enumerable)
-        iterable.push(enumerable[key])
+export function getKeysAsArray(obj: object): Array<string> {
+    const keyArray: Array<any> = [];
+    for(const key in obj)
+        keyArray.push(key)
     
-    return iterable;
+    return keyArray;
+}
+
+export function getValuesAsArray(obj: object): Array<any> {
+    const valueArray: Array<any> = [];
+    for(const key in obj)
+        valueArray.push(obj[key])
+    
+    return valueArray;
 }
