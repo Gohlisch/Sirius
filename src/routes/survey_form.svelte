@@ -10,7 +10,8 @@
 	 */
 
 	/** @type {htmlGeneratorFunc} */
-	const generateNeverRepetitionInput = ()=>{ return `
+	const generateNeverRepetitionInput = () => {
+		return `
                     <div class="inputgroup">
                     <label class="required">Datum:
                     <input  data-input="day"
@@ -34,10 +35,12 @@
                             max="23:59"
                             required>
                     </label>
-                    </div>`;};
+                    </div>`;
+	};
 
 	/** @type {htmlGeneratorFunc} */
-	const generateDailyRepetitionInput = () => { return `
+	const generateDailyRepetitionInput = () => {
+		return `
                     <div class="inputgroup">
                     <label class="required">Startzeit:
                     <input  data-input="start"
@@ -59,7 +62,8 @@
 	};
 
 	/** @type {htmlGeneratorFunc} */
-	const generateWeeklyRepetitionInput = ()=>{ return `
+	const generateWeeklyRepetitionInput = () => {
+		return `
                     <div class="inputgroup">
                     <label class="required">Wochentag:
                       <select data-input="weekday" name="weekday">
@@ -89,7 +93,8 @@
                             max="23:59"
                             required>
                     </label>
-                    </div>`;};
+                    </div>`;
+	};
 
 	/**
 	 * @typedef Slot
@@ -107,7 +112,7 @@
 	 * @return {boolean}
 	 */
 	function slotIsValid(slot) {
-		return Array.from(slot.groupDiv.querySelectorAll("input, select")).every(s => s.checkValidity());
+		return (Array.from(slot.groupDiv.querySelectorAll("input, select")) as Array<HTMLInputElement>).every(s => s.checkValidity());
 	}
 
 
@@ -119,6 +124,11 @@
 	 * @constructor
 	 */
 	class FormGroupContainer {
+		private containerDiv: HTMLDivElement;
+		private slots: Array<object>;
+		private formGroupHtmlGeneratorFunc: ()=>string;
+		private inputIds: Array<string>;
+
 		constructor(containerDiv, slots, formGroupHtmlGeneratorFunc, inputIds) {
 			this.containerDiv = containerDiv;
 			this.slots = slots;
@@ -127,7 +137,7 @@
 		}
 
 		generateSlots() {
-			while(this.containerDiv.lastElementChild) {
+			while (this.containerDiv.lastElementChild) {
 				this.containerDiv.removeChild(this.containerDiv.lastElementChild);
 			}
 			if (this.slots.length === 0) {
@@ -153,7 +163,7 @@
 			generatedInputs.forEach((input) => input.value = slot[input.dataset.input]);
 			generatedInputs.forEach((input) => {
 				input.oninput = () => {
-					slot[input.dataset.input]= input.value;
+					slot[input.dataset.input] = input.value;
 					this.setRequired(slot);
 					if (slotIsEmpty(slot) && this.slots.length > 0) {
 						this.removeSlot(slot);
@@ -192,20 +202,26 @@
 		}
 	}
 
-	window.onload = ()=>{
+	window.onload = () => {
 		const repetitionNever = document.getElementById("never");
 		const repetitionDaily = document.getElementById("daily");
 		const repetitionWeekly = document.getElementById("weekly");
-		slotsDiv: HTMLDivElement = document.getElementById("slots") as HTMLDivElement;
+		slotsDiv = document.getElementById("slots") as HTMLDivElement;
 
 		const neverFormContainer = new FormGroupContainer(slotsDiv, neverSlots, generateNeverRepetitionInput, ["date", "start", "end"]);
 		const dailyFormContainer = new FormGroupContainer(slotsDiv, dailySlots, generateDailyRepetitionInput, ["start", "end"]);
 		const weeklyFormContainer = new FormGroupContainer(slotsDiv, weeklySlots, generateWeeklyRepetitionInput, ["weekday", "start", "end"]);
 
-		repetitionNever.onchange = ()=> { neverFormContainer.generateSlots(); }
-		repetitionDaily.onchange = ()=> { dailyFormContainer.generateSlots(); }
-		repetitionWeekly.onchange = ()=> { weeklyFormContainer.generateSlots(); }
-	}
+		repetitionNever.onchange = () => {
+			neverFormContainer.generateSlots();
+		};
+		repetitionDaily.onchange = () => {
+			dailyFormContainer.generateSlots();
+		};
+		repetitionWeekly.onchange = () => {
+			weeklyFormContainer.generateSlots();
+		};
+	};
 </script>
 <style>
     #slots :invalid {
@@ -226,60 +242,47 @@
         resize: vertical;
     }
 </style>
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<svelte:head>
     <title>Sirius – Neue Umfrage</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/survey_form.css">
-    <script src="js/survey_form.js"></script>
-    <link rel="icon" type="image/png" href="img/favicon.png">
-</head>
-<body>
-<div class="grid_container">
-    <%- include("includes/header.ejs") %>
-    <%- include("includes/nav.ejs") %>
-    <main>
-        <section>
-            <h2>Neue Umfrage erstellen</h2>
-            <form action="/survey" method="post">
-                <fieldset>
-                    <legend>Informationen</legend>
-                    <label for="title" class="required">Titel:
-                        <input
-                                type="text"
-                                name="title"
-                                id="title"
-                                placeholder="max. 256 Zeichen"
-                                maxlength="256"
-                                autofocus required>
-                    </label>
-                    <label for="description">Beschreibung:
-                        <textarea
-                                name="description"
-                                id="description"
-                                placeholder="optional, max. 1024 Zeichen"
-                                maxlength="1024"
-                        ></textarea>
-                    </label>
-                </fieldset>
-                <fieldset>
-                    <legend>Wiederholung des Termins</legend>
-                    <label for="never"><input id="never" name="repetition" value="never" type="radio">niemals</label>
-                    <label for="daily"><input id="daily" name="repetition" value="daily" type="radio">täglich</label>
-                    <label for="weekly"><input id="weekly" name="repetition" value="weekly" type="radio">wöchentlich</label>
-                </fieldset>
-                <fieldset>
-                    <legend>Auswählbare Slots</legend>
-                    <div id="slots">
-                        <p>Wählen Sie zunächst eine Wiederholungsrate aus</p>
-                    </div>
-                </fieldset>
-                <button type="submit">Erstellen</button>
-            </form>
-        </section>
-    </main>
-</div>
-<%- include("includes/footer.ejs") %>
-</body>
+</svelte:head>
+<main>
+    <section>
+        <h2>Neue Umfrage erstellen</h2>
+        <form action="/survey" method="post">
+            <fieldset>
+                <legend>Informationen</legend>
+                <label for="title" class="required">Titel:
+                    <input
+                            type="text"
+                            name="title"
+                            id="title"
+                            placeholder="max. 256 Zeichen"
+                            maxlength="256"
+                            autofocus required>
+                </label>
+                <label for="description">Beschreibung:
+                    <textarea
+                            name="description"
+                            id="description"
+                            placeholder="optional, max. 1024 Zeichen"
+                            maxlength="1024"
+                    ></textarea>
+                </label>
+            </fieldset>
+            <fieldset>
+                <legend>Wiederholung des Termins</legend>
+                <label for="never"><input id="never" name="repetition" value="never" type="radio">niemals</label>
+                <label for="daily"><input id="daily" name="repetition" value="daily" type="radio">täglich</label>
+                <label for="weekly"><input id="weekly" name="repetition" value="weekly" type="radio">wöchentlich</label>
+            </fieldset>
+            <fieldset>
+                <legend>Auswählbare Slots</legend>
+                <div id="slots">
+                    <p>Wählen Sie zunächst eine Wiederholungsrate aus</p>
+                </div>
+            </fieldset>
+            <button type="submit">Erstellen</button>
+        </form>
+    </section>
+</main>
 
