@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { AppointmentSurvey } from "src/model/appointment_survey";
     import type { TimeSlot } from "src/model/time_slot";
-    import {groupBy, getValuesAsArray, getKeysAsArray, toDateTimeFormat} from "../util/util"
+    import {groupBy, getKeysAsArray, toDateTimeFormat} from "../util/util"
 
     export let survey: AppointmentSurvey;
 
