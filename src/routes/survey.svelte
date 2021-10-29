@@ -1,35 +1,44 @@
 <script lang="ts">
-	window.onload = ()=>{
+    import type {AppointmentSurvey} from "../model/appointment_survey";
+    import WeeklyAppointmentResultTable from "./_WeeklyAppointmentResultTable.svelte"
+    import DailyAppointmentResultTable from "./_DailyAppointmentResultTable.svelte"
+    import AppointmentResultTable from "./_AppointmentResultTable.svelte"
+    import WeeklyAppointmentInputs from "./_WeeklyAppointmentInputs.svelte"
+    import DailyAppointmentInputs from "./_DailyAppointmentInputs.svelte"
+    import AppointmentInputs from "./_AppointmentResultTable.svelte"
+
+    export let survey: AppointmentSurvey;
+
+	window.onload = () => {
 		/** @TODO: Add copy to clipboard button */
 		const thisSurveyAnchorElement: HTMLAnchorElement = document.querySelector(".share_survey");
-		thisSurveyAnchorElement.innerText = window.location as string;
-		thisSurveyAnchorElement.href = window.location as string;
+		thisSurveyAnchorElement.innerText = window.location as unknown as string;
+		thisSurveyAnchorElement.href = window.location as unknown as string;
 
-		const slotCheckboxElements: Array<HTMLInputElement> =  document.querySelectorAll(".appointment_survey [type=\"checkbox\"]") as Array<HTMLInputElement>;
+		const slotCheckboxElements: NodeListOf<HTMLInputElement> = document.querySelectorAll(".appointment_survey [type=\"checkbox\"]") as NodeListOf<HTMLInputElement>;
 		const nameInputElement: HTMLInputElement = document.querySelector("[name=\"participant\"]");
 		const warningParagraphElement = document.querySelector(".appointment_survey .warning");
-		const determineWarningVisibility = ()=>{
-			if(nameInputElement.value === "" ||
-				Array.from(slotCheckboxElements).some((cb)=>cb.checked)
+		const determineWarningVisibility = () => {
+			if (nameInputElement.value === "" ||
+				Array.from(slotCheckboxElements).some((cb) => cb.checked)
 			) {
 				warningParagraphElement.classList.add("hidden");
 			} else {
 				warningParagraphElement.classList.remove("hidden");
 			}
 		};
-		slotCheckboxElements.forEach((element: HTMLInputElement)=>{
-			element.onchange = ()=>{
-				if(element.checked) {
+		slotCheckboxElements.forEach((element: HTMLInputElement) => {
+			element.onchange = () => {
+				if (element.checked) {
 					element.parentElement.classList.add("selected_slot");
-				}
-				else {
+				} else {
 					element.parentElement.classList.remove("selected_slot");
 				}
 				determineWarningVisibility();
 			};
 		});
 		nameInputElement.oninput = determineWarningVisibility;
-	}
+	};
 </script>
 <style>
     .no_bottom_padding {
@@ -72,7 +81,7 @@
     }
 
     .appointment_survey [type="checkbox"] {
-        position:absolute;
+        position: absolute;
         left: -100vh
     }
 
@@ -95,7 +104,7 @@
         font-size: 0;
     }
 
-    @media screen and (max-width:415px) {
+    @media screen and (max-width: 415px) {
         main nav {
             display: flex;
             flex-direction: column;
@@ -125,91 +134,59 @@
         }
     }
 </style>
-<%
-/**
-* @type {AppointmentSurvey}
-* @external survey
-*/
-/** @external groupBy */
-/** @external toDateTimeFormat */
-%>
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sirius – <%= survey.title %></title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/survey.css">
-    <script src="js/survey.js"></script>
-    <link rel="icon" type="image/png" href="img/favicon.png">
-</head>
-<body>
-<div class="grid_container">
-    <%- include("includes/header.ejs") %>
-    <%- include("includes/nav.ejs") %>
-    <main>
-        <h2 class="no_bottom_padding"><%= survey.title %></h2>
-        <nav>
-            <a href="#description">Beschreibung</a>
-            <a href="#survey">Umfrageformular</a>
-            <a href="#results">Ergebnisse</a>
-        </nav>
-        <% /** @TODO add copy button */ %>
-        <p>Teile diese Umfrage: <a class="share_survey"></a></p>
-        <section id="description">
-            <h3>Beschreibung</h3>
-            <p><%= survey.description %></p>
-        </section>
-        <section class="appointment_survey" id="survey">
-            <h3>Dann habe ich Zeit</h3>
-            <form action="<%= survey.id %>" method="post">
-                <label>Name:<input
-                        required
-                        type="text"
-                        name="participant"
-                        placeholder="max. 64 Zeichen"
-                        maxlength="64"></label>
-                <% if(survey.repetition === "weekly"){ %>
-                <%- include("includes/weekly_appointment_inputs.ejs", survey) %>
-                <% } else if(survey.repetition === "daily"){ %>
-                <%- include("includes/daily_appointment_inputs.ejs", survey) %>
-                <% } else { %>
-                <%- include("includes/appointment_inputs.ejs", {
-                survey: survey,
-                groupBy: groupBy,
-                toDateTimeFormat: toDateTimeFormat
-            }) %>
-                <% } %>
-                <p class="warning hidden">
-                    <strong>
-                        WARNUNG: Sie haben zur Zeit keine Slots ausgewählt.
-                        Wenn Sie nun senden, werden Sie als verhindert aufgeführt.
-                    </strong>
-                </p>
-                <input type="submit">
-            </form>
-        </section>
-        <section id="results">
-            <h3>Ergebnisse</h3>
-            <div class="table_container">
-                <table>
-                    <% if(survey.repetition === "weekly"){ %>
-                    <%- include("includes/weekly_appointment_result_table.ejs", survey) %>
-                    <% } else if(survey.repetition === "daily"){ %>
-                    <%- include("includes/daily_appointment_result_table.ejs", survey) %>
-                    <% } else { %>
-                    <%- include("includes/appointment_result_table.ejs", {
-                    survey: survey,
-                    groupBy: groupBy,
-                    toDateTimeFormat: toDateTimeFormat
-                }) %>
-                    <% } %>
-                </table>
-            </div>
-        </section>
-    </main>
-</div>
-<%- include("includes/footer.ejs") %>
-</body>
-</html>
+<svelte:head>
+    <title>Sirius – {survey.title}</title>
+</svelte:head>
+<main>
+    <h2 class="no_bottom_padding">{survey.title}</h2>
+    <nav>
+        <a href="#description">Beschreibung</a>
+        <a href="#survey">Umfrageformular</a>
+        <a href="#results">Ergebnisse</a>
+    </nav>
+    <!-- @TODO add copy button -->
+    <p>Teile diese Umfrage: <a class="share_survey"></a></p>
+    <section id="description">
+        <h3>Beschreibung</h3>
+        <p>{survey.description}</p>
+    </section>
+    <section class="appointment_survey" id="survey">
+        <h3>Dann habe ich Zeit</h3>
+        <form action="<%= survey.id %>" method="post">
+            <label>Name:<input
+                    required
+                    type="text"
+                    name="participant"
+                    placeholder="max. 64 Zeichen"
+                    maxlength="64"></label>
+            {#if survey.repetition === "weekly"}
+                <WeeklyAppointmentInputs/>
+            {:else if survey.repetition === "daily"}
+                <DailyAppointmentInputs/>
+            {:else}
+                <AppointmentInputs/>
+            {/if}
+            <p class="warning hidden">
+                <strong>
+                    WARNUNG: Sie haben zur Zeit keine Slots ausgewählt.
+                    Wenn Sie nun senden, werden Sie als verhindert aufgeführt.
+                </strong>
+            </p>
+            <input type="submit">
+        </form>
+    </section>
+    <section id="results">
+        <h3>Ergebnisse</h3>
+        <div class="table_container">
+            <table>
+                {#if survey.repetition === "weekly"}
+                    <WeeklyAppointmentResultTable survey="{survey}"/>
+                {:else if survey.repetition === "daily"}
+                    <DailyAppointmentResultTable survey="{survey}"/>
+                {:else}
+                    <AppointmentResultTable survey="{survey}"/>
+                {/if}
+            </table>
+        </div>
+    </section>
+</main>
