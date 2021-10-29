@@ -1,0 +1,223 @@
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: url('./fonts/JetBrainsMono-Regular.woff2') format('woff2')
+}
+
+:root{
+    --main_color: #00bc7e;
+    --very_bright_main_color: rgba(163, 200, 175, 0.46);
+    --bright_main_color: rgba(149, 193, 160, 0.46);
+    --text_color: #575757;
+    --bright_text_color: #6d6c6c;
+    --warning: #d79595;
+    --inactive_color: #d7d7d7;
+    --secondary_color: #f3f3f3;
+}
+
+html {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    color: var(--text_color);
+    height: 100vh;
+}
+
+body {
+    min-height: calc(100vh - 10px);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    overflow-x: hidden;
+    margin: 0;
+}
+
+.grid_container {
+    min-width: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto;
+    grid-template-areas:
+    "headerarea"
+    "navarea"
+    "mainarea"
+}
+
+header, header + nav {
+    font-family: "JetBrains Mono", monospace;
+}
+
+header {
+    grid-area: headerarea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    text-transform: uppercase;
+    color: var(--main_color);
+}
+
+header > h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+header + nav {
+    grid-area: navarea;
+    display: flex;
+    justify-content: center;
+    font-size: 1.5em;
+    background-color: var(--secondary_color);
+}
+
+header + nav > a {
+    margin-left: 1em;
+    margin-right: 1em;
+    color: var(--text_color);
+    text-decoration: none;
+}
+
+header + nav > a > img {
+    display: none;
+}
+
+main {
+    display: flex;
+    grid-area: mainarea;
+}
+
+figcaption {
+    font-size: 0.8em;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid var(--text_color);
+    padding: 3px;
+}
+
+tr:nth-child(even), th {
+    background-color: var(--secondary_color);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+[type="submit"] {
+    justify-self: center;
+    align-self: center;
+    flex-grow: 0;
+    margin-top: 5px;
+    padding: 1em;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    color: var(--text_color);
+    font-size: 1em;
+    background-color: var(--very_bright_main_color);
+    border-top: 1px solid var(--inactive_color);
+    border-left: 1px solid var(--inactive_color);
+    border-right: 2px solid var(--text_color);
+    border-bottom: 2px solid var(--text_color);
+    border-radius: 5px;
+}
+
+[type="submit"]:hover, [type="submit"]:focus {
+    background-color: var(--bright_main_color);
+    border-top: 1px solid var(--text_color);
+    border-left: 1px solid var(--text_color);
+    border-right: 1px solid var(--inactive_color);
+    border-bottom: 1px solid var(--inactive_color);
+    margin-bottom: 3px;
+}
+
+[type="submit"]:active {
+    background-color: var(--bright_main_color);
+    border-top: 2px solid var(--text_color);
+    border-left: 2px solid var(--text_color);
+    border-right: 1px solid var(--inactive_color);
+    border-bottom: 1px solid var(--inactive_color);
+    margin-bottom: 2px;
+}
+
+footer {
+    display: flex;
+    justify-self: end;
+    justify-content: center;
+    font-size: 0.5em;
+}
+
+a {
+    color: var(--text_color);
+}
+
+a:hover {
+    color: var(--main_color);
+}
+
+main {
+    display: flex;
+    align-items: baseline;
+    flex-direction: column;
+    margin-left: calc(10% - 20px);
+    margin-right: calc(10% - 20px);
+}
+
+section {
+    max-width: 100%;
+}
+
+fieldset {
+    background-color: var(--secondary_color);
+}
+
+fieldset legend {
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+label {
+    display: inline-block;
+}
+
+.warning {
+    transition: font-size 1s;
+    color: var(--warning);
+    font-size: 0.8em;
+}
+
+@media screen and (max-width:415px) {
+    .grid_container {
+        grid-template-columns: 60% 40%;
+        grid-template-areas:
+        "headerarea navarea"
+        "mainarea mainarea"
+    }
+
+    header {
+        justify-content: flex-start;
+        background-color: var(--secondary_color);
+    }
+
+    header > h1 {
+        font-size: 1em;
+        margin-left: 10px;
+    }
+
+    header + nav {
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    header + nav > a {
+        font-size: 0;
+    }
+
+    header + nav > a > img {
+        display: block;
+    }
+
+    section {
+        width: 100%;
+    }
+}
