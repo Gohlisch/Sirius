@@ -1,64 +1,74 @@
-<% const options = {hour: "2-digit", minute: "2-digit"}; %>
-<% if(survey.slots.some((slot) => slot.start.getDay() === 1)){ %>
+<script lang="ts">
+    const options: Intl.DateTimeFormatOptions = {hour: "2-digit", minute: "2-digit"};
+</script>
+
+{#if survey.slots.some((slot) => slot.start.getDay() === 1)}
     <fieldset>
         <Legend>Montag</Legend>
-        <% for(let i = 0; i < survey.slots.length; ++i) {
-        if(survey.slots[i].start.getDay() === 1) { %>
-            <%- include("slot_checkbox.ejs", {slot: survey.slots[i], i: i}) %>
-        <% } } %>
+        {#each survey.slots as slot, i}
+            {#if slot.start.getDay() === 1}
+                <SlotCheckbox slot="{slot}" i="{i}">
+            {/if}
+        {/each}
     </fieldset>
-<% } %>
-<% if(survey.slots.some((slot) => slot.start.getDay() === 2)){ %>
+{/if}
+{#if survey.slots.some((slot) => slot.start.getDay() === 1)}
     <fieldset>
-        <legend>Dienstag</legend>
-        <% for(let i = 0; i < survey.slots.length; ++i) {
-        if(survey.slots[i].start.getDay() === 2) { %>
-            <%- include("slot_checkbox.ejs", {slot: survey.slots[i], i: i}) %>
-        <% } } %>
+        <Legend>Dienstag</Legend>
+        {#each survey.slots as slot, i}
+            {#if slot.start.getDay() === 2}
+                <SlotCheckbox slot="{slot}" i="{i}">
+            {/if}
+        {/each}
     </fieldset>
-<% } %>
-<% if(survey.slots.some((slot) => slot.start.getDay() === 3)){ %>
-    <fieldset>
-        <legend>Mittwoch</legend>
-        <% for(let i = 0; i < survey.slots.length; ++i) {
-        if(survey.slots[i].start.getDay() === 3) { %>
-            <%- include("slot_checkbox.ejs", {slot: survey.slots[i], i: i}) %>
-        <% } } %>
-    </fieldset>
-<% } %>
-<% if(survey.slots.some((slot) => slot.start.getDay() === 4)){ %>
-    <fieldset>
-        <Legend>Donnerstag</Legend>
-        <% for(let i = 0; i < survey.slots.length; ++i) {
-        if(survey.slots[i].start.getDay() === 4) { %>
-            <%- include("slot_checkbox.ejs", {slot: survey.slots[i], i: i}) %>
-        <% } } %>
-    </fieldset>
-<% } %>
-<% if(survey.slots.some((slot) => slot.start.getDay() === 5)){ %>
-    <fieldset>
-        <Legend>Freitag</Legend>
-        <% for(let i = 0; i < survey.slots.length; ++i) {
-        if(survey.slots[i].start.getDay() === 5) { %>
-            <%- include("slot_checkbox.ejs", {slot: survey.slots[i], i: i}) %>
-        <% } } %>
-    </fieldset>
-<% } %>
-<% if(survey.slots.some((slot) => slot.start.getDay() === 6)){ %>
-    <fieldset>
-        <Legend>Samstag</Legend>
-        <% for(let i = 0; i < survey.slots.length; ++i) {
-        if(survey.slots[i].start.getDay() === 6) { %>
-            <%- include("slot_checkbox.ejs", {slot: survey.slots[i], i: i}) %>
-        <% } } %>
-    </fieldset>
-<% } %>
-<% if(survey.slots.some((slot) => slot.start.getDay() === 0)){ %>
-    <fieldset>
-        <Legend>Sonntag</Legend>
-        <% for(let i = 0; i < survey.slots.length; ++i) {
-        if(survey.slots[i].start.getDay() === 0) { %>
-            <%- include("slot_checkbox.ejs", {slot: survey.slots[i], i: i}) %>
-        <% } } %>
-    </fieldset>
-<% } %>
+{/if}
+{#if survey.slots.some((slot) => slot.start.getDay() === 1)}
+<fieldset>
+    <Legend>Mittwoch</Legend>
+    {#each survey.slots as slot, i}
+        {#if slot.start.getDay() === 3}
+            <SlotCheckbox slot="{slot}" i="{i}">
+        {/if}
+    {/each}
+</fieldset>
+{/if}
+{#if survey.slots.some((slot) => slot.start.getDay() === 1)}
+<fieldset>
+    <Legend>Donnerstag</Legend>
+    {#each survey.slots as slot, i}
+        {#if slot.start.getDay() === 4}
+            <SlotCheckbox slot="{slot}" i="{i}">
+        {/if}
+    {/each}
+</fieldset>
+{/if}
+{#if survey.slots.some((slot) => slot.start.getDay() === 1)}
+<fieldset>
+    <Legend>Freitag</Legend>
+    {#each survey.slots as slot, i}
+        {#if slot.start.getDay() === 5}
+            <SlotCheckbox slot="{slot}" i="{i}">
+        {/if}
+    {/each}
+</fieldset>
+{/if}
+{#if survey.slots.some((slot) => slot.start.getDay() === 1)}
+<fieldset>
+    <Legend>Samstag</Legend>
+    {#each survey.slots as slot, i}
+        {#if slot.start.getDay() === 6}
+            <SlotCheckbox slot="{slot}" i="{i}">
+        {/if}
+    {/each}
+</fieldset>
+{/if}
+{#if survey.slots.some((slot) => slot.start.getDay() === 1)}
+<fieldset>
+    <Legend>Sonntag</Legend>
+    {#each survey.slots as slot, i}
+        {#if slot.start.getDay() === 7}
+            <SlotCheckbox slot="{slot}" i="{i}">
+        {/if}
+    {/each}
+</fieldset>
+{/if}
