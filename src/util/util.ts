@@ -78,3 +78,11 @@ export function groupBy<T>(array: Array<T>, keyFunction: (T)=>string): Record<st
 
     return groups
 }
+
+export function forInIterable(enumerable: object): Iterable<any> {
+    const iterable = [];
+    for(const key in enumerable)
+        iterable.push(enumerable[key])
+    
+    return iterable;
+}
