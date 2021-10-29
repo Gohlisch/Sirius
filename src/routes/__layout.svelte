@@ -1,6 +1,12 @@
+<script lang="ts">
+    import Nav from "./_Nav.svelte";
+    import Header from "./_Header.svelte";
+    import Footer from "./_Header.svelte";
+</script>
+
 <div class="grid_container">
-    <%- include("includes/header.ejs") %>
-    <%- include("includes/nav.ejs") %>
+    <Header/>
+    <Nav/>
 <slot></slot>
+    <Footer/>
 </div>
-<%- include("includes/footer.ejs") %>
