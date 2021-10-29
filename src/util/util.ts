@@ -65,7 +65,7 @@ export function toDateTimeFormat(date: Date): string {
  * @param keyFunction {keyGeneratorFunction}
  * @returns {{}}
  */
-export function groupBy<T>(array: Array<T>, keyFunction: (T)=>string): Record<string, unknown> {
+export function groupBy<T>(array: Array<T>, keyFunction: (T)=>string): Record<string, T> {
     const groups = {};
 
     for(const x of array) {
