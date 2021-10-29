@@ -160,11 +160,11 @@
                     placeholder="max. 64 Zeichen"
                     maxlength="64"></label>
             {#if survey.repetition === "weekly"}
-                <WeeklyAppointmentInputs/>
+                <WeeklyAppointmentInputs survey="{survey}"/>
             {:else if survey.repetition === "daily"}
-                <DailyAppointmentInputs/>
+                <DailyAppointmentInputs survey="{survey}"/>
             {:else}
-                <AppointmentInputs/>
+                <AppointmentInputs survey="{survey}"/>
             {/if}
             <p class="warning hidden">
                 <strong>
