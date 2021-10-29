@@ -1,11 +1,11 @@
 <script lang="ts">
     import type {AppointmentSurvey} from "../model/appointment_survey";
-    import WeeklyAppointmentResultTable from "./_WeeklyAppointmentResultTable.svelte"
-    import DailyAppointmentResultTable from "./_DailyAppointmentResultTable.svelte"
-    import AppointmentResultTable from "./_AppointmentResultTable.svelte"
-    import WeeklyAppointmentInputs from "./_WeeklyAppointmentInputs.svelte"
-    import DailyAppointmentInputs from "./_DailyAppointmentInputs.svelte"
-    import AppointmentInputs from "./_AppointmentResultTable.svelte"
+    import WeeklyAppointmentResultTable from "../components/appointment_surveys/WeeklyAppointmentResultTable.svelte"
+    import DailyAppointmentResultTable from "../components/appointment_surveys/DailyAppointmentResultTable.svelte"
+    import AppointmentResultTable from "../components/appointment_surveys/AppointmentResultTable.svelte"
+    import WeeklyAppointmentInputs from "../components/appointment_surveys/WeeklyAppointmentInputs.svelte"
+    import DailyAppointmentInputs from "../components/appointment_surveys/DailyAppointmentInputs.svelte"
+    import AppointmentInputs from "../components/appointment_surveys/AppointmentInputs.svelte"
 
     export let survey: AppointmentSurvey;
 
