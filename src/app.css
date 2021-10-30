@@ -111,7 +111,7 @@ form {
     flex-direction: column;
 }
 
-[type="submit"] {
+[type="submit"], button {
     justify-self: center;
     align-self: center;
     flex-grow: 0;
@@ -128,7 +128,7 @@ form {
     border-radius: 5px;
 }
 
-[type="submit"]:hover, [type="submit"]:focus {
+[type="submit"]:hover, [type="submit"]:focus, button:hover, button:focus {
     background-color: var(--bright_main_color);
     border-top: 1px solid var(--text_color);
     border-left: 1px solid var(--text_color);
@@ -137,7 +137,7 @@ form {
     margin-bottom: 3px;
 }
 
-[type="submit"]:active {
+[type="submit"]:active, button:active  {
     background-color: var(--bright_main_color);
     border-top: 2px solid var(--text_color);
     border-left: 2px solid var(--text_color);
