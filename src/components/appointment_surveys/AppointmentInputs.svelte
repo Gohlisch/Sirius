@@ -1,7 +1,7 @@
 <script lang="ts">
-import type { AppointmentSurvey } from "src/model/appointment_survey";
-    import { getKeysAsArray, groupBy, toDateTimeFormat } from "src/util/util";
-    import SlotCheckbox from "src/components/appointment_surveys/SlotCheckbox.svelte"
+import type { AppointmentSurvey } from "../../model/appointment_survey";
+    import { getKeysAsArray, groupBy, toDateTimeFormat } from "../../util/util";
+    import SlotCheckbox from "./SlotCheckbox.svelte"
 
     export let survey: AppointmentSurvey;
 

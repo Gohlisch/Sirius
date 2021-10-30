@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { AppointmentSurvey } from "src/model/appointment_survey";
+    import type { AppointmentSurvey } from "../../model/appointment_survey";
     import SlotCheckbox from "./SlotCheckbox.svelte"
 
     export let survey: AppointmentSurvey;

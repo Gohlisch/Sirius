@@ -18,7 +18,7 @@ export class AppointmentRepository {
     }
 }
 
-const appointmentRepository = new AppointmentRepository();
+export const appointmentRepository = new AppointmentRepository();
 
 appointmentRepository.addSurvey(new AppointmentSurvey(
     "FB42 Sportgruppe - Erstes Treffen",
@@ -75,6 +75,3 @@ appointmentRepository.addSurvey(new AppointmentSurvey(
         new TimeSlot(new Date("2021-06-23T16:00:00"), new Date("2021-06-23T17:00:00"), ["Annika"]),
         new TimeSlot(new Date("2021-06-23T17:00:00"), new Date("2021-06-23T18:00:00"), ["Annika"]),
     ]));
-
-module.exports.AppointmentRepository = AppointmentRepository;
-module.exports.repositoryInstance = appointmentRepository;

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { AppointmentSurvey } from "src/model/appointment_survey";
+    import type { AppointmentSurvey } from "../../model/appointment_survey";
 
     export let survey: AppointmentSurvey;
     const options: Intl.DateTimeFormatOptions = {hour: "2-digit", minute: "2-digit"};

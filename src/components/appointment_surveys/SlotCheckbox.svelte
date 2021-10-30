@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { TimeSlot } from "src/model/time_slot";
+    import type { TimeSlot } from "../../model/time_slot";
 
     export let numberedSlot: {
         slot: TimeSlot,
