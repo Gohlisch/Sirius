@@ -1,8 +1,10 @@
 <script lang="ts">
+import type { PickedSlot } from "src/model/picked_slot";
+
     import type { TimeSlot } from "../../model/time_slot";
 
     export let numberedSlot: {
-        slot: TimeSlot,
+        pickedSlot: PickedSlot,
         number: number
     };    
 
@@ -10,7 +12,7 @@
 </script>
 
 <label>
-    <time>{ numberedSlot.slot.start.toLocaleTimeString("de", options) }</time> bis
-    <time>{ numberedSlot.slot.end.toLocaleTimeString("de", options) }</time>
-    <input type="checkbox" name="slot{numberedSlot.number}">
+    <time>{ numberedSlot.pickedSlot.slot.start.toLocaleTimeString("de", options) }</time> bis
+    <time>{ numberedSlot.pickedSlot.slot.end.toLocaleTimeString("de", options) }</time>
+    <input type="checkbox" name="slot{numberedSlot.number}" bind:checked={numberedSlot.pickedSlot.picked}>
 </label>
