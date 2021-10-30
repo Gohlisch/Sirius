@@ -230,3 +230,98 @@ label {
         width: 100%;
     }
 }
+
+/* /SURVEY/[id] RULES */
+
+.no_bottom_padding {
+    margin-bottom: 0;
+}
+
+main nav {
+    font-size: 0.8em;
+}
+
+main nav > a {
+    margin-left: 1em;
+    margin-right: 1em;
+    color: var(--inactive_color);
+    text-decoration: none;
+}
+
+.appointment_survey fieldset label {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    font-weight: bolder;
+    justify-content: center;
+    align-items: center;
+    word-spacing: 2px;
+    height: 5em;
+    width: 5em;
+    border: solid black 1px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    /** @TODO Make not selectable */
+}
+
+.appointment_survey fieldset label:hover, .appointment_survey fieldset label:focus {
+    border-color: var(--bright_main_color);
+}
+
+.selected_slot {
+    background-color: var(--bright_main_color);
+}
+
+.appointment_survey [type="checkbox"] {
+    position: absolute;
+    left: -100vh
+}
+
+.appointment_survey fieldset {
+    display: flex;
+    align-items: stretch;
+    align-content: stretch;
+    overflow-x: auto;
+    min-width: 0;
+    flex-grow: 0;
+    flex-shrink: 1;
+}
+
+.table_container {
+    overflow-x: scroll;
+}
+
+.hidden {
+    visibility: hidden;
+    font-size: 0;
+}
+
+@media screen and (max-width: 415px) {
+    main nav {
+        display: flex;
+        flex-direction: column;
+        font-size: 1em;
+    }
+
+    main nav > a {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .appointment_survey fieldset {
+        flex-direction: column;
+        height: auto;
+        max-height: 200px;
+    }
+
+    .appointment_survey fieldset label {
+        height: 44px;
+        width: auto;
+        flex-direction: row;
+    }
+
+    .appointment_survey fieldset label time {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}

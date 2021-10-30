@@ -6,103 +6,14 @@
     import WeeklyAppointmentInputs from "$lib/appointment_surveys/WeeklyAppointmentInputs.svelte"
     import DailyAppointmentInputs from "$lib/appointment_surveys/DailyAppointmentInputs.svelte"
     import AppointmentInputs from "$lib/appointment_surveys/AppointmentInputs.svelte"
+    import type { PickedSlot } from "../../model/picked_slot";
 
     export let survey: AppointmentSurvey;
     let name: string = "";
+    let pickedSlots: Array<PickedSlot> = survey.slots.map(s => {return {slot: s, picked: false}});
 </script>
 <style>
-    .no_bottom_padding {
-        margin-bottom: 0;
-    }
 
-    main nav {
-        font-size: 0.8em;
-    }
-
-    main nav > a {
-        margin-left: 1em;
-        margin-right: 1em;
-        color: var(--inactive_color);
-        text-decoration: none;
-    }
-
-    .appointment_survey fieldset label {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        font-weight: bolder;
-        justify-content: center;
-        align-items: center;
-        word-spacing: 2px;
-        height: 5em;
-        width: 5em;
-        border: solid black 1px;
-        flex-grow: 0;
-        flex-shrink: 0;
-        /** @TODO Make not selectable */
-    }
-
-    .appointment_survey fieldset label:hover, .appointment_survey fieldset label:focus {
-        border-color: var(--bright_main_color);
-    }
-
-    .selected_slot {
-        background-color: var(--bright_main_color);
-    }
-
-    .appointment_survey [type="checkbox"] {
-        position: absolute;
-        left: -100vh
-    }
-
-    .appointment_survey fieldset {
-        display: flex;
-        align-items: stretch;
-        align-content: stretch;
-        overflow-x: auto;
-        min-width: 0;
-        flex-grow: 0;
-        flex-shrink: 1;
-    }
-
-    .table_container {
-        overflow-x: scroll;
-    }
-
-    .hidden {
-        visibility: hidden;
-        font-size: 0;
-    }
-
-    @media screen and (max-width: 415px) {
-        main nav {
-            display: flex;
-            flex-direction: column;
-            font-size: 1em;
-        }
-
-        main nav > a {
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-
-        .appointment_survey fieldset {
-            flex-direction: column;
-            height: auto;
-            max-height: 200px;
-        }
-
-        .appointment_survey fieldset label {
-            height: 44px;
-            width: auto;
-            flex-direction: row;
-        }
-
-        .appointment_survey fieldset label time {
-            margin-left: 5px;
-            margin-right: 5px;
-        }
-    }
 </style>
 <svelte:head>
     <title>Sirius – {survey.title}</title>
@@ -133,13 +44,13 @@
                     bind:value="{name}">
             </label>
             {#if survey.repetition === "weekly"}
-                <WeeklyAppointmentInputs survey="{survey}"/>
+                <WeeklyAppointmentInputs pickedSlots={pickedSlots}/>
             {:else if survey.repetition === "daily"}
-                <DailyAppointmentInputs survey="{survey}"/>
+                <DailyAppointmentInputs slots={pickedSlots}/>
             {:else}
-                <AppointmentInputs survey="{survey}"/>
+                <AppointmentInputs slots={pickedSlots}/>
             {/if}
-            <p class="warning" class:hidden={name}>
+            <p class="warning" class:hidden={name && pickedSlots.some((ps) => ps.picked)}>
                 <strong>
                     WARNUNG: Sie haben zur Zeit keine Slots ausgewählt.
                     Wenn Sie nun senden, werden Sie als verhindert aufgeführt.
