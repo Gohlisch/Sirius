@@ -46,9 +46,9 @@
             {#if survey.repetition === "weekly"}
                 <WeeklyAppointmentInputs pickedSlots={pickedSlots}/>
             {:else if survey.repetition === "daily"}
-                <DailyAppointmentInputs slots={pickedSlots}/>
+                <DailyAppointmentInputs pickedSlots={pickedSlots}/>
             {:else}
-                <AppointmentInputs slots={pickedSlots}/>
+                <AppointmentInputs pickedSlots={pickedSlots}/>
             {/if}
             <p class="warning" class:hidden={name && pickedSlots.some((ps) => ps.picked)}>
                 <strong>

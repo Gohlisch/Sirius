@@ -1,24 +1,24 @@
 <script lang="ts">
-import type { AppointmentSurvey } from "../../model/appointment_survey";
+    import type { PickedSlot } from "src/model/picked_slot";
     import { getKeysAsArray, groupBy, toDateTimeFormat } from "../../util/util";
     import SlotCheckbox from "./SlotCheckbox.svelte"
 
-    export let survey: AppointmentSurvey;
+    export let pickedSlots: Array<PickedSlot>;
 
     const dateOptions = { weekday: "long", day: "2-digit", month: "2-digit", year: "2-digit" };
-    const slotsGroupedByStart = groupBy(survey.slots, (slot)=>slot.start.toLocaleDateString("de-DE", dateOptions));
+    const slotsGroupedByStart = groupBy(pickedSlots, (ps)=>ps.slot.start.toLocaleDateString("de-DE", dateOptions));
  </script>
 
 {#each getKeysAsArray(slotsGroupedByStart) as date}
     <fieldset>
         <legend>
             { date.slice(0, date.indexOf(",")+1) }
-            <time datetime="{toDateTimeFormat(slotsGroupedByStart[date][0].start)}">
+            <time datetime="{toDateTimeFormat(slotsGroupedByStart[date][0].slot.start)}">
                 { date.slice(date.indexOf(",")+1) }
             </time>
         </legend>
         {#each slotsGroupedByStart[date] as slot, i}
-            <SlotCheckbox numberedSlot="{{slot: slot, number: i}}"></SlotCheckbox>
+            <SlotCheckbox numberedSlot="{{pickedSlot: slotsGroupedByStart[date][i], number: i}}"></SlotCheckbox>
         {/each}
     </fieldset>
 {/each}
