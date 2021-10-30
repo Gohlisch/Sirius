@@ -15,7 +15,7 @@
     export let errorInfo;
 
     const errorMedia = {
-        "404": {src: "../../static/img/john_travolta_pulp_fiction.gif", alt:"John Travolta als Vincent Vega aus Pulp Fiction schaut verwirrt umher."}
+        "404": {src: "/img/john_travolta_pulp_fiction.gif", alt:"John Travolta als Vincent Vega aus Pulp Fiction schaut verwirrt umher."}
     }
 </script>
 
