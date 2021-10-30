@@ -10,7 +10,7 @@
     <ul>
         {#each appointmentRepository.getSurveys() as survey} 
         <li>
-        <a href="./survey/{survey.id}">{survey.title}</a>
+        <a href="lol/{survey.id}">{survey.title}</a>
         </li>
         {/each}
     </ul>

@@ -1,44 +1,14 @@
 <script lang="ts">
-    import type {AppointmentSurvey} from "../model/appointment_survey";
-    import WeeklyAppointmentResultTable from "../components/appointment_surveys/WeeklyAppointmentResultTable.svelte"
-    import DailyAppointmentResultTable from "../components/appointment_surveys/DailyAppointmentResultTable.svelte"
-    import AppointmentResultTable from "../components/appointment_surveys/AppointmentResultTable.svelte"
-    import WeeklyAppointmentInputs from "../components/appointment_surveys/WeeklyAppointmentInputs.svelte"
-    import DailyAppointmentInputs from "../components/appointment_surveys/DailyAppointmentInputs.svelte"
-    import AppointmentInputs from "../components/appointment_surveys/AppointmentInputs.svelte"
+    import type {AppointmentSurvey} from "../../model/appointment_survey";
+    import WeeklyAppointmentResultTable from "$lib/appointment_surveys/WeeklyAppointmentResultTable.svelte"
+    import DailyAppointmentResultTable from "$lib/appointment_surveys/DailyAppointmentResultTable.svelte"
+    import AppointmentResultTable from "$lib/appointment_surveys/AppointmentResultTable.svelte"
+    import WeeklyAppointmentInputs from "$lib/appointment_surveys/WeeklyAppointmentInputs.svelte"
+    import DailyAppointmentInputs from "$lib/appointment_surveys/DailyAppointmentInputs.svelte"
+    import AppointmentInputs from "$lib/appointment_surveys/AppointmentInputs.svelte"
 
     export let survey: AppointmentSurvey;
-
-	window.onload = () => {
-		/** @TODO: Add copy to clipboard button */
-		const thisSurveyAnchorElement: HTMLAnchorElement = document.querySelector(".share_survey");
-		thisSurveyAnchorElement.innerText = window.location as unknown as string;
-		thisSurveyAnchorElement.href = window.location as unknown as string;
-
-		const slotCheckboxElements: NodeListOf<HTMLInputElement> = document.querySelectorAll(".appointment_survey [type=\"checkbox\"]") as NodeListOf<HTMLInputElement>;
-		const nameInputElement: HTMLInputElement = document.querySelector("[name=\"participant\"]");
-		const warningParagraphElement = document.querySelector(".appointment_survey .warning");
-		const determineWarningVisibility = () => {
-			if (nameInputElement.value === "" ||
-				Array.from(slotCheckboxElements).some((cb) => cb.checked)
-			) {
-				warningParagraphElement.classList.add("hidden");
-			} else {
-				warningParagraphElement.classList.remove("hidden");
-			}
-		};
-		slotCheckboxElements.forEach((element: HTMLInputElement) => {
-			element.onchange = () => {
-				if (element.checked) {
-					element.parentElement.classList.add("selected_slot");
-				} else {
-					element.parentElement.classList.remove("selected_slot");
-				}
-				determineWarningVisibility();
-			};
-		});
-		nameInputElement.oninput = determineWarningVisibility;
-	};
+    let name: string = "";
 </script>
 <style>
     .no_bottom_padding {
@@ -153,12 +123,15 @@
     <section class="appointment_survey" id="survey">
         <h3>Dann habe ich Zeit</h3>
         <form action="<%= survey.id %>" method="post">
-            <label>Name:<input
+            <label>Name
+                <input
                     required
                     type="text"
                     name="participant"
                     placeholder="max. 64 Zeichen"
-                    maxlength="64"></label>
+                    maxlength="64"
+                    bind:value="{name}">
+            </label>
             {#if survey.repetition === "weekly"}
                 <WeeklyAppointmentInputs survey="{survey}"/>
             {:else if survey.repetition === "daily"}
@@ -166,7 +139,7 @@
             {:else}
                 <AppointmentInputs survey="{survey}"/>
             {/if}
-            <p class="warning hidden">
+            <p class="warning" class:hidden={name}>
                 <strong>
                     WARNUNG: Sie haben zur Zeit keine Slots ausgewählt.
                     Wenn Sie nun senden, werden Sie als verhindert aufgeführt.

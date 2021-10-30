@@ -22,7 +22,7 @@ export const appointmentRepository = new AppointmentRepository();
 
 appointmentRepository.addSurvey(new AppointmentSurvey(
     "FB42 Sportgruppe - Erstes Treffen",
-    randomString(5),
+    "aaaaa",
     "never",
     "Hallo zusammen! Für unsere neugegründete Sportgruppe wollen wir ein initiales Treffen abhalten, bitte tragt ein, wann ihr Zeit habt! - Erik",
     [
@@ -37,7 +37,7 @@ appointmentRepository.addSurvey(new AppointmentSurvey(
     ]));
 appointmentRepository.addSurvey(new AppointmentSurvey(
     "Lerngruppe Webtechnologien",
-    randomString(5),
+    "bbbbb",
     "daily",
     "Wann habt ihr Zeit für die Lerngruppe? Teilt den Link gerne!",
     [
@@ -48,7 +48,7 @@ appointmentRepository.addSurvey(new AppointmentSurvey(
     ]));
 appointmentRepository.addSurvey(new AppointmentSurvey(
     "Projektarbeit",
-    randomString(5),
+    "ccccc",
     "weekly",
     "Wir müssen noch einen Termin für unsere Gruppenarbeiten finden, bitte tragt einen Wochentag+Uhrzeit ein, wann es euch passt! LG Annika",
     [
