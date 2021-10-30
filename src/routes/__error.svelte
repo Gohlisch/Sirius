@@ -18,6 +18,11 @@
         "404": {src: "../../static/img/john_travolta_pulp_fiction.gif", alt:"John Travolta als Vincent Vega aus Pulp Fiction schaut verwirrt umher."}
     }
 </script>
+
+<svelte:head>
+    <title>Sirius – { errorInfo.statusCode }</title>
+</svelte:head>
+
 <main>
     <h1>Ups! Etwas ist schiefgelaufen! 🙁</h1>
     <p>{errorInfo.title}</p>
