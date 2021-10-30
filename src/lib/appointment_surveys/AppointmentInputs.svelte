@@ -5,7 +5,7 @@
 
     export let pickedSlots: Array<PickedSlot>;
 
-    const dateOptions = { weekday: "long", day: "2-digit", month: "2-digit", year: "2-digit" };
+    const dateOptions: Intl.DateTimeFormatOptions = { weekday: "long", day: "2-digit", month: "2-digit", year: "2-digit" };
     const slotsGroupedByStart = groupBy(pickedSlots, (ps)=>ps.slot.start.toLocaleDateString("de-DE", dateOptions));
  </script>
 
@@ -14,11 +14,11 @@
         <legend>
             { date.slice(0, date.indexOf(",")+1) }
             <time datetime="{toDateTimeFormat(slotsGroupedByStart[date][0].slot.start)}">
-                { date.slice(date.indexOf(",")+1) }
+            { date.slice(date.indexOf(",")+1) }
             </time>
         </legend>
-        {#each slotsGroupedByStart[date] as slot, i}
-            <SlotCheckbox bind:pickedSlot={slotsGroupedByStart[date][i]}></SlotCheckbox>
+        {#each pickedSlots.filter((ps) => ps.slot.start.toLocaleDateString("de-DE", dateOptions) === date) as ps}
+            <SlotCheckbox bind:pickedSlot={ps}></SlotCheckbox>
         {/each}
     </fieldset>
 {/each}
