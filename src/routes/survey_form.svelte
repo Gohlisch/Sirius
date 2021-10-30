@@ -115,8 +115,7 @@
 					{#each dailySlots as slot, i}
                     <div id="inputgroup{i}" class:newly_generated={i !== 0 && !slot.start && !slot.end}>
 						<label class="required">Startzeit:
-						<input  data-input="start"
-								type="time"
+						<input  type="time"
 								name="start"
 								min="00:00"
 								max="23:59"
@@ -125,8 +124,7 @@
 								on:input={(e) => handleDailySlotInput(i)}>
 						</label>
 						<label class="required">Endzeit:
-						<input  data-input="end"
-								type="time"
+						<input  type="time"
 								name="end"
 								min="00:00"
 								max="23:59"
@@ -140,8 +138,7 @@
 					{#each weeklySlots as slot, i}
                     <div id="inputgroup{i}" class:newly_generated={i !== 0 && !slot.weekday && !slot.start && !slot.end}>
 						<label class="required">Wochentag:
-							<select data-input="weekday"
-								    name="weekday"
+							<select name="weekday"
 									required={!!(i === 0 || slot.weekday || slot.start || slot.end)}
 									bind:value={slot["weekday"]}
 									on:select={(e) => handleWeeklySlotInput(i)}>
@@ -156,8 +153,7 @@
 							</select>
 						</label>
 						<label class="required">Startzeit:
-						<input data-input="start"
-								type="time"
+						<input  type="time"
 								name="start"
 								min="00:00"
 								max="23:59"
@@ -166,8 +162,7 @@
 								on:input={(e) => handleWeeklySlotInput(i)}>
 						</label>
 						<label class="required">Endzeit:
-						<input data-input="end"
-								type="time"
+						<input  type="time"
 								name="end"
 								min="00:00"
 								max="23:59"
@@ -181,16 +176,14 @@
 						{#each neverSlots as slot, i}
 						<div id="inputgroup{i}" class:newly_generated={i !== 0 && !slot.day && !slot.start && !slot.end}>
 							<label class="required">Datum:
-							<input  data-input="day"
-									type="date"
+							<input  type="date"
 									name="day"
 									required={!!(i === 0 || slot.day || slot.start || slot.end)}
 									bind:value={slot["day"]}
 									on:input={(e) => handleNeverSlotInput(i)}>
 							</label>
 							<label class="required">Startzeit:
-							<input  data-input="start"
-									type="time"
+							<input  type="time"
 									name="start"
 									min="00:00"
 									max="23:59"
@@ -199,8 +192,7 @@
 									on:input={(e) => handleNeverSlotInput(i)}>
 							</label>
 							<label class="required">Endzeit:
-							<input  data-input="end"
-									type="time"
+							<input  type="time"
 									name="end"
 									min="00:00"
 									max="23:59"
