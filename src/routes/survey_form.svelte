@@ -91,7 +91,7 @@
                             id="title"
                             placeholder="max. 256 Zeichen"
                             maxlength="256"
-                            autofocus required>
+                            required>
                 </label>
                 <label for="description">Beschreibung:
                     <textarea
