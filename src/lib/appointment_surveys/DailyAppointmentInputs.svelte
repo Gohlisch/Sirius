@@ -1,13 +1,13 @@
 <script lang="ts">
-    import type { AppointmentSurvey } from "../../model/appointment_survey";
+    import type { PickedSlot } from "src/model/picked_slot";
     import SlotCheckbox from "./SlotCheckbox.svelte"
 
-    export let survey: AppointmentSurvey;
+    export let pickedSlots: Array<PickedSlot>;
 </script>
 
 <fieldset>
     <legend>Täglich</legend>
-    {#each survey.slots as slot, i}
-        <SlotCheckbox numberedSlot="{{slot: slot, number: i}}"></SlotCheckbox>
+    {#each pickedSlots as ps, i}
+        <SlotCheckbox numberedSlot="{{pickedSlot: ps, number: i}}"></SlotCheckbox>
     {/each}
 </fieldset>
