@@ -8,6 +8,6 @@
 <fieldset>
     <legend>Täglich</legend>
     {#each pickedSlots as ps, i}
-        <SlotCheckbox numberedSlot="{{pickedSlot: ps, number: i}}"></SlotCheckbox>
+        <SlotCheckbox bind:pickedSlot={ps}></SlotCheckbox>
     {/each}
 </fieldset>

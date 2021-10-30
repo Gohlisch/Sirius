@@ -18,7 +18,7 @@
             </time>
         </legend>
         {#each slotsGroupedByStart[date] as slot, i}
-            <SlotCheckbox numberedSlot="{{pickedSlot: slotsGroupedByStart[date][i], number: i}}"></SlotCheckbox>
+            <SlotCheckbox bind:pickedSlot={slotsGroupedByStart[date][i]}></SlotCheckbox>
         {/each}
     </fieldset>
 {/each}

@@ -13,7 +13,7 @@ import type { PickedSlot } from "src/model/picked_slot";
         <legend>Montag</legend>
         {#each pickedSlots as ps, i}
             {#if ps.slot.start.getDay() === 1}
-            <SlotCheckbox numberedSlot="{{pickedSlot: ps, number: i}}"/>
+            <SlotCheckbox bind:pickedSlot={ps}/>
             {/if}
         {/each}
     </fieldset>
@@ -23,7 +23,7 @@ import type { PickedSlot } from "src/model/picked_slot";
         <legend>Dienstag</legend>
         {#each pickedSlots as ps, i}
             {#if ps.slot.start.getDay() === 2}
-            <SlotCheckbox numberedSlot="{{pickedSlot: ps, number: i}}"/>
+            <SlotCheckbox bind:pickedSlot={ps}/>
             {/if}
         {/each}
     </fieldset>
@@ -33,7 +33,7 @@ import type { PickedSlot } from "src/model/picked_slot";
     <legend>Mittwoch</legend>
     {#each pickedSlots as ps, i}
         {#if ps.slot.start.getDay() === 3}
-        <SlotCheckbox numberedSlot="{{pickedSlot: ps, number: i}}"/>
+        <SlotCheckbox bind:pickedSlot={ps}/>
         {/if}
     {/each}
 </fieldset>
@@ -43,7 +43,7 @@ import type { PickedSlot } from "src/model/picked_slot";
     <legend>Donnerstag</legend>
     {#each pickedSlots as ps, i}
         {#if ps.slot.start.getDay() === 4}
-        <SlotCheckbox numberedSlot="{{pickedSlot: ps, number: i}}"/>
+        <SlotCheckbox bind:pickedSlot={ps}/>
         {/if}
     {/each}
 </fieldset>
@@ -53,7 +53,7 @@ import type { PickedSlot } from "src/model/picked_slot";
     <legend>Freitag</legend>
     {#each pickedSlots as ps, i}
         {#if ps.slot.start.getDay() === 5}
-        <SlotCheckbox numberedSlot="{{pickedSlot: ps, number: i}}"/>
+        <SlotCheckbox bind:pickedSlot={ps}/>
         {/if}
     {/each}
 </fieldset>
@@ -63,7 +63,7 @@ import type { PickedSlot } from "src/model/picked_slot";
     <legend>Samstag</legend>
     {#each pickedSlots as ps, i}
         {#if ps.slot.start.getDay() === 6}
-        <SlotCheckbox numberedSlot="{{pickedSlot: ps, number: i}}"/>
+        <SlotCheckbox bind:pickedSlot={ps}/>
         {/if}
     {/each}
 </fieldset>
@@ -73,7 +73,7 @@ import type { PickedSlot } from "src/model/picked_slot";
     <legend>Sonntag</legend>
     {#each pickedSlots as ps, i}
         {#if ps.slot.start.getDay() === 7}
-        <SlotCheckbox numberedSlot="{{pickedSlot: ps, number: i}}"/>
+        <SlotCheckbox bind:pickedSlot={ps}/>
         {/if}
     {/each}
 </fieldset>

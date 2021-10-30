@@ -44,13 +44,13 @@
                     bind:value="{name}">
             </label>
             {#if survey.repetition === "weekly"}
-                <WeeklyAppointmentInputs pickedSlots={pickedSlots}/>
+                <WeeklyAppointmentInputs bind:pickedSlots={pickedSlots}/>
             {:else if survey.repetition === "daily"}
-                <DailyAppointmentInputs pickedSlots={pickedSlots}/>
+                <DailyAppointmentInputs bind:pickedSlots={pickedSlots}/>
             {:else}
-                <AppointmentInputs pickedSlots={pickedSlots}/>
+                <AppointmentInputs bind:pickedSlots={pickedSlots}/>
             {/if}
-            <p class="warning" class:hidden={name && pickedSlots.some((ps) => ps.picked)}>
+            <p class="warning" class:hidden={!name || pickedSlots.some((ps) => ps.picked)}>
                 <strong>
                     WARNUNG: Sie haben zur Zeit keine Slots ausgewählt.
                     Wenn Sie nun senden, werden Sie als verhindert aufgeführt.
