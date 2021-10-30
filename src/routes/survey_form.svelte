@@ -113,14 +113,14 @@
                 <div id="slots">
 					{#if repititon === "daily"}
 					{#each dailySlots as slot, i}
-                    <div id="inputgroup{i}">
+                    <div id="inputgroup{i}" class:newly_generated={i !== 0 && !slot.start && !slot.end}>
 						<label class="required">Startzeit:
 						<input  data-input="start"
 								type="time"
 								name="start"
 								min="00:00"
 								max="23:59"
-								required
+								required={!!(i === 0 || slot.start || slot.end)}
 								bind:value={slot["start"]}
 								on:input={(e) => handleDailySlotInput(i)}>
 						</label>
@@ -130,7 +130,7 @@
 								name="end"
 								min="00:00"
 								max="23:59"
-								required
+								required={!!(i === 0 || slot.start || slot.end)}
 								bind:value={slot["end"]}
 								on:input={(e) => handleDailySlotInput(i)}>
 						</label>
@@ -138,10 +138,11 @@
 					{/each}
 					{:else if repititon === "weekly"}
 					{#each weeklySlots as slot, i}
-                    <div id="inputgroup{i}">
+                    <div id="inputgroup{i}" class:newly_generated={i !== 0 && !slot.weekday && !slot.start && !slot.end}>
 						<label class="required">Wochentag:
 							<select data-input="weekday"
 								    name="weekday"
+									required={!!(i === 0 || slot.weekday || slot.start || slot.end)}
 									bind:value={slot["weekday"]}
 									on:select={(e) => handleWeeklySlotInput(i)}>
 								<option value="" selected>Tag wählen</option>
@@ -160,7 +161,7 @@
 								name="start"
 								min="00:00"
 								max="23:59"
-								required
+								required={!!(i === 0 || slot.weekday || slot.start || slot.end)}
 								bind:value={slot["start"]}
 								on:input={(e) => handleWeeklySlotInput(i)}>
 						</label>
@@ -170,7 +171,7 @@
 								name="end"
 								min="00:00"
 								max="23:59"
-								required
+								required={!!(i === 0 || slot.weekday || slot.start || slot.end)}
 								bind:value={slot["end"]}
 								on:input={(e) => handleWeeklySlotInput(i)}>
 						</label>
@@ -178,12 +179,12 @@
 						{/each}
 						{:else if repititon === "never"}
 						{#each neverSlots as slot, i}
-						<div id="inputgroup{i}">
+						<div id="inputgroup{i}" class:newly_generated={i !== 0 && !slot.day && !slot.start && !slot.end}>
 							<label class="required">Datum:
 							<input  data-input="day"
 									type="date"
 									name="day"
-									required
+									required={!!(i === 0 || slot.day || slot.start || slot.end)}
 									bind:value={slot["day"]}
 									on:input={(e) => handleNeverSlotInput(i)}>
 							</label>
@@ -193,7 +194,7 @@
 									name="start"
 									min="00:00"
 									max="23:59"
-									required
+									required={!!(i === 0 || slot.day || slot.start || slot.end)}
 									bind:value={slot["start"]}
 									on:input={(e) => handleNeverSlotInput(i)}>
 							</label>
@@ -203,7 +204,7 @@
 									name="end"
 									min="00:00"
 									max="23:59"
-									required
+									required={!!(i === 0 || slot.day || slot.start || slot.end)}
 									bind:value={slot["end"]}
 									on:input={(e) => handleNeverSlotInput(i)}>
 							</label>
