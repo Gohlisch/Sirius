@@ -41,8 +41,8 @@
 	 * @property {HTMLDivElement} groupDiv
 	 */
 	 function slotIsEmpty(slot) {
-		for (const value in slot) {
-			if (value !== "groupDiv" && slot[value] !== "") return false;
+		for(const value in slot) {
+			if(slot[value] !== "") return false;
 		}
 		return true;
 	}
@@ -162,7 +162,7 @@
 								max="23:59"
 								required
 								bind:value={slot["start"]}
-								on:input={(e) => handleWeeklySlotInput(i, "start")}>
+								on:input={(e) => handleWeeklySlotInput(i)}>
 						</label>
 						<label class="required">Endzeit:
 						<input data-input="end"
@@ -172,7 +172,7 @@
 								max="23:59"
 								required
 								bind:value={slot["end"]}
-								on:input={(e) => handleWeeklySlotInput(i, "end")}>
+								on:input={(e) => handleWeeklySlotInput(i)}>
 						</label>
 						</div>
 						{/each}
@@ -185,7 +185,7 @@
 									name="day"
 									required
 									bind:value={slot["day"]}
-									on:input={(e) => handleNeverSlotInput(i, "day")}>
+									on:input={(e) => handleNeverSlotInput(i)}>
 							</label>
 							<label class="required">Startzeit:
 							<input  data-input="start"
@@ -195,7 +195,7 @@
 									max="23:59"
 									required
 									bind:value={slot["start"]}
-									on:input={(e) => handleNeverSlotInput(i, "start")}>
+									on:input={(e) => handleNeverSlotInput(i)}>
 							</label>
 							<label class="required">Endzeit:
 							<input  data-input="end"
@@ -205,7 +205,7 @@
 									max="23:59"
 									required
 									bind:value={slot["end"]}
-									on:input={(e) => handleNeverSlotInput(i, "end")}>
+									on:input={(e) => handleNeverSlotInput(i)}>
 							</label>
 							</div>
 						{/each}
