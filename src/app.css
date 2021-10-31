@@ -115,35 +115,37 @@ form {
     justify-self: center;
     align-self: center;
     flex-grow: 0;
-    margin-top: 5px;
     padding: 1em;
     font-family: "Helvetica Neue", Arial, sans-serif;
     color: var(--text_color);
     font-size: 1em;
     background-color: var(--very_bright_main_color);
     border-top: 1px solid var(--inactive_color);
-    border-left: 1px solid var(--inactive_color);
     border-right: 2px solid var(--text_color);
     border-bottom: 2px solid var(--text_color);
+    border-left: 1px solid var(--inactive_color);
     border-radius: 5px;
+    margin: 5px 1px 1px 2px;
 }
 
 [type="submit"]:hover, [type="submit"]:focus, button:hover, button:focus {
     background-color: var(--bright_main_color);
     border-top: 1px solid var(--text_color);
-    border-left: 1px solid var(--text_color);
     border-right: 1px solid var(--inactive_color);
     border-bottom: 1px solid var(--inactive_color);
-    margin-bottom: 3px;
+    border-left: 1px solid var(--text_color);
+    margin: 5px 2px 2px 2px;
 }
 
 [type="submit"]:active, button:active  {
     background-color: var(--bright_main_color);
     border-top: 2px solid var(--text_color);
-    border-left: 2px solid var(--text_color);
     border-right: 1px solid var(--inactive_color);
     border-bottom: 1px solid var(--inactive_color);
+    border-left: 2px solid var(--text_color);
+    margin-top: 4px;
     margin-bottom: 2px;
+    margin: 4px 2px 2px 1px;
 }
 
 footer {
@@ -231,7 +233,7 @@ label {
     }
 }
 
-/* /SURVEY/[id] RULES */
+/*************** /survey/[id] RULES ***************/
 
 .no_bottom_padding {
     margin-bottom: 0;
