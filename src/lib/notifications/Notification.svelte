@@ -8,10 +8,10 @@
     article {
         display: flex;
         align-items: center;
-        padding: 0.5em 1em 0.5em 1em;
+        padding: 0 0.5em 0 .05em;
         margin: 0.5em 1em 0.5em 1em;
         border: 1px solid black;
-        border-radius: 1em;
+        border-radius: 0.5em;
     }
 
     .info {
@@ -32,9 +32,13 @@
 </style>
 
 <article class="{message.type || ""}">
-    <div>Icon</div>
+    {#if message.iconPath}
+    <div><img src="{message.iconPath}" alt="Icon" aria-hidden="true"></div>
+    {/if}
     <div>
         <p><strong>{message.title}</strong></p>
+        {#if message.content}
         <p>{message.content}</p>
+        {/if}
     </div>
 </article>

@@ -37,8 +37,8 @@ export interface NotificationOptions {
 
 export interface Message {
     title: string,
-    content: string,
     type: MessageType,
+    content?: string,
     iconPath?: string
 }
 

@@ -8,6 +8,7 @@
     import AppointmentInputs from "$lib/appointment_surveys/AppointmentInputs.svelte"
     import type { PickedSlot } from "../../model/picked_slot";
     import { page } from "$app/stores";
+    import { MessageType, notificationStore } from "$lib/notifications/notification_store";
 
     export let survey: AppointmentSurvey;
     let name: string = "";
@@ -26,7 +27,10 @@
         <a href="#survey">Umfrageformular</a>
         <a href="#results">Ergebnisse</a>
     </nav>
-    <button on:click={(e) => navigator.clipboard.writeText($page.host + $page.path)}>Umfrage teilen</button>
+    <button on:click={(e) => {
+        navigator.clipboard.writeText($page.host + $page.path);
+        notificationStore.show({title: "Adresse kopiert", type: MessageType.INFO, iconPath: "/icons/clipboard_copy.svg"}, {msVisible: 3000});
+    }}>Umfrage teilen</button>
     <section id="description">
         <h3>Beschreibung</h3>
         <p>{survey.description}</p>
