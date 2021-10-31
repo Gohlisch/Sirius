@@ -115,7 +115,6 @@ form {
     justify-self: center;
     align-self: center;
     flex-grow: 0;
-    padding: 1em;
     font-family: "Helvetica Neue", Arial, sans-serif;
     color: var(--text_color);
     font-size: 1em;
@@ -125,7 +124,8 @@ form {
     border-bottom: 2px solid var(--text_color);
     border-left: 1px solid var(--inactive_color);
     border-radius: 5px;
-    margin: 5px 1px 1px 2px;
+    padding: calc(1em - 1px) calc(1em - 2px) calc(1em - 2px) calc(1em - 1px);
+    margin: 5px;
 }
 
 [type="submit"]:hover, [type="submit"]:focus, button:hover, button:focus {
@@ -134,7 +134,7 @@ form {
     border-right: 1px solid var(--inactive_color);
     border-bottom: 1px solid var(--inactive_color);
     border-left: 1px solid var(--text_color);
-    margin: 5px 2px 2px 2px;
+    padding: calc(1em - 1px) calc(1em - 1px) calc(1em - 1px) calc(1em - 1px);
 }
 
 [type="submit"]:active, button:active  {
@@ -143,9 +143,7 @@ form {
     border-right: 1px solid var(--inactive_color);
     border-bottom: 1px solid var(--inactive_color);
     border-left: 2px solid var(--text_color);
-    margin-top: 4px;
-    margin-bottom: 2px;
-    margin: 4px 2px 2px 1px;
+    padding: calc(1em - 2px) calc(1em - 1px) calc(1em - 1px) calc(1em - 2px);
 }
 
 footer {
