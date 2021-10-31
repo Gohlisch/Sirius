@@ -1,1 +1,1 @@
-<footer><a href="https://github.com">Host you own Sirius</a></footer>
+<footer><a href="https://github.com/gohlisch/sirius">Host your own Sirius</a></footer>
