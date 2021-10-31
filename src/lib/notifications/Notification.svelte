@@ -13,6 +13,22 @@
         border: 1px solid black;
         border-radius: 1em;
     }
+
+    .info {
+        background-color: var(--info_bg_color);
+    }
+
+    .success {
+        background-color: var(--success_bg_color);
+    }
+
+    .warning {
+        background-color: var(--warning_bg_color);
+    }
+
+    .error {
+        background-color: var(--error_bg_color);
+    }
 </style>
 
 <article class="{message.type || ""}">

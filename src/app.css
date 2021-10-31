@@ -16,6 +16,10 @@
     --warning: #d79595;
     --inactive_color: #d7d7d7;
     --secondary_color: #f3f3f3;
+    --info_bg_color: rgb(218, 218, 218);
+    --success_bg_color: rgb(193, 252, 193);
+    --warning_bg_color: rgb(255, 255, 181);
+    --error_bg_color: rgb(252, 216, 150);
 }
 
 html {
