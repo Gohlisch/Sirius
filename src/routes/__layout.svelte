@@ -3,6 +3,7 @@
     import Header from "$lib/Header.svelte";
     import Footer from "$lib/Footer.svelte";
 	import '../app.css';
+    import NotificationOverlay from "$lib/notifications/NotificationOverlay.svelte";
 </script>
 
 <div class="grid_container">
@@ -11,3 +12,4 @@
     <slot></slot>
     <Footer/>
 </div>
+<NotificationOverlay/>
