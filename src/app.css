@@ -8,23 +8,19 @@
 }
 
 :root{
-    --main_color: #00bc7e;
-    --very_bright_main_color: rgba(163, 200, 175, 0.46);
-    --bright_main_color: rgba(149, 193, 160, 0.46);
-    --text_color: #575757;
-    --bright_text_color: #6d6c6c;
-    --warning: #d79595;
-    --inactive_color: #d7d7d7;
-    --secondary_color: #f3f3f3;
-    --info_bg_color: rgb(218, 218, 218);
-    --success_bg_color: rgb(193, 252, 193);
-    --warning_bg_color: rgb(255, 255, 181);
-    --error_bg_color: rgb(252, 216, 150);
+    --primary_color: #005c5a; /* primary colour */
+    --secondary_color: #f1b24b;
+    --important_signifier: #BD4049;
+    --darkest_color: #000000; /* icons */
+    --darker_color: #212121; /* primary text */
+    --dark_color: #757575; /* secondary text */
+    --bright_color: #BDBDBD; /* devider */
+    --brightest_color: #ffffff; /* backgroudn */
 }
 
 html {
     font-family: "Helvetica Neue", Arial, sans-serif;
-    color: var(--text_color);
+    color: var(--darker_color);
     height: 100vh;
 }
 
@@ -41,56 +37,66 @@ body {
     min-width: 100%;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: min-content min-content auto min-content;
+    grid-template-columns: min-content auto;
+    grid-template-rows: min-content auto min-content;
     grid-template-areas:
-    "headerarea"
-    "navarea"
-    "mainarea"
-    "footerarea"
+    "headerarea navarea"
+    "mainarea mainarea"
+    "footerarea footerarea"
 }
 
 header, header + nav {
     font-family: "JetBrains Mono", monospace;
+    border-bottom: 1px solid var(--bright_color);
 }
 
 header {
     grid-area: headerarea;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     font-size: 2em;
     text-transform: uppercase;
-    color: var(--main_color);
 }
 
 header > h1 {
-    margin-top: 0;
-    margin-bottom: 0;
+    margin: 0 1em;
+}
+
+header > h1 > a {
+    text-decoration: none;
 }
 
 header + nav {
     grid-area: navarea;
     display: flex;
-    justify-content: center;
+    justify-content: start;
+    align-items: center;
     font-size: 1.5em;
-    background-color: var(--secondary_color);
 }
 
 header + nav > a {
     margin-left: 1em;
     margin-right: 1em;
-    color: var(--text_color);
     text-decoration: none;
+    border-bottom: 1px solid var(--bright_color);
 }
 
-header + nav > a > img {
-    display: none;
+header + nav > a:hover{
+    border-bottom: 1px solid var(--secondary_color);
+}
+
+a > img {
+    margin-right: 0.25em;
 }
 
 main {
     display: flex;
     grid-area: mainarea;
+}
+
+h1, h2, h3, h1 > a {
+    color: var(--primary_color)
 }
 
 figcaption {
@@ -107,7 +113,7 @@ td, th {
 }
 
 tr:nth-child(even), th {
-    background-color: var(--secondary_color);
+    background-color: var(--bright_color);
 }
 
 form {
@@ -122,31 +128,31 @@ form {
     font-family: "Helvetica Neue", Arial, sans-serif;
     color: var(--text_color);
     font-size: 1em;
-    background-color: var(--very_bright_main_color);
-    border-top: 1px solid var(--inactive_color);
-    border-right: 2px solid var(--text_color);
-    border-bottom: 2px solid var(--text_color);
-    border-left: 1px solid var(--inactive_color);
+    background-color: var(--secondary_color);
+    border-top: 1px solid var(--dark_color);
+    border-right: 2px solid var(--darker_color);
+    border-bottom: 2px solid var(--darker_color);
+    border-left: 1px solid var(--dark_color);
     border-radius: 5px;
     padding: calc(1em - 1px) calc(1em - 2px) calc(1em - 2px) calc(1em - 1px);
     margin: 5px;
 }
 
 [type="submit"]:hover, [type="submit"]:focus, button:hover, button:focus {
-    background-color: var(--bright_main_color);
-    border-top: 1px solid var(--text_color);
-    border-right: 1px solid var(--inactive_color);
-    border-bottom: 1px solid var(--inactive_color);
-    border-left: 1px solid var(--text_color);
+    background-color: var(--secondary_color);
+    border-top: 1px solid var(--darker_color);
+    border-right: 1px solid var(--dark_color);
+    border-bottom: 1px solid var(--dark_color);
+    border-left: 1px solid var(--darker_color);
     padding: calc(1em - 1px) calc(1em - 1px) calc(1em - 1px) calc(1em - 1px);
 }
 
 [type="submit"]:active, button:active  {
-    background-color: var(--bright_main_color);
-    border-top: 2px solid var(--text_color);
-    border-right: 1px solid var(--inactive_color);
-    border-bottom: 1px solid var(--inactive_color);
-    border-left: 2px solid var(--text_color);
+    background-color: var(--secondary_color);
+    border-top: 2px solid var(--darker_color);
+    border-right: 1px solid var(--dark_color);
+    border-bottom: 1px solid var(--dark_color);
+    border-left: 2px solid var(--darker_color);
     padding: calc(1em - 2px) calc(1em - 1px) calc(1em - 1px) calc(1em - 2px);
 }
 
@@ -159,11 +165,11 @@ footer {
 }
 
 a {
-    color: var(--text_color);
+    color: var(--darker_color);
 }
 
 a:hover {
-    color: var(--main_color);
+    color: var(--secondary_color);
 }
 
 main {
@@ -179,10 +185,13 @@ section {
 }
 
 fieldset {
-    background-color: var(--secondary_color);
+    background-color: var(--brightest_color);
+    border: 1px solid var(--bright_color);
+    border-radius: 1em;
 }
 
 fieldset legend {
+    color: var(--darker_color);
     font-weight: bold;
     font-size: 0.8em;
 }
@@ -248,8 +257,7 @@ main nav {
 main nav > a {
     margin-left: 1em;
     margin-right: 1em;
-    color: var(--inactive_color);
-    text-decoration: none;
+    color: var(--dark_color);
 }
 
 .appointment_survey fieldset label {
@@ -269,11 +277,11 @@ main nav > a {
 }
 
 .appointment_survey fieldset label:hover, .appointment_survey fieldset label:focus {
-    border-color: var(--bright_main_color);
+    border-color: var(--secondary_color);
 }
 
 .selected_slot {
-    background-color: var(--bright_main_color);
+    background-color: var(--secondary_color);
 }
 
 .appointment_survey [type="checkbox"] {
