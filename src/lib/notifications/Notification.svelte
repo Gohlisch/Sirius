@@ -17,19 +17,23 @@
     }
 
     .info {
-        background-color: var(--info_bg_color);
+        background-color: rgba(var(--bright_color_rgb), 0.90);
+        border-color: var(--bright_color);
     }
 
     .success {
-        background-color: var(--success_bg_color);
+        background-color: rgba(var(--primary_color_rgb), 0.90);
+        border-color: var(--primary_color);
     }
 
     .warning {
-        background-color: var(--warning_bg_color);
+        background-color: rgba(var(--secondary_color_rgb), 0.90);
+        border-color: var(--secondary_color);
     }
 
     .error {
-        background-color: var(--error_bg_color);
+        background-color: rgba(var(--important_signifier_color_rgb), 0.90);
+        border-color: var(--important_signifier_color);
     }
 </style>
 
