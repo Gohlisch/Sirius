@@ -38,7 +38,7 @@ html {
 }
 
 body {
-    min-height: calc(100vh - 10px);
+    min-height: 100vh;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -47,10 +47,10 @@ body {
 }
 
 .grid_container {
-    min-width: 100%;
     min-height: 100vh;
     display: grid;
     grid-template-rows: min-content auto min-content;
+    grid-template-columns: 50% 50%;
     justify-content: stretch;
     grid-template-areas:
     "headerarea navarea"
@@ -117,10 +117,6 @@ a > img {
     margin-right: 0.25em;
 }
 
-main {
-    display: flex;
-    grid-area: mainarea;
-}
 
 h1, h2, h3, h1 > a {
     color: var(--primary_color)
@@ -200,11 +196,12 @@ a:hover {
 }
 
 main {
+    grid-area: mainarea;
     display: flex;
     align-items: baseline;
     flex-direction: column;
-    margin-left: calc(10% - 20px);
-    margin-right: calc(10% - 20px);
+    padding-left: calc(8% - 20px);
+    padding-right: calc(8% - 20px);
 }
 
 section {
@@ -246,7 +243,7 @@ input:focus, select:focus, textarea:focus  {
     font-size: 0.8em;
 }
 
-@media screen and (max-width:415px) {
+@media screen and (max-width: 415px) {
     .grid_container {
         grid-template-columns: 60% 40%;
         grid-template-rows: min-content auto min-content;
