@@ -50,8 +50,8 @@ body {
     min-width: 100%;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: min-content auto;
     grid-template-rows: min-content auto min-content;
+    justify-content: stretch;
     grid-template-areas:
     "headerarea navarea"
     "mainarea mainarea"
@@ -66,14 +66,14 @@ header, header + nav {
 header {
     grid-area: headerarea;
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     font-size: 2em;
     text-transform: uppercase;
 }
 
 header > h1 {
-    margin: 0 calc(1em);
+    margin: 0;
 }
 
 header > h1 > a {
@@ -83,20 +83,19 @@ header > h1 > a {
 header + nav {
     grid-area: navarea;
     display: flex;
-    justify-content: start;
     align-items: center;
     font-size: 1.5em;
 }
 
 header + nav > a {
-    margin-left: 1em;
+    margin-left: calc(1em * 100%);
     margin-right: 1em;
     text-decoration: none;
     border-bottom: 1px solid var(--bright_color);
 }
 
 header + nav > a:hover{
-    border-bottom: 1px solid var(--secondary_color);
+    border-color: var(--secondary_color);
 }
 
 a > img {
@@ -258,7 +257,10 @@ input:focus, select:focus, textarea:focus  {
 
     header + nav > a {
         font-size: 0;
-        border-bottom: 1px solid hidden;
+        padding: 3px;
+        border: 1px solid var(--dark_color);
+        background-color: rgba(var(--secondary_color_rgb), 0.25);
+        border-radius: 100%;
     }
 
     header + nav > a > img {
