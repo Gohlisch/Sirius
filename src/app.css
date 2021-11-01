@@ -8,14 +8,27 @@
 }
 
 :root{
-    --primary_color: #005c5a; /* primary colour */
-    --secondary_color: #f1b24b;
-    --important_signifier: #BD4049;
-    --darkest_color: #000000; /* icons */
-    --darker_color: #212121; /* primary text */
-    --dark_color: #757575; /* secondary text */
-    --bright_color: #BDBDBD; /* devider */
-    --brightest_color: #ffffff; /* backgroudn */
+    --primary_color_rgb: 0,92,90; /* primary colour (hex: #005c5a) */
+    --secondary_color_rgb: 241, 178, 75; /* (hex: #f1b24b) */
+    --important_signifier_rgb: 189, 64, 73; /* (hex: #BD4049)*/
+    --darkest_color_rgb: 0, 0, 0; /* icons (hex: #000000)*/
+    --darker_color_rgb: 33, 33, 33; /* primary text (hex: #212121)*/
+    --dark_color_rgb: 117, 117, 117; /* secondary text (hex: #757575)*/
+    --bright_color_rgb: 189, 189, 189; /* devider (hex: #BDBDBD) */
+    --brightest_color_rgb: 255, 255, 255; /* background (hex: #ffffff)*/
+
+    --primary_color: rgb(var(--primary_color_rgb)); /* primary colour */
+    --secondary_color: rgb(var(--secondary_color_rgb));
+    --important_signifier: rgb(var(--important_signifier_rgb));
+    --darkest_color: rgb(var(--darkest_color_rgb)); /* icons */
+    --darker_color: rgb(var(--darker_color_rgb)); /* primary text */
+    --dark_color: rgb(var(--dark_color_rgb)); /* secondary text */
+    --bright_color: rgb(var(--bright_color_rgb)); /* devider */
+    --brightest_color: rgb(var(--brightest_color_rgb)); /* backgroudn */
+}
+
+* {
+    outline-color: var(--secondary_color);
 }
 
 html {
@@ -60,7 +73,7 @@ header {
 }
 
 header > h1 {
-    margin: 0 1em;
+    margin: 0 calc(1em);
 }
 
 header > h1 > a {
@@ -200,9 +213,22 @@ label {
     display: inline-block;
 }
 
+input, select, textarea  {
+    border: 1px solid var(--secondary_color);
+}
+
+input:invalid, select:invalid, textarea:invalid {
+    background-color: rgba(var(--secondary_color_rgb), 0.25);
+}
+
+input:focus, select:focus, textarea:focus  {
+    border: 1px solid var(--secondary_color);
+    outline: var(--secondary_color) 1px outset;
+}
+
 .warning {
     transition: font-size 1s;
-    color: var(--warning);
+    color: var(--important_signifier);
     font-size: 0.8em;
 }
 
@@ -218,7 +244,6 @@ label {
 
     header {
         justify-content: flex-start;
-        background-color: var(--secondary_color);
     }
 
     header > h1 {
@@ -233,6 +258,7 @@ label {
 
     header + nav > a {
         font-size: 0;
+        border-bottom: 1px solid hidden;
     }
 
     header + nav > a > img {
