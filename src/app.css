@@ -31,6 +31,11 @@
     outline-color: var(--secondary_color);
 }
 
+.dark_mode {
+    color: var(--bright_color);
+    background-color: var(--darker_color);
+}
+
 html {
     font-family: "Helvetica Neue", Arial, sans-serif;
     color: var(--darker_color);
@@ -122,6 +127,11 @@ h1, h2, h3, h1 > a {
     color: var(--primary_color)
 }
 
+.dark_mode h1, .dark_mode h2, .dark_mode h3, .dark_mode h1 > a {
+    color: var(--bright_color);
+    background-color: var(--primary_color);
+}
+
 figcaption {
     font-size: 0.8em;
 }
@@ -131,12 +141,16 @@ table {
 }
 
 td, th {
-    border: 1px solid var(--text_color);
+    border: 1px solid var(--bright_color);
     padding: 3px;
 }
 
 tr:nth-child(even), th {
     background-color: var(--bright_color);
+}
+
+.dark_mode tr:nth-child(even), .dark_mode th {
+    background-color: var(--primary_color);
 }
 
 form {
@@ -161,6 +175,12 @@ form {
     margin: 5px;
 }
 
+.dark_mode [type="submit"], .dark_mode button {
+    background-color: var(--darker_color);
+    color: var(--secondary_color);
+    border: 1px solid var(--secondary_color);
+}
+
 [type="submit"]:hover, [type="submit"]:focus, button:hover, button:focus {
     background-color: var(--secondary_color);
     border-top: 1px solid var(--darker_color);
@@ -168,6 +188,12 @@ form {
     border-bottom: 1px solid var(--dark_color);
     border-left: 1px solid var(--darker_color);
     padding: calc(1em - 1px) calc(1em - 1px) calc(1em - 1px) calc(1em - 1px);
+}
+
+.dark_mode [type="submit"]:hover, .dark_mode [type="submit"]:focus, .dark_mode button:hover, .dark_mode button:focus {
+    background-color: var(--darker_color);
+    color: var(--secondary_color);
+    border: 1px solid var(--secondary_color);
 }
 
 [type="submit"]:active, button:active  {
@@ -179,6 +205,12 @@ form {
     padding: calc(1em - 2px) calc(1em - 1px) calc(1em - 1px) calc(1em - 2px);
 }
 
+.dark_mode [type="submit"]:active, .dark_mode button:active {
+    background-color: var(--darker_color);
+    color: var(--secondary_color);
+    border: 2px solid var(--secondary_color);
+}
+
 footer {
     grid-area: footerarea;
     display: flex;
@@ -187,11 +219,26 @@ footer {
     font-size: 0.5em;
 }
 
+.options {
+    justify-self: end;
+}
+
+.options button {
+    font-size: 0.25em;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
 a {
     color: var(--darker_color);
 }
 
 a:hover {
+    color: var(--secondary_color);
+}
+
+.dark_mode a {
     color: var(--secondary_color);
 }
 
@@ -209,7 +256,6 @@ section {
 }
 
 fieldset {
-    background-color: var(--brightest_color);
     border: 1px solid var(--bright_color);
     border-radius: 1em;
 }
@@ -218,6 +264,10 @@ fieldset legend {
     color: var(--darker_color);
     font-weight: bold;
     font-size: 0.8em;
+}
+
+.dark_mode fieldset legend {
+    color: var(--bright_color_rgb);
 }
 
 label {
@@ -317,8 +367,18 @@ main nav > a {
     border-color: var(--secondary_color);
 }
 
+.dark_mode .appointment_survey fieldset label:hover, .dark_mode .appointment_survey fieldset label:focus {
+    border-color: var(--secondary_color);
+}
+
 .selected_slot {
     background-color: var(--secondary_color);
+}
+
+.dark_mode .selected_slot {
+    background-color: var(--darker_color);
+    color: var(--secondary_color);
+    border-color: var(--secondary_color);
 }
 
 .appointment_survey [type="checkbox"] {

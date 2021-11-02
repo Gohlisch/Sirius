@@ -17,7 +17,12 @@
     }
 
     .info {
-        background-color: rgba(var(--bright_color_rgb), 0.90);
+        background-color: rgba(var(--darker_color_rgb), 0.90);
+        border-color: var(--bright_color);
+    }
+
+    .dark_mode .info {
+        background-color: rgba(var(--darker_color_rgb), 0.90);
         border-color: var(--bright_color);
     }
 
@@ -26,14 +31,29 @@
         border-color: var(--primary_color);
     }
 
+    .dark_mode .success {
+        background-color: rgba(var(--darker_color_rgb), 0.90);
+        border-color: var(--bright_color);
+    }
+
     .warning {
         background-color: rgba(var(--secondary_color_rgb), 0.90);
         border-color: var(--secondary_color);
     }
 
+    .dark_mode .warning {
+        background-color: rgba(var(--darker_color_rgb), 0.90);
+        border-color: var(--secondary_color_rgb);
+    }
+
     .error {
         background-color: rgba(var(--important_signifier_color_rgb), 0.90);
         border-color: var(--important_signifier_color);
+    }
+
+    .dark_mode .error {
+        background-color: rgba(var(--darker_color_rgb), 0.90);
+        border-color: var(--important_signifier_color_rgb);
     }
 </style>
 
