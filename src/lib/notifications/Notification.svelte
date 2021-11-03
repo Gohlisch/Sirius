@@ -17,7 +17,7 @@
     }
 
     .info {
-        background-color: rgba(var(--darker_color_rgb), 0.90);
+        background-color: rgba(var(--brightest_color), 0.90);
         border-color: var(--bright_color);
     }
 
