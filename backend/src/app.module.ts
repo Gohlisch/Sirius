@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TimeSlotEntity } from './entities/time-slot.entity';
+import { TimeSlotModule } from './time-slot/time-slot.module';
 
 @Module({
   imports: [
@@ -12,9 +14,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'postgres',
       password: 'password123',
       database: 'sirius',
-      entities: [],
+      entities: [TimeSlotEntity],
       synchronize: true,
     }),
+    TimeSlotModule,
   ],
   controllers: [AppController],
   providers: [AppService],
