@@ -1,3 +1,3 @@
 <header>
-    <h1>Sirius</h1>
+    <h1><a href="/">Sirius</a></h1>
 </header>

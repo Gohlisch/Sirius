@@ -104,9 +104,9 @@
             </fieldset>
             <fieldset>
                 <legend>Wiederholung des Termins</legend>
-                <label for="never"><input id="never" name="repetition" value="never" type="radio" bind:group={repititon}>niemals</label>
-                <label for="daily"><input id="daily" name="repetition" value="daily" type="radio" bind:group={repititon}>täglich</label>
-                <label for="weekly"><input id="weekly" name="repetition" value="weekly" type="radio" bind:group={repititon}>wöchentlich</label>
+                <label for="never"><input id="never" name="repetition" value="never" type="radio" required bind:group={repititon}>niemals</label>
+                <label for="daily"><input id="daily" name="repetition" value="daily" type="radio" required bind:group={repititon}>täglich</label>
+                <label for="weekly"><input id="weekly" name="repetition" value="weekly" type="radio" required bind:group={repititon}>wöchentlich</label>
             </fieldset>
             <fieldset>
                 <legend>Auswählbare Slots</legend>
