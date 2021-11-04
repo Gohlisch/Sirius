@@ -43,8 +43,8 @@ body.dark_mode {
 
     --darkest_color: rgb(var(--darkest_rgb)); /* icons */
     --darker_color: rgb(var(--darker_rgb)); /* primary text */
-    --dark_color: rgb(var(--bright_rgb)); /* secondary text */
-    --bright_color: rgb(var(--brighter_rgb)); /* devider */
+    --dark_color: rgb(var(--dark_rgb)); /* secondary text */
+    --bright_color: rgb(var(--bright_rgb)); /* devider */
     --brighter_color: rgb(var(--brighter_rgb));
     --brightest_color: rgb(var(--brightest_rgb)); /* backgroudn */
 

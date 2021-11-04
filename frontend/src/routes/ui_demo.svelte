@@ -13,6 +13,7 @@
         height: 100px;
         width: 100px;
         color: var(--brightest_color);
+        border: 1px solid var(--darkest_color);
     }
 </style>
 
