@@ -8,13 +8,14 @@
 }
 
 :root{
-    --primary_color_rgb: 0,92,90; /* primary colour (hex: #005c5a) */
-    --secondary_color_rgb: 241, 178, 75; /* (hex: #f1b24b) */
-    --important_signifier_color_rgb: 189, 64, 73; /* (hex: #BD4049)*/
+    --primary_color_rgb: 48,176,199; /* primary colour (hex: #) */
+    --secondary_color_rgb: 0, 122, 255; /* (hex: #) */
+    --important_signifier_color_rgb: 255, 45, 85; /* (hex: #)*/
     --darkest_color_rgb: 0, 0, 0; /* icons (hex: #000000)*/
     --darker_color_rgb: 33, 33, 33; /* primary text (hex: #212121)*/
     --dark_color_rgb: 117, 117, 117; /* secondary text (hex: #757575)*/
     --bright_color_rgb: 189, 189, 189; /* devider (hex: #BDBDBD) */
+    --brighter_color_rgb: 142,142,147;
     --brightest_color_rgb: 255, 255, 255; /* background (hex: #ffffff)*/
 
     --primary_color: rgb(var(--primary_color_rgb)); /* primary colour */
@@ -24,6 +25,7 @@
     --darker_color: rgb(var(--darker_color_rgb)); /* primary text */
     --dark_color: rgb(var(--dark_color_rgb)); /* secondary text */
     --bright_color: rgb(var(--bright_color_rgb)); /* devider */
+    --brighter_color: rgb(var(--brighter_color));
     --brightest_color: rgb(var(--brightest_color_rgb)); /* backgroudn */
 }
 
@@ -31,13 +33,16 @@
     outline-color: var(--secondary_color);
 }
 
-.dark_mode {
-    color: var(--bright_color);
-    background-color: var(--darker_color);
-}
-
 html {
-    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-family: -apple-system, 
+                BlinkMacSystemFont, 
+                "Segoe UI", 
+                Roboto, 
+                Oxygen-Sans, 
+                Ubuntu, 
+                Cantarell, 
+                "Helvetica Neue", 
+                sans-serif;
     color: var(--darker_color);
     height: 100vh;
 }
@@ -122,16 +127,6 @@ a > img {
     margin-right: 0.25em;
 }
 
-
-h1, h2, h3, h1 > a {
-    color: var(--primary_color)
-}
-
-.dark_mode h1, .dark_mode h2, .dark_mode h3, .dark_mode h1 > a {
-    color: var(--bright_color);
-    background-color: var(--primary_color);
-}
-
 figcaption {
     font-size: 0.8em;
 }
@@ -149,10 +144,6 @@ tr:nth-child(even), th {
     background-color: var(--bright_color);
 }
 
-.dark_mode tr:nth-child(even), .dark_mode th {
-    background-color: var(--primary_color);
-}
-
 form {
     display: flex;
     flex-direction: column;
@@ -162,38 +153,9 @@ form {
     justify-self: center;
     align-self: center;
     flex-grow: 0;
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    color: var(--text_color);
-    font-size: 1em;
-    background-color: var(--secondary_color);
-    border-top: 1px solid var(--dark_color);
-    border-right: 2px solid var(--darker_color);
-    border-bottom: 2px solid var(--darker_color);
-    border-left: 1px solid var(--dark_color);
-    border-radius: 5px;
-    padding: calc(1em - 1px) calc(1em - 2px) calc(1em - 2px) calc(1em - 1px);
-    margin: 5px;
-}
-
-.dark_mode [type="submit"], .dark_mode button {
-    background-color: var(--darker_color);
-    color: var(--secondary_color);
-    border: 1px solid var(--secondary_color);
 }
 
 [type="submit"]:hover, [type="submit"]:focus, button:hover, button:focus {
-    background-color: var(--secondary_color);
-    border-top: 1px solid var(--darker_color);
-    border-right: 1px solid var(--dark_color);
-    border-bottom: 1px solid var(--dark_color);
-    border-left: 1px solid var(--darker_color);
-    padding: calc(1em - 1px) calc(1em - 1px) calc(1em - 1px) calc(1em - 1px);
-}
-
-.dark_mode [type="submit"]:hover, .dark_mode [type="submit"]:focus, .dark_mode button:hover, .dark_mode button:focus {
-    background-color: var(--darker_color);
-    color: var(--secondary_color);
-    border: 1px solid var(--secondary_color);
 }
 
 [type="submit"]:active, button:active  {
@@ -203,12 +165,6 @@ form {
     border-bottom: 1px solid var(--dark_color);
     border-left: 2px solid var(--darker_color);
     padding: calc(1em - 2px) calc(1em - 1px) calc(1em - 1px) calc(1em - 2px);
-}
-
-.dark_mode [type="submit"]:active, .dark_mode button:active {
-    background-color: var(--darker_color);
-    color: var(--secondary_color);
-    border: 2px solid var(--secondary_color);
 }
 
 footer {
@@ -228,6 +184,15 @@ footer {
     padding: 0;
     margin: 0;
     border: 0;
+    background-color: rgba(0,0,0,0);
+}
+
+.options button:hover {
+    font-size: 0.25em;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background-color: rgba(0,0,0,0);
 }
 
 a {
@@ -235,10 +200,6 @@ a {
 }
 
 a:hover {
-    color: var(--secondary_color);
-}
-
-.dark_mode a {
     color: var(--secondary_color);
 }
 
@@ -264,10 +225,6 @@ fieldset legend {
     color: var(--darker_color);
     font-weight: bold;
     font-size: 0.8em;
-}
-
-.dark_mode fieldset legend {
-    color: var(--bright_color_rgb);
 }
 
 label {
@@ -367,18 +324,8 @@ main nav > a {
     border-color: var(--secondary_color);
 }
 
-.dark_mode .appointment_survey fieldset label:hover, .dark_mode .appointment_survey fieldset label:focus {
-    border-color: var(--secondary_color);
-}
-
 .selected_slot {
     background-color: var(--secondary_color);
-}
-
-.dark_mode .selected_slot {
-    background-color: var(--darker_color);
-    color: var(--secondary_color);
-    border-color: var(--secondary_color);
 }
 
 .appointment_survey [type="checkbox"] {
