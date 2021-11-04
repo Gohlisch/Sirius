@@ -7,33 +7,109 @@
     min-height: 100vh;
 }
 
-:root{
-    --primary_color_rgb: 48,176,199; /* primary colour (hex: #) */
-    --secondary_color_rgb: 0, 122, 255; /* (hex: #) */
-    --important_signifier_color_rgb: 255, 45, 85; /* (hex: #)*/
-    --darkest_color_rgb: 0, 0, 0; /* icons (hex: #000000)*/
-    --darker_color_rgb: 33, 33, 33; /* primary text (hex: #212121)*/
-    --dark_color_rgb: 117, 117, 117; /* secondary text (hex: #757575)*/
-    --bright_color_rgb: 189, 189, 189; /* devider (hex: #BDBDBD) */
-    --brighter_color_rgb: 142,142,147;
-    --brightest_color_rgb: 255, 255, 255; /* background (hex: #ffffff)*/
+body.dark_mode {
+    --red_rgb: 255, 69, 58;
+    --orange_rgb: 255, 159, 10;
+    --yellow_rgb: 255, 214, 10;
+    --green_rgb: 48, 09, 88;
+    --mint_rgb: 102, 212, 207;
+    --teal_rgb: 64, 200, 224;
+    --cyan_rgb: 100, 210, 255;
+    --blue_rgb: 10, 132, 255;
+    --indigo_rgb: 94, 92, 230;
+    --purple_rgb: 191, 90, 242;
+    --pink_rgb: 255, 55, 95;
+    --brown_rgb: 172, 142, 104;
 
-    --primary_color: rgb(var(--primary_color_rgb)); /* primary colour */
-    --secondary_color: rgb(var(--secondary_color_rgb));
-    --important_signifier_color: rgb(var(--important_signifier_color_rgb));
-    --darkest_color: rgb(var(--darkest_color_rgb)); /* icons */
-    --darker_color: rgb(var(--darker_color_rgb)); /* primary text */
-    --dark_color: rgb(var(--dark_color_rgb)); /* secondary text */
-    --bright_color: rgb(var(--bright_color_rgb)); /* devider */
-    --brighter_color: rgb(var(--brighter_color));
-    --brightest_color: rgb(var(--brightest_color_rgb)); /* backgroudn */
+    --red_color: rgb(var(--red_rgb));
+    --orange_color: rgb(var(--orange_rgb));
+    --yellow_color: rgb(var(--yellow_rgb));
+    --green_color: rgb(var(--green_rgb));
+    --mint_color: rgb(var(--mint_rgb));
+    --teal_color: rgb(var(--teal_rgb));
+    --cyan_color: rgb(var(--cyan_rgb));
+    --blue_color: rgb(var(--blue_rgb));
+    --indigo_color: rgb(var(--indigo_rgb));
+    --purple_color: rgb(var(--purple_rgb));
+    --pink_color: rgb(var(--pink_rgb));
+    --brown_color: rgb(var(--brown_rgb));
+
+    --darkest_rgb: 229, 229, 234; /* icons (hex: #000000)*/
+    --darker_rgb: 199, 199, 204; /* primary text (hex: #212121)*/
+    --dark_rgb: 142, 142, 147; /* secondary text (hex: #757575)*/
+    --bright_rgb: 99, 99, 102; /* devider (hex: #BDBDBD) */
+    --brighter_rgb: 58, 58, 60;
+    --brightest_rgb: 28, 28, 30; /* background (hex: #ffffff)*/
+
+    --darkest_color: rgb(var(--darkest_rgb)); /* icons */
+    --darker_color: rgb(var(--darker_rgb)); /* primary text */
+    --dark_color: rgb(var(--bright_rgb)); /* secondary text */
+    --bright_color: rgb(var(--brighter_rgb)); /* devider */
+    --brighter_color: rgb(var(--brighter_rgb));
+    --brightest_color: rgb(var(--brightest_rgb)); /* backgroudn */
+
+    --font_rgb: var(--darkest_rgb);
+    --primary_rgb: var(--teal_rgb); /* primary colour (hex: #) */
+    --secondary_rgb: var(--blue_rgb); /* (hex: #) */
+    --important_signifier_rgb: var(--red_rgb); /* (hex: #)*/
+
+    --font_color: rgb(var(--font_rgb));
+    --primary_color: rgb(var(--primary_rgb));
+    --secondary_color: rgb(var(--secondary_rgb));
+}
+
+body {
+    --red_rgb: 255, 59, 48;
+    --orange_rgb: 255, 149, 0;
+    --yellow_rgb: 255, 204, 0;
+    --green_rgb: 52, 199, 89;
+    --mint_rgb: 0, 199, 190;
+    --teal_rgb: 48, 176, 199;
+    --cyan_rgb: 50, 173, 230;
+    --blue_rgb: 0, 122, 255;
+    --indigo_rgb: 88, 86, 214;
+    --purple_rgb: 175, 82, 222;
+    --pink_rgb: 255, 45, 85;
+    --brown_rgb: 162, 132, 94;
+
+    --red_color: rgb(var(--red_rgb));
+    --orange_color: rgb(var(--orange_rgb));
+    --yellow_color: rgb(var(--yellow_rgb));
+    --green_color: rgb(var(--green_rgb));
+    --mint_color: rgb(var(--mint_rgb));
+    --teal_color: rgb(var(--teal_rgb));
+    --cyan_color: rgb(var(--cyan_rgb));
+    --blue_color: rgb(var(--blue_rgb));
+    --indigo_color: rgb(var(--indigo_rgb));
+    --purple_color: rgb(var(--purple_rgb));
+    --pink_color: rgb(var(--pink_rgb));
+    --brown_color: rgb(var(--brown_rgb));
+
+    --darkest_rgb: 28, 28, 30; /* icons (hex: #000000)*/
+    --darker_rgb:  58, 58, 60; /* primary text (hex: #212121)*/
+    --dark_rgb: 99, 99, 102; /* secondary text (hex: #757575)*/
+    --bright_rgb:  142, 142, 147; /* devider (hex: #BDBDBD) */
+    --brighter_rgb: 199, 199, 204;
+    --brightest_rgb:  229, 229, 234;/* background (hex: #ffffff)*/
+
+    --darkest_color: rgb(var(--darkest_rgb)); /* icons */
+    --darker_color: rgb(var(--darker_rgb)); /* primary text */
+    --dark_color: rgb(var(--dark_rgb)); /* secondary text */
+    --bright_color: rgb(var(--bright_rgb)); /* devider */
+    --brighter_color: rgb(var(--brighter_rgb));
+    --brightest_color: rgb(var(--brightest_rgb)); /* backgroudn */
+
+    --font_rgb: var(--darkest_rgb);
+    --primary_rgb: var(--teal_rgb); /* primary colour (hex: #) */
+    --secondary_rgb: var(--blue_rgb); /* (hex: #) */
+    --important_signifier_rgb: var(--red_rgb); /* (hex: #)*/
+
+    --font_color: rgb(var(--font_rgb));
+    --primary_color: rgb(var(--primary_rgb));
+    --secondary_color: rgb(var(--secondary_rgb));
 }
 
 * {
-    outline-color: var(--secondary_color);
-}
-
-html {
     font-family: -apple-system, 
                 BlinkMacSystemFont, 
                 "Segoe UI", 
@@ -43,11 +119,16 @@ html {
                 Cantarell, 
                 "Helvetica Neue", 
                 sans-serif;
-    color: var(--darker_color);
+    outline-color: var(--secondary_color);
+}
+
+html {
     height: 100vh;
 }
 
 body {
+    color: var(--font_color);
+    background-color: var(--brightest_color);
     min-height: 100vh;
     display: flex;
     justify-content: space-between;
@@ -115,7 +196,6 @@ header + nav > a > img {
     max-height: min-content;
     padding: 3px;
     border: 1px solid var(--dark_color);
-    background-color: rgba(var(--secondary_color_rgb), 0.25);
     border-radius: 10000px;
 }
 
