@@ -16,7 +16,7 @@ export class TimeSlot {
   @Column()
   end: Date;
   @ManyToOne(() => AppointmentSurvey, (survey) => survey.slots)
-  appointmentSurvey: AppointmentSurvey[];
+  appointmentSurveys: AppointmentSurvey[];
 
   constructor(start: Date, end: Date) {
     this.start = start;

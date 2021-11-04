@@ -24,8 +24,8 @@ export class AppointmentSurvey {
   @Column()
   description: string;
 
-  @OneToMany(() => TimeSlot, (timeSlot) => timeSlot.appointmentSurvey)
-  slots: Array<TimeSlot>;
+  @OneToMany(() => TimeSlot, (timeSlot) => timeSlot.appointmentSurveys)
+  slots: TimeSlot[];
 
   //indisposedParticipants: Array<string>;
 
@@ -33,15 +33,15 @@ export class AppointmentSurvey {
     title: string,
     id: string,
     repetition: Repetition,
-    description = '',
-    slots: TimeSlot[] = [],
+    description: string,
+    slots: TimeSlot[],
     /*indisposedParticipants: string[] = [],*/
   ) {
     this.title = title;
     this.id = id;
     this.repetition = repetition;
     this.description = description;
-    this.slots = [...slots];
+    this.slots = slots;
     //this.indisposedParticipants = [...indisposedParticipants];
   }
 }
