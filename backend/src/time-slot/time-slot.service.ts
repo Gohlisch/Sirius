@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TimeSlot } from '../entities/time.slot';
+import { TimeSlot } from '../entities/time-slot.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

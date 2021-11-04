@@ -1,4 +1,4 @@
-import { TimeSlot } from './time.slot';
+import { TimeSlot } from './time-slot.entity';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 export enum Repetition {

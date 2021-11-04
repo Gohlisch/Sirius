@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TimeSlot } from './entities/time.slot';
+import { TimeSlot } from './entities/time-slot.entity';
 import { TimeSlotModule } from './time-slot/time-slot.module';
 import { SurveyModule } from './survey/survey.module';
 import { AppointmentSurvey } from './entities/survey.entity';

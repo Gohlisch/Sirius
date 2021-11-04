@@ -36,7 +36,7 @@ export class SurveyService {
   async removeById(id: string): Promise<AppointmentSurvey> {
     const appointmentSurvey = await this.getById(id);
     if (appointmentSurvey) {
-      return this.surveyRepository.remove(appointmentSurvey);
+      return this.surveyRepository.remove(appointmentSurvey); // ToDo check if works
     }
   }
 
@@ -46,5 +46,9 @@ export class SurveyService {
    */
   remove(survey: AppointmentSurvey): Promise<AppointmentSurvey> {
     return this.surveyRepository.remove(survey);
+  }
+
+  create(survey: AppointmentSurvey): Promise<AppointmentSurvey> {
+    return this.surveyRepository.save(survey);
   }
 }
