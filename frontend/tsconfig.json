@@ -19,7 +19,7 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
-		"baseUrl": ".",
+		"baseUrl": "..",
 		"allowJs": true,
 		"checkJs": true,
 		"paths": {
@@ -27,5 +27,10 @@
 			"$lib/*": ["src/lib/*"]
 		}
 	},
-	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]
+	"include": [
+      "frontend/src/**/*.d.ts",
+      "frontend/src/**/*.js",
+      "frontend/src/**/*.ts",
+      "frontend/src/**/*.svelte"
+    ]
 }

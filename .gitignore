@@ -1,7 +1,3 @@
+/frontend/.idea/
+/.idea/
 .DS_Store
-node_modules
-/build
-/.svelte-kit
-/package
-/.idea
-.vercel_build_output

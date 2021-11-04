@@ -2,7 +2,7 @@
 
 Sirius is a simple web app to plan your appointments with collegues collaborativly. The goal is to provide a solution that is easy to customize, build and use. You can check out the prototype [@Vercel](https://sirius-appointments.vercel.app).
 
-The web client is build with [SvelteKit](http://kit.svelte.dev).
+The web client is build with [SvelteKit](http://kit.svelte.dev). The web server is build with [NestJS](https://nestjs.com).
 
 ## Getting started
 
