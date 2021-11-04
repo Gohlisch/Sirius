@@ -4,16 +4,19 @@
  * @param {Date} end
  * @param {Array<string>} participants
  */
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { AppointmentSurvey } from './survey.entity';
 
 @Entity()
-export class TimeSlotEntity {
+export class TimeSlot {
   @PrimaryColumn()
   id: number;
   @Column()
   start: Date;
   @Column()
   end: Date;
+  @ManyToOne(() => AppointmentSurvey, (survey) => survey.slots)
+  appointmentSurvey: AppointmentSurvey[];
 
   constructor(start: Date, end: Date) {
     this.start = start;

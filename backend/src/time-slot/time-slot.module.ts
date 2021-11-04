@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TimeSlotEntity } from '../entities/time-slot.entity';
+import { TimeSlot } from '../entities/time.slot';
 import { TimeSlotService } from './time-slot.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TimeSlotEntity])],
+  imports: [TypeOrmModule.forFeature([TimeSlot])],
   providers: [TimeSlotService],
   exports: [TimeSlotService],
 })

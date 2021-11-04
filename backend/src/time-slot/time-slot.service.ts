@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TimeSlotEntity } from '../entities/time-slot.entity';
+import { TimeSlot } from '../entities/time.slot';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class TimeSlotService {
   constructor(
-    @InjectRepository(TimeSlotEntity)
-    private timeSlotRepository: Repository<TimeSlotEntity>,
+    @InjectRepository(TimeSlot)
+    private timeSlotRepository: Repository<TimeSlot>,
   ) {}
 
-  save(timeSlot: TimeSlotEntity): Promise<TimeSlotEntity> {
+  save(timeSlot: TimeSlot): Promise<TimeSlot> {
     return this.timeSlotRepository.save(timeSlot);
   }
 }
