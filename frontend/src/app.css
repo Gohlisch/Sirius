@@ -51,7 +51,7 @@ body.dark_mode {
     --font_rgb: var(--darkest_rgb);
     --primary_rgb: var(--teal_rgb); /* primary colour (hex: #) */
     --secondary_rgb: var(--blue_rgb); /* (hex: #) */
-    --important_signifier_rgb: var(--red_rgb); /* (hex: #)*/
+    --important_signifier_rgb: var(--orange_rgb); /* (hex: #)*/
 
     --font_color: rgb(var(--font_rgb));
     --primary_color: rgb(var(--primary_rgb));
@@ -103,7 +103,7 @@ body {
     --font_rgb: var(--darkest_rgb);
     --primary_rgb: var(--teal_rgb); /* primary colour (hex: #) */
     --secondary_rgb: var(--blue_rgb); /* (hex: #) */
-    --important_signifier_rgb: var(--red_rgb); /* (hex: #)*/
+    --important_signifier_rgb: var(--orange_rgb); /* (hex: #)*/
 
     --font_color: rgb(var(--font_rgb));
     --primary_color: rgb(var(--primary_rgb));
