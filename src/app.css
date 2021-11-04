@@ -11,7 +11,7 @@ body.dark_mode {
     --red_rgb: 255, 69, 58;
     --orange_rgb: 255, 159, 10;
     --yellow_rgb: 255, 214, 10;
-    --green_rgb: 48, 09, 88;
+    --green_rgb: 48, 209, 88;
     --mint_rgb: 102, 212, 207;
     --teal_rgb: 64, 200, 224;
     --cyan_rgb: 100, 210, 255;
@@ -56,6 +56,7 @@ body.dark_mode {
     --font_color: rgb(var(--font_rgb));
     --primary_color: rgb(var(--primary_rgb));
     --secondary_color: rgb(var(--secondary_rgb));
+    --important_signifier_color: rgb(var(--important_signifier_rgb));
 }
 
 body {
@@ -107,6 +108,7 @@ body {
     --font_color: rgb(var(--font_rgb));
     --primary_color: rgb(var(--primary_rgb));
     --secondary_color: rgb(var(--secondary_rgb));
+    --important_signifier_color: rgb(var(--important_signifier_rgb));
 }
 
 * {
