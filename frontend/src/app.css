@@ -235,18 +235,19 @@ form {
     justify-self: center;
     align-self: center;
     flex-grow: 0;
+    color: var(--brightest_color);
+    background-color: var(--secondary_color);
+    padding: 7px 2em;
+    border-radius: 0.75em;
+    border: 1px solid transparent;
 }
 
-[type="submit"]:hover, [type="submit"]:focus, button:hover, button:focus {
+[type="submit"]:hover, button:hover{
+    border: 1px solid var(--secondary_color);
 }
 
 [type="submit"]:active, button:active  {
-    background-color: var(--secondary_color);
-    border-top: 2px solid var(--darker_color);
-    border-right: 1px solid var(--dark_color);
-    border-bottom: 1px solid var(--dark_color);
-    border-left: 2px solid var(--darker_color);
-    padding: calc(1em - 2px) calc(1em - 1px) calc(1em - 1px) calc(1em - 2px);
+    background-color: rgba(var(--secondary_rgb), 0.90);
 }
 
 footer {
@@ -261,20 +262,12 @@ footer {
     justify-self: end;
 }
 
-.options button {
-    font-size: 0.25em;
+.options button, .options button:hover  {
     padding: 0;
     margin: 0;
     border: 0;
     background-color: rgba(0,0,0,0);
-}
-
-.options button:hover {
-    font-size: 0.25em;
-    padding: 0;
-    margin: 0;
-    border: 0;
-    background-color: rgba(0,0,0,0);
+    color: var(--font_color);
 }
 
 a {

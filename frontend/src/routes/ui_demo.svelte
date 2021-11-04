@@ -41,4 +41,8 @@
             {/each}
         <div/>
     </article>
+    <article>
+        <h1>Inputs</h1>
+        <button>button</button>
+    </article>
 </div>
