@@ -7,7 +7,7 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
-import { AppointmentSurvey } from '../entities/survey.entity';
+import { AppointmentSurvey } from '../model/entities/survey.entity';
 import { SurveyService } from './survey.service';
 
 @Controller('/api/survey')
