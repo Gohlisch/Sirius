@@ -1,4 +1,6 @@
 <script>
+    import RangeSlider from "$lib/other/RangeSlider.svelte"
+
     const colors = ["red", "orange", "yellow", "green", "mint", "teal", "cyan", "blue", "indigo", "purple", "pink", "brown"];
     const shades_of_grey = ["darkest", "darker", "dark", "bright", "brighter", "brightest"]
     const purpose_color = ["font", "primary", "secondary", "important_signifier"];
@@ -45,5 +47,6 @@
     <article>
         <h1>Inputs</h1>
         <button>button</button>
+        <RangeSlider></RangeSlider>
     </article>
 </div>
