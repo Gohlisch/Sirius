@@ -1,5 +1,5 @@
 import { TimeSlot } from './time-slot.entity';
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum Repetition {
   NEVER,
@@ -9,7 +9,7 @@ export enum Repetition {
 
 @Entity()
 export class AppointmentSurvey {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column()

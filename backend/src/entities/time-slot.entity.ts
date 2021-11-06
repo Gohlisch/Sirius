@@ -1,15 +1,9 @@
-/**
- * @constructor
- * @param {Date} start
- * @param {Date} end
- * @param {Array<string>} participants
- */
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { AppointmentSurvey } from './survey.entity';
 
 @Entity()
 export class TimeSlot {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
   @Column()
   start: Date;
