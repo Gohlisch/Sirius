@@ -20,8 +20,15 @@ export default class SurveyParticipant {
   )
   appointmentSurvey: AppointmentSurvey;
 
-  constructor(name: string, id?: number) {
+  constructor(
+    name: string,
+    voteDate: Date,
+    survey: AppointmentSurvey,
+    id?: number,
+  ) {
     this.name = name;
+    this.voteDate = voteDate;
+    this.appointmentSurvey = survey;
     this.id = id;
   }
 }
