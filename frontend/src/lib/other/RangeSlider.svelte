@@ -22,7 +22,7 @@
         background-color: var(--secondary_color);
         color: var(--brightest_color);
         height: calc(1em + 14px);
-        line-height:  2em;
+        line-height: calc(1em + 14px);
         text-align: center;
         cursor: grab;
         top: 0;
@@ -33,9 +33,11 @@
     }
 
     .slider_container {
+        background-color: var(--brighter_color);
         position: relative;
         width: 200px;
         height: 2em;
+        margin: 0 2px;
     }
 
     .left_thumb {
