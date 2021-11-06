@@ -1,7 +1,7 @@
-import SurveyParticipantDto from '../model/dtos/survey-participant.dto';
-import { AppointmentSurvey } from '../model/entities/survey.entity';
-import { Repetition } from '../model/enum/repitition.enum';
-import SurveyParticipant from '../model/entities/survey-participant.entity';
+import SurveyParticipantDto from '../../model/dtos/survey-participant.dto';
+import { AppointmentSurvey } from '../../model/entities/survey.entity';
+import { Repetition } from '../../model/enum/repitition.enum';
+import SurveyParticipant from '../../model/entities/survey-participant.entity';
 import {
   mapSurveyParticipantDto,
   mapSurveyParticipantDtos,

@@ -1,6 +1,6 @@
-import SurveyParticipant from '../model/entities/survey-participant.entity';
-import SurveyParticipantDto from '../model/dtos/survey-participant.dto';
-import { AppointmentSurvey } from '../model/entities/survey.entity';
+import SurveyParticipant from '../../model/entities/survey-participant.entity';
+import SurveyParticipantDto from '../../model/dtos/survey-participant.dto';
+import { AppointmentSurvey } from '../../model/entities/survey.entity';
 
 export function mapSurveyParticipantDto(
   dto: SurveyParticipantDto,
