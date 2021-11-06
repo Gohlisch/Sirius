@@ -13,10 +13,17 @@ export class TimeSlot {
   end: Date;
 
   @ManyToOne(() => AppointmentSurvey, (survey) => survey.slots)
-  appointmentSurveys: AppointmentSurvey;
+  appointmentSurvey: AppointmentSurvey;
 
-  constructor(start: Date, end: Date) {
+  constructor(
+    start: Date,
+    end: Date,
+    appointmentSurvey: AppointmentSurvey,
+    id?: number,
+  ) {
     this.start = start;
     this.end = end;
+    this.appointmentSurvey = appointmentSurvey;
+    this.id = id;
   }
 }

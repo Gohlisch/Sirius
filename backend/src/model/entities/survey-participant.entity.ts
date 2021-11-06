@@ -19,4 +19,9 @@ export default class SurveyParticipant {
     (appointmentSurvey) => appointmentSurvey.participants,
   )
   appointmentSurvey: AppointmentSurvey;
+
+  constructor(name: string, id?: number) {
+    this.name = name;
+    this.id = id;
+  }
 }
