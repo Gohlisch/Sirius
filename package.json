@@ -1,0 +1,7 @@
+{
+    "name": "sirius",
+    "version": "0.0.1",
+    "scripts": {
+        "dev": "npm --prefix ./frontend run dev & npm --prefix ./backend run start:dev"
+    }   
+}
