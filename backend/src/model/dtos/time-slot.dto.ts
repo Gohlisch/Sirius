@@ -1,7 +1,7 @@
-import { IsDate, IsNumber, ValidateNested } from 'class-validator';
-import { AppointmentSurvey } from '../entities/survey.entity';
+import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class TimeSlotDto {
+  @IsOptional()
   @IsNumber()
   id?: number;
 
@@ -11,12 +11,13 @@ export class TimeSlotDto {
   @IsDate()
   end: Date;
 
-  @ValidateNested()
-  appointmentSurvey: AppointmentSurvey;
+  @IsString()
+  surveyId?: string;
 
-  constructor(start: Date, end: Date, appointmentSurvey: AppointmentSurvey) {
+  constructor(start: Date, end: Date, surveyId?: string, id?: number) {
     this.start = start;
     this.end = end;
-    this.appointmentSurvey = appointmentSurvey;
+    this.surveyId = surveyId;
+    this.id = id;
   }
 }

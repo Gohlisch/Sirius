@@ -10,9 +10,13 @@ export default class SurveyParticipantDto {
   @IsDate()
   voteDate: Date;
 
-  constructor(name: string, voteDate: Date, id?: number) {
+  @IsString()
+  surveyId?: string;
+
+  constructor(name: string, voteDate: Date, surveyId?: string, id?: number) {
     this.id = id;
     this.name = name;
     this.voteDate = voteDate;
+    this.surveyId = surveyId;
   }
 }

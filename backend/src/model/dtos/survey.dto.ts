@@ -1,16 +1,17 @@
 import { Repetition } from '../enum/repitition.enum';
-import { IsString, ValidateNested } from 'class-validator';
+import { IsEnum, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { TimeSlotDto } from './time-slot.dto';
 import SurveyParticipantDto from './survey-participant.dto';
 
 export class AppointmentSurveyDto {
+  @IsOptional()
   @IsString()
   id?: string;
 
   @IsString()
   title: string;
 
-  @ValidateNested()
+  @IsEnum(Repetition)
   repetition: Repetition;
 
   @IsString()
