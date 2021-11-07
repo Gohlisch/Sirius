@@ -9,6 +9,8 @@ import {
 } from '@nestjs/common';
 import { AppointmentSurvey } from '../model/entities/survey.entity';
 import { SurveyService } from './survey.service';
+import { AppointmentSurveyDto } from '../model/dtos/survey.dto';
+import { mapSurveyDto } from '../mapper/survey/survey.mapper';
 
 @Controller('/api/survey')
 export class SurveyController {
@@ -29,9 +31,11 @@ export class SurveyController {
   }
 
   @Post()
-  createSurvey(@Body() survey: AppointmentSurvey): Promise<AppointmentSurvey> {
+  createSurvey(
+    @Body() survey: AppointmentSurveyDto,
+  ): Promise<AppointmentSurvey> {
     this.logger.log('received POST for surveys.');
-    return this.surveyService.create(survey);
+    return this.surveyService.create(mapSurveyDto(survey));
   }
 
   @Delete(':id')
