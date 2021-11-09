@@ -7,17 +7,17 @@ export class TimeSlot {
   id: number;
 
   @Column()
-  start: Date;
+  start: string;
 
   @Column()
-  end: Date;
+  end: string;
 
   @ManyToOne(() => AppointmentSurvey, (survey) => survey.slots)
   appointmentSurvey: AppointmentSurvey;
 
   constructor(
-    start: Date,
-    end: Date,
+    start: string,
+    end: string,
     appointmentSurvey: AppointmentSurvey,
     id?: number,
   ) {

@@ -10,9 +10,9 @@ export default class SurveyParticipant {
   name: string;
 
   @Column({
-    default: new Date(),
+    default: new Date().toISOString(),
   })
-  voteDate: Date;
+  voteDate: string;
 
   @ManyToOne(
     () => AppointmentSurvey,
@@ -22,7 +22,7 @@ export default class SurveyParticipant {
 
   constructor(
     name: string,
-    voteDate: Date,
+    voteDate: string,
     survey: AppointmentSurvey,
     id?: number,
   ) {

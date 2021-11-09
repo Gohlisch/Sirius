@@ -20,12 +20,17 @@ export class AppointmentSurvey {
   @Column()
   description: string;
 
-  @OneToMany(() => TimeSlot, (timeSlot) => timeSlot.appointmentSurvey)
+  @OneToMany(() => TimeSlot, (timeSlot) => timeSlot.appointmentSurvey, {
+    cascade: true,
+  })
   slots: TimeSlot[];
 
   @OneToMany(
     () => SurveyParticipant,
     (surveyParticipant) => surveyParticipant.appointmentSurvey,
+    {
+      cascade: true,
+    },
   )
   participants: SurveyParticipant[];
 

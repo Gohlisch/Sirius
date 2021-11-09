@@ -18,7 +18,11 @@ describe('survey mapper', () => {
 
   // time slot
   const timeSlots: TimeSlot[] = [];
-  const timeSlot = new TimeSlot(start, end, undefined);
+  const timeSlot = new TimeSlot(
+    start.toISOString(),
+    end.toISOString(),
+    undefined,
+  );
   timeSlots.push(timeSlot);
   timeSlots.push(timeSlot);
 
@@ -33,7 +37,11 @@ describe('survey mapper', () => {
 
   // participants
   const participants: SurveyParticipant[] = [];
-  const participant = new SurveyParticipant('name', start, undefined);
+  const participant = new SurveyParticipant(
+    'name',
+    start.toISOString(),
+    undefined,
+  );
   participants.push(participant);
   participants.push(participant);
 

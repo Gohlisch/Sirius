@@ -6,7 +6,11 @@ export function mapSurveyParticipantDto(
   dto: SurveyParticipantDto,
   survey: AppointmentSurvey,
 ): SurveyParticipant {
-  return new SurveyParticipant(dto.name, dto.voteDate, survey);
+  return new SurveyParticipant(
+    dto.name,
+    new Date(dto.voteDate).toISOString(),
+    survey,
+  );
 }
 
 export function mapSurveyParticipantDtos(

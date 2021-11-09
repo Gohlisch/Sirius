@@ -30,11 +30,12 @@ export class SurveyController {
     return this.surveyService.getById(params.id);
   }
 
-  @Post()
+  @Post() // ToDo redirect to ("address"/survey/"id")
   createSurvey(
     @Body() survey: AppointmentSurveyDto,
   ): Promise<AppointmentSurvey> {
     this.logger.log('received POST for surveys.');
+    console.log(mapSurveyDto(survey));
     return this.surveyService.create(mapSurveyDto(survey));
   }
 
