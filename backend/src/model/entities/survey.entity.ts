@@ -20,22 +20,27 @@ export class AppointmentSurvey {
   @Column()
   description: string;
 
-  @OneToMany(() => TimeSlot, (timeSlot) => timeSlot.appointmentSurveys)
+  @OneToMany(() => TimeSlot, (timeSlot) => timeSlot.appointmentSurvey, {
+    cascade: true,
+  })
   slots: TimeSlot[];
 
   @OneToMany(
     () => SurveyParticipant,
     (surveyParticipant) => surveyParticipant.appointmentSurvey,
+    {
+      cascade: true,
+    },
   )
   participants: SurveyParticipant[];
 
   constructor(
     title: string,
-    id: string,
     repetition: Repetition,
     description: string,
     slots: TimeSlot[],
     participants: SurveyParticipant[],
+    id?: string,
   ) {
     this.title = title;
     this.id = id;

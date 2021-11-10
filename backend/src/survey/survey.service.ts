@@ -13,8 +13,8 @@ export class SurveyService {
   /**
    * returns all saved surveys.
    */
-  async getAll(): Promise<AppointmentSurvey[]> {
-    return this.surveyRepository.find();
+  getAll(): Promise<AppointmentSurvey[]> {
+    return this.surveyRepository.find({ relations: ['slots', 'participants'] });
   }
 
   /**
@@ -26,6 +26,7 @@ export class SurveyService {
       where: {
         id,
       },
+      relations: ['slots', 'participants'],
     });
   }
 

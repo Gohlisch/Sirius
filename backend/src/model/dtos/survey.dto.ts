@@ -1,40 +1,41 @@
 import { Repetition } from '../enum/repitition.enum';
-import { TimeSlot } from '../entities/time-slot.entity';
-import SurveyParticipant from '../entities/survey-participant.entity';
-import { IsString, ValidateNested } from 'class-validator';
+import { IsEnum, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { TimeSlotDto } from './time-slot.dto';
+import SurveyParticipantDto from './survey-participant.dto';
 
 export class AppointmentSurveyDto {
+  @IsOptional()
   @IsString()
   id?: string;
 
   @IsString()
   title: string;
 
-  @ValidateNested()
+  @IsEnum(Repetition)
   repetition: Repetition;
 
   @IsString()
   description: string;
 
   @ValidateNested()
-  slots: TimeSlot[];
+  slots: TimeSlotDto[];
 
   @ValidateNested()
-  participants: SurveyParticipant[];
+  participants: SurveyParticipantDto[];
 
   constructor(
     title: string,
-    id: string,
     repetition: Repetition,
     description: string,
-    slots: TimeSlot[],
-    participants: SurveyParticipant[],
+    slots: TimeSlotDto[],
+    participants: SurveyParticipantDto[],
+    id?: string,
   ) {
     this.title = title;
-    this.id = id;
     this.repetition = repetition;
     this.description = description;
     this.slots = slots;
     this.participants = participants;
+    this.id = id;
   }
 }

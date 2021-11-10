@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { AppointmentSurvey } from './survey.entity';
 
 @Entity()
@@ -7,16 +13,27 @@ export class TimeSlot {
   id: number;
 
   @Column()
-  start: Date;
+  start: string;
 
   @Column()
-  end: Date;
+  end: string;
 
-  @ManyToOne(() => AppointmentSurvey, (survey) => survey.slots)
-  appointmentSurveys: AppointmentSurvey;
+  @ManyToOne(() => AppointmentSurvey, (survey) => survey.slots, {
+    onDelete: 'CASCADE',
+    eager: true,
+  })
+  @JoinTable()
+  appointmentSurvey: AppointmentSurvey;
 
-  constructor(start: Date, end: Date) {
+  constructor(
+    start: string,
+    end: string,
+    appointmentSurvey: AppointmentSurvey,
+    id?: number,
+  ) {
     this.start = start;
     this.end = end;
+    this.appointmentSurvey = appointmentSurvey;
+    this.id = id;
   }
 }
