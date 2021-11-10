@@ -26,24 +26,24 @@ export function mapSurveyParticipantDtos(
 }
 
 export function mapSurveyParticipantEntity(
-  participant: SurveyParticipant,
+  entity: SurveyParticipant,
 ): SurveyParticipantDto {
   return new SurveyParticipantDto(
-    participant.name,
-    new Date(participant.voteDate),
-    participant.appointmentSurvey.id,
-    participant.id,
+    entity.name,
+    new Date(entity.voteDate),
+    entity.appointmentSurvey.id,
+    entity.id,
   );
 }
 
 export function mapSurveyParticipantEntities(
-  participants: SurveyParticipant[],
+  entities: SurveyParticipant[],
 ): SurveyParticipantDto[] {
-  const mappedParticipants: SurveyParticipantDto[] = [];
+  const participantDtos: SurveyParticipantDto[] = [];
 
-  for (const entity of participants) {
-    mappedParticipants.push(mapSurveyParticipantEntity(entity));
+  for (const entity of entities) {
+    participantDtos.push(mapSurveyParticipantEntity(entity));
   }
 
-  return mappedParticipants;
+  return participantDtos;
 }
