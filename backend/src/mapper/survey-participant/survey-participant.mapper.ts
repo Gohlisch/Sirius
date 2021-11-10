@@ -24,3 +24,26 @@ export function mapSurveyParticipantDtos(
   }
   return participants;
 }
+
+export function mapSurveyParticipantEntity(
+  participant: SurveyParticipant,
+): SurveyParticipantDto {
+  return new SurveyParticipantDto(
+    participant.name,
+    new Date(participant.voteDate),
+    participant.appointmentSurvey.id,
+    participant.id,
+  );
+}
+
+export function mapSurveyParticipantEntities(
+  participants: SurveyParticipant[],
+): SurveyParticipantDto[] {
+  const mappedParticipants: SurveyParticipantDto[] = [];
+
+  for (const entity of participants) {
+    mappedParticipants.push(mapSurveyParticipantEntity(entity));
+  }
+
+  return mappedParticipants;
+}
