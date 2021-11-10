@@ -4,7 +4,8 @@
         end: number,
         min: number,
         max: number,
-        steps: number
+        steps: number,
+        endBeforeStartAllowed?: boolean
     };
 
     export let options: RangeSliderProps = {
@@ -12,8 +13,27 @@
         end: 100,
         min: 0,
         max: 100,
-        steps: 1
+        steps: 1,
+        endBeforeStartAllowed: false
     };
+
+    let actionOnMouseUp = null;
+
+    function dragThumbStart(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): any {
+        const thumbStart = e.currentTarget;
+        const thumbStartLeft = thumbStart.style.getPropertyValue("left");
+        const thumbStartPixelsLeft = thumbStartLeft.slice(0, thumbStartLeft.length-2) as unknown as number;
+        const xOnDragStart = e.x;
+        console.log("resize start");
+
+        actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
+            console.log(`${mouseUpEvent.x} - ${xOnDragStart}`)
+            thumbStart.style.setProperty("left", `${ thumbStartPixelsLeft + mouseUpEvent.x - xOnDragStart}px`)
+            actionOnMouseUp = null;
+        };
+    }
+
+
 </script>
 
 <style>
@@ -24,8 +44,7 @@
         height: calc(1em + 14px);
         line-height: calc(1em + 14px);
         text-align: center;
-        cursor: grab;
-        top: 0;
+        top: 1px;
     }
 
     .left_thumb, .right_thumb {
@@ -35,7 +54,7 @@
     .slider_container {
         background-color: var(--brighter_color);
         position: relative;
-        width: 200px;
+        width: calc(200px);
         height: 2em;
         margin: 0 2px;
     }
@@ -60,8 +79,10 @@
     }
 </style>
 
+<svelte:body on:mouseup={(e) => {if(actionOnMouseUp) actionOnMouseUp(e);}} />
+
 <div aria-hidden="true" class="slider_container">
-    <div class="left_thumb not_selectable">◀</div>
+    <div class="left_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbStart(e)}>◀</div>
     <div class="middle_thumb not_selectable">:::</div>
     <div class="right_thumb not_selectable">▶</div>
 </div>
