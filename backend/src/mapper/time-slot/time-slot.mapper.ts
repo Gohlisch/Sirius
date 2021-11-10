@@ -24,3 +24,22 @@ export function mapTimeSlotDtos(
   }
   return timeSlots;
 }
+
+export function mapTimeSlotEntity(timeSlot: TimeSlot): TimeSlotDto {
+  return new TimeSlotDto(
+    new Date(timeSlot.start),
+    new Date(timeSlot.end),
+    timeSlot.appointmentSurvey.id,
+    timeSlot.id,
+  );
+}
+
+export function mapTimeSlotEntities(entities: TimeSlot[]): TimeSlotDto[] {
+  const timeSlotEntities: TimeSlotDto[] = [];
+
+  for (const entity of entities) {
+    timeSlotEntities.push(mapTimeSlotEntity(entity));
+  }
+
+  return timeSlotEntities;
+}

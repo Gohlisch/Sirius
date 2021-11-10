@@ -12,6 +12,7 @@ export class TimeSlotDto {
   end: Date;
 
   @IsString()
+  @IsOptional()
   surveyId?: string;
 
   constructor(start: Date, end: Date, surveyId?: string, id?: number) {

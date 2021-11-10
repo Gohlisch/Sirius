@@ -1,7 +1,8 @@
-import { IsDate, IsNumber, IsString } from 'class-validator';
+import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export default class SurveyParticipantDto {
   @IsNumber()
+  @IsOptional()
   id?: number;
 
   @IsString()
@@ -11,6 +12,7 @@ export default class SurveyParticipantDto {
   voteDate: Date;
 
   @IsString()
+  @IsOptional()
   surveyId?: string;
 
   constructor(name: string, voteDate: Date, surveyId?: string, id?: number) {

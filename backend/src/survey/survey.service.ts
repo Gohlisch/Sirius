@@ -26,6 +26,7 @@ export class SurveyService {
       where: {
         id,
       },
+      relations: ['slots', 'participants'],
     });
   }
 

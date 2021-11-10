@@ -7,10 +7,13 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
-import { AppointmentSurvey } from '../model/entities/survey.entity';
 import { SurveyService } from './survey.service';
 import { AppointmentSurveyDto } from '../model/dtos/survey.dto';
-import { mapSurveyDto } from '../mapper/survey/survey.mapper';
+import {
+  mapSurveyDto,
+  mapSurveyEntities,
+  mapSurveyEntity,
+} from '../mapper/survey/survey.mapper';
 
 @Controller('/api/survey')
 export class SurveyController {
@@ -19,29 +22,30 @@ export class SurveyController {
   constructor(private readonly surveyService: SurveyService) {}
 
   @Get()
-  getAllSurveys(): Promise<AppointmentSurvey[]> {
+  async getAllSurveys(): Promise<AppointmentSurveyDto[]> {
     this.logger.log('received GET for all surveys.');
-    return this.surveyService.getAll();
+    return mapSurveyEntities(await this.surveyService.getAll());
   }
 
   @Get(':id')
-  getSurveyById(@Param() params): Promise<AppointmentSurvey> {
+  async getSurveyById(@Param() params): Promise<AppointmentSurveyDto> {
     this.logger.log('received GET for surveys with id: ' + params.id + '.');
-    return this.surveyService.getById(params.id);
+    return mapSurveyEntity(await this.surveyService.getById(params.id));
   }
 
   @Post() // ToDo redirect to ("address"/survey/"id")
-  createSurvey(
+  async createSurvey(
     @Body() survey: AppointmentSurveyDto,
-  ): Promise<AppointmentSurvey> {
+  ): Promise<AppointmentSurveyDto> {
     this.logger.log('received POST for surveys.');
-    console.log(mapSurveyDto(survey));
-    return this.surveyService.create(mapSurveyDto(survey));
+    return mapSurveyEntity(
+      await this.surveyService.create(mapSurveyDto(survey)),
+    );
   }
 
   @Delete(':id')
-  deleteById(@Param() params): Promise<AppointmentSurvey> {
+  async deleteById(@Param() params): Promise<AppointmentSurveyDto> {
     this.logger.log('received DELETE for surveys with id: ' + params.id + '.');
-    return this.surveyService.removeById(params.id);
+    return mapSurveyEntity(await this.surveyService.removeById(params.id));
   }
 }
