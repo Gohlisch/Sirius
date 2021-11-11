@@ -13,10 +13,10 @@ export class TimeSlot {
   id: number;
 
   @Column()
-  start: string;
+  start: Date;
 
   @Column()
-  end: string;
+  end: Date;
 
   @ManyToOne(() => AppointmentSurvey, (survey) => survey.slots, {
     onDelete: 'CASCADE',
@@ -26,8 +26,8 @@ export class TimeSlot {
   appointmentSurvey: AppointmentSurvey;
 
   constructor(
-    start: string,
-    end: string,
+    start: Date,
+    end: Date,
     appointmentSurvey: AppointmentSurvey,
     id?: number,
   ) {

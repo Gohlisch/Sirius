@@ -16,10 +16,13 @@ describe('survey-participant mapper', () => {
     [],
   );
   const date: Date = new Date();
-  const dto: SurveyParticipantDto = new SurveyParticipantDto('name', date);
-  const surveyParticipant: SurveyParticipant = new SurveyParticipant(
+  const dto: SurveyParticipantDto = new SurveyParticipantDto(
     'name',
     date.toISOString(),
+  );
+  const surveyParticipant: SurveyParticipant = new SurveyParticipant(
+    'name',
+    date,
     survey,
   );
 
@@ -31,13 +34,13 @@ describe('survey-participant mapper', () => {
   it('should map dtos to entities', function () {
     const surveyParticipants: SurveyParticipant[] = [];
     surveyParticipants.push(surveyParticipant);
-    surveyParticipants.push(
-      new SurveyParticipant('name2', date.toISOString(), survey),
-    );
+    surveyParticipants.push(new SurveyParticipant('name2', date, survey));
 
     const surveyParticipantDtos: SurveyParticipantDto[] = [];
     surveyParticipantDtos.push(dto);
-    surveyParticipantDtos.push(new SurveyParticipantDto('name2', date));
+    surveyParticipantDtos.push(
+      new SurveyParticipantDto('name2', date.toISOString()),
+    );
     const surveyParticipantsMapped = mapSurveyParticipantDtos(
       surveyParticipantDtos,
       survey,

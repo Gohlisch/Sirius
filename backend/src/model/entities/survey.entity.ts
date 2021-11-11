@@ -1,11 +1,11 @@
 import { TimeSlot } from './time-slot.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import SurveyParticipant from './survey-participant.entity';
 import { Repetition } from '../enum/repitition.enum';
 
 @Entity()
 export class AppointmentSurvey {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   id: string;
 
   @Column()

@@ -6,11 +6,7 @@ export function mapTimeSlotDto(
   dto: TimeSlotDto,
   survey: AppointmentSurvey,
 ): TimeSlot {
-  return new TimeSlot(
-    new Date(dto.start).toISOString(),
-    new Date(dto.end).toISOString(),
-    survey,
-  );
+  return new TimeSlot(new Date(dto.start), new Date(dto.end), survey);
 }
 
 export function mapTimeSlotDtos(
@@ -27,8 +23,8 @@ export function mapTimeSlotDtos(
 
 export function mapTimeSlotEntity(timeSlot: TimeSlot): TimeSlotDto {
   return new TimeSlotDto(
-    new Date(timeSlot.start),
-    new Date(timeSlot.end),
+    timeSlot.start.toISOString(),
+    timeSlot.end.toISOString(),
     timeSlot.appointmentSurvey.id,
     timeSlot.id,
   );

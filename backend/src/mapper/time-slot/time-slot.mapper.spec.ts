@@ -7,7 +7,7 @@ import { mapTimeSlotDto, mapTimeSlotDtos } from './time-slot.mapper';
 describe('time-slot mapper', () => {
   const start = new Date();
   const end = new Date();
-  const dto = new TimeSlotDto(start, end);
+  const dto = new TimeSlotDto(start.toISOString(), end.toISOString());
   const survey: AppointmentSurvey = new AppointmentSurvey(
     'title',
     Repetition.NEVER,
@@ -15,7 +15,7 @@ describe('time-slot mapper', () => {
     [],
     [],
   );
-  const timeSlot = new TimeSlot(start.toISOString(), end.toISOString(), survey);
+  const timeSlot = new TimeSlot(start, end, survey);
 
   it('should map dto to entity', function () {
     const mappedTimeSlot = mapTimeSlotDto(dto, survey);
