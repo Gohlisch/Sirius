@@ -12,17 +12,13 @@ describe('survey mapper', () => {
   const timeSlotDtos: TimeSlotDto[] = [];
   const start = new Date();
   const end = new Date();
-  const timeSlotDto = new TimeSlotDto(start, end);
+  const timeSlotDto = new TimeSlotDto(start.toISOString(), end.toISOString());
   timeSlotDtos.push(timeSlotDto);
   timeSlotDtos.push(timeSlotDto);
 
   // time slot
   const timeSlots: TimeSlot[] = [];
-  const timeSlot = new TimeSlot(
-    start.toISOString(),
-    end.toISOString(),
-    undefined,
-  );
+  const timeSlot = new TimeSlot(start, end, undefined);
   timeSlots.push(timeSlot);
   timeSlots.push(timeSlot);
 
@@ -30,18 +26,14 @@ describe('survey mapper', () => {
   const participantsDtos: SurveyParticipantDto[] = [];
   const surveyParticipantDto: SurveyParticipantDto = new SurveyParticipantDto(
     'name',
-    start,
+    start.toISOString(),
   );
   participantsDtos.push(surveyParticipantDto);
   participantsDtos.push(surveyParticipantDto);
 
   // participants
   const participants: SurveyParticipant[] = [];
-  const participant = new SurveyParticipant(
-    'name',
-    start.toISOString(),
-    undefined,
-  );
+  const participant = new SurveyParticipant('name', start, undefined);
   participants.push(participant);
   participants.push(participant);
 
