@@ -27,6 +27,7 @@ export class AppointmentSurveyDto {
   slots: TimeSlotDto[];
 
   @ValidateNested()
+  @IsOptional()
   @ApiProperty({ type: SurveyParticipantDto })
   participants: SurveyParticipantDto[];
 
