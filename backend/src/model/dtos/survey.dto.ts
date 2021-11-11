@@ -3,6 +3,7 @@ import { IsEnum, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { TimeSlotDto } from './time-slot.dto';
 import SurveyParticipantDto from './survey-participant.dto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 export class AppointmentSurveyDto {
   @IsOptional()
@@ -23,11 +24,13 @@ export class AppointmentSurveyDto {
   description: string;
 
   @ValidateNested()
+  @Type(() => TimeSlotDto)
   @ApiProperty({ type: [TimeSlotDto] })
   slots: TimeSlotDto[];
 
   @ValidateNested()
   @IsOptional()
+  @Type(() => SurveyParticipantDto)
   @ApiPropertyOptional({ type: [SurveyParticipantDto] })
   participants: SurveyParticipantDto[];
 
