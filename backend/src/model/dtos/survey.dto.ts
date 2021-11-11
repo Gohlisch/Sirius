@@ -23,12 +23,12 @@ export class AppointmentSurveyDto {
   description: string;
 
   @ValidateNested()
-  @ApiProperty({ type: TimeSlotDto })
+  @ApiProperty({ type: [TimeSlotDto] })
   slots: TimeSlotDto[];
 
   @ValidateNested()
   @IsOptional()
-  @ApiProperty({ type: SurveyParticipantDto })
+  @ApiProperty({ type: [SurveyParticipantDto] })
   participants: SurveyParticipantDto[];
 
   constructor(
