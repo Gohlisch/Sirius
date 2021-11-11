@@ -6,11 +6,7 @@ export function mapSurveyParticipantDto(
   dto: SurveyParticipantDto,
   survey: AppointmentSurvey,
 ): SurveyParticipant {
-  return new SurveyParticipant(
-    dto.name,
-    new Date(dto.voteDate).toISOString(),
-    survey,
-  );
+  return new SurveyParticipant(dto.name, new Date(dto.voteDate), survey);
 }
 
 export function mapSurveyParticipantDtos(
@@ -30,7 +26,7 @@ export function mapSurveyParticipantEntity(
 ): SurveyParticipantDto {
   return new SurveyParticipantDto(
     entity.name,
-    new Date(entity.voteDate),
+    new Date(entity.voteDate).toISOString(),
     entity.appointmentSurvey.id,
     entity.id,
   );

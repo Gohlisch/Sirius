@@ -7,7 +7,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 export class AppointmentSurveyDto {
   @IsOptional()
   @IsString()
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ example: undefined })
   id?: string;
 
   @IsString()
@@ -15,7 +15,7 @@ export class AppointmentSurveyDto {
   title: string;
 
   @IsEnum(Repetition)
-  @ApiProperty({ enum: Repetition })
+  @ApiProperty({ enum: [0, 1, 2] })
   repetition: Repetition;
 
   @IsString()
@@ -28,7 +28,7 @@ export class AppointmentSurveyDto {
 
   @ValidateNested()
   @IsOptional()
-  @ApiProperty({ type: [SurveyParticipantDto] })
+  @ApiPropertyOptional({ type: [SurveyParticipantDto] })
   participants: SurveyParticipantDto[];
 
   constructor(
