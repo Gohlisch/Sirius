@@ -1,1 +1,0 @@
-const BACKEND_URL = "localhost:3333";
