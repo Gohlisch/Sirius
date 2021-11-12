@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Logger,
   Param,
   Post,
@@ -14,6 +16,7 @@ import {
   mapSurveyEntities,
   mapSurveyEntity,
 } from '../mapper/survey/survey.mapper';
+import { ApiParam } from '@nestjs/swagger';
 
 @Controller('/api/survey')
 export class SurveyController {
@@ -27,10 +30,17 @@ export class SurveyController {
     return mapSurveyEntities(await this.surveyService.getAll());
   }
 
+  @ApiParam({ name: 'id' })
   @Get(':id')
   async getSurveyById(@Param() params): Promise<AppointmentSurveyDto> {
     this.logger.log('received GET for surveys with id: ' + params.id + '.');
-    return mapSurveyEntity(await this.surveyService.getById(params.id));
+    const survey = await this.surveyService.getById(params.id);
+
+    if (survey) {
+      return mapSurveyEntity(survey);
+    } else {
+      throw new HttpException('user not found', HttpStatus.NOT_FOUND);
+    }
   }
 
   @Post() // ToDo redirect to ("address"/survey/"id")
@@ -43,9 +53,16 @@ export class SurveyController {
     );
   }
 
+  @ApiParam({ name: 'id' })
   @Delete(':id')
   async deleteById(@Param() params): Promise<AppointmentSurveyDto> {
     this.logger.log('received DELETE for surveys with id: ' + params.id + '.');
-    return mapSurveyEntity(await this.surveyService.removeById(params.id));
+    const survey = await this.surveyService.removeById(params.id);
+
+    if (survey) {
+      return mapSurveyEntity(survey);
+    } else {
+      throw new HttpException('user to delete not found', HttpStatus.NOT_FOUND);
+    }
   }
 }
