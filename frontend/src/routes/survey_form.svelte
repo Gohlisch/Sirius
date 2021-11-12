@@ -81,68 +81,49 @@
 
 	function getSlotsAsTimeSlotDto(): Array<{start: Date, end: Date}> {
 		console.log(neverSlots.slice(0, -1));
-		const timeFormatRegex = /(\d\d):(\d\d)/;
 
 		if(repetition === "never") {
 			return neverSlots.slice(0, -1).map(slot => {
-				const startTimeStamp = timeFormatRegex.exec(slot.start);
-				const endTimeStamp = timeFormatRegex.exec(slot.end) ;
-
 				const startDate = new Date(slot.day);
+				setTime(startDate, slot.start);
 				const endDate = new Date(slot.day);
-				const startHours: number = startTimeStamp[1] as unknown as number;
-				const startMinutes: number = startTimeStamp[2] as unknown as number;
-				const endHours: number = endTimeStamp[1] as unknown as number;
-				const endMinutes: number = endTimeStamp[2] as unknown as number;
-
-				startDate.setHours(startHours);
-				startDate.setMinutes(startMinutes);
-				endDate.setHours(endHours);
-				endDate.setMinutes(endMinutes);
+				setTime(endDate, slot.end);
 
 				return {start: startDate, end: endDate }
 			});
 		} else if(repetition === "daily") {
 			return dailySlots.slice(0, -1).map(slot => {
-				const startTimeStamp = timeFormatRegex.exec(slot.start);
-				const endTimeStamp = timeFormatRegex.exec(slot.end) ;
-
 				const startDate = new Date(0,0,0);
+				setTime(startDate, slot.start);
 				const endDate = new Date(0,0,0);
-				const startHours: number = startTimeStamp[1] as unknown as number;
-				const startMinutes: number = startTimeStamp[2] as unknown as number;
-				const endHours: number = endTimeStamp[1] as unknown as number;
-				const endMinutes: number = endTimeStamp[2] as unknown as number;
-
-				startDate.setHours(startHours);
-				startDate.setMinutes(startMinutes);
-				endDate.setHours(endHours);
-				endDate.setMinutes(endMinutes);
+				setTime(endDate, slot.end);
 
 				return {start: startDate, end: endDate }
 			});
 		} else if(repetition === "weekly") {
 			return weeklySlots.slice(0, -1).map(slot => {
-				const startTimeStamp = timeFormatRegex.exec(slot.start);
-				const endTimeStamp = timeFormatRegex.exec(slot.end) ;
-
 				const startDate = new Date(0,0,weekdayToNumber(slot.weekday));
+				setTime(startDate, slot.start);
 				const endDate = new Date(0,0,weekdayToNumber(slot.weekday));
-				const startHours: number = startTimeStamp[1] as unknown as number;
-				const startMinutes: number = startTimeStamp[2] as unknown as number;
-				const endHours: number = endTimeStamp[1] as unknown as number;
-				const endMinutes: number = endTimeStamp[2] as unknown as number;
-
-				startDate.setHours(startHours);
-				startDate.setMinutes(startMinutes);
-				endDate.setHours(endHours);
-				endDate.setMinutes(endMinutes);
-
+				setTime(endDate, slot.end);
+				
 				return {start: startDate, end: endDate }
 			});
 		} else {
 			return [];
 		}
+	}
+
+	/**
+	 * @param date - Date object, of which the time will be set
+	 * @param time - Time to be set in hh:mm format
+	 */
+	function setTime(date: Date, time: string): void {
+		const timeFormatRegex = /(\d\d):(\d\d)/;
+		const timeFormatGroups = timeFormatRegex.exec(time) ;
+
+		date.setHours(timeFormatGroups[1] as unknown as number);
+		date.setMinutes(timeFormatGroups[2] as unknown as number);
 	}
 
 	function repetitionStringToRepetitionNumber(r: Repetition) {
