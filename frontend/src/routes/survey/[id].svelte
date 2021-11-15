@@ -1,6 +1,13 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import AppointmentSurvey from "./_AppointmentSurvey.svelte";
-    import { appointmentRepository } from "../../model/appointment_repository";
+    import { surveyApiStore } from "./_SurveyApiStore";
+
+    const surveyRequest = surveyApiStore.get($page.params.id);
 </script>
-<AppointmentSurvey survey={appointmentRepository.getSurvey($page.params.id)}></AppointmentSurvey>
+
+{#await surveyRequest then survey}
+    <AppointmentSurvey survey={survey}></AppointmentSurvey>
+{:catch error}
+    <p>{error}</p>
+{/await}
