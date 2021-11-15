@@ -9,6 +9,7 @@
     import type { PickedSlot } from "../../model/picked_slot";
     import { page } from "$app/stores";
     import { MessageType, notificationStore } from "$lib/notifications/notification_store";
+    import { Repetition } from "../../model/survey_dto";
 
     export let survey: AppointmentSurvey;
     let name: string = "";
@@ -49,9 +50,9 @@
                     maxlength="64"
                     bind:value="{name}">
             </label>
-            {#if survey.repetition === "weekly"}
+            {#if survey.repetition === Repetition.WEEKLY}
                 <WeeklyAppointmentInputs bind:pickedSlots={pickedSlots}/>
-            {:else if survey.repetition === "daily"}
+            {:else if survey.repetition === Repetition.DAILY}
                 <DailyAppointmentInputs bind:pickedSlots={pickedSlots}/>
             {:else}
                 <AppointmentInputs bind:pickedSlots={pickedSlots}/>
@@ -69,9 +70,9 @@
         <h3>Ergebnisse</h3>
         <div class="table_container">
             <table>
-                {#if survey.repetition === "weekly"}
+                {#if survey.repetition === Repetition.WEEKLY}
                     <WeeklyAppointmentResultTable survey="{survey}"/>
-                {:else if survey.repetition === "daily"}
+                {:else if survey.repetition === Repetition.DAILY}
                     <DailyAppointmentResultTable survey="{survey}"/>
                 {:else}
                     <AppointmentResultTable survey="{survey}"/>
