@@ -15,7 +15,7 @@ export class SurveyService {
    * returns all saved surveys.
    */
   getAll(): Promise<AppointmentSurvey[]> {
-    return this.surveyRepository.find({ relations: ['slots', 'participants'] });
+    return this.surveyRepository.find({ relations: ['slots', 'indisposedParticipants'] });
   }
 
   /**
@@ -27,7 +27,7 @@ export class SurveyService {
       where: {
         id,
       },
-      relations: ['slots', 'participants'],
+      relations: ['slots', 'indisposedParticipants'],
     });
   }
 

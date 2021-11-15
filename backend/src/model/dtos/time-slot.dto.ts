@@ -1,5 +1,7 @@
-import { IsDateString, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDateString, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import SurveyParticipantDto from './survey-participant.dto';
 
 export class TimeSlotDto {
   @IsOptional()
@@ -26,10 +28,17 @@ export class TimeSlotDto {
   @ApiPropertyOptional()
   surveyId?: string;
 
-  constructor(start: string, end: string, surveyId?: string, id?: number) {
+  @ValidateNested()
+  @IsOptional()
+  @Type(() => SurveyParticipantDto)
+  @ApiPropertyOptional({ type: [SurveyParticipantDto] })
+  participants: SurveyParticipantDto[];
+
+  constructor(start: string, end: string, surveyId?: string, participants?:Array<SurveyParticipantDto>, id?: number) {
     this.start = start;
     this.end = end;
     this.surveyId = surveyId;
+    this.participants = participants;
     this.id = id;
   }
 }

@@ -32,14 +32,14 @@ export class AppointmentSurvey {
       cascade: true,
     },
   )
-  participants: SurveyParticipant[];
+  indisposedParticipants: SurveyParticipant[];
 
   constructor(
     title: string,
     repetition: Repetition,
     description: string,
     slots: TimeSlot[],
-    participants: SurveyParticipant[],
+    indisposedParticipants: SurveyParticipant[],
     id?: string,
   ) {
     this.title = title;
@@ -47,6 +47,6 @@ export class AppointmentSurvey {
     this.repetition = repetition;
     this.description = description;
     this.slots = slots;
-    this.participants = participants;
+    this.indisposedParticipants = indisposedParticipants;
   }
 }

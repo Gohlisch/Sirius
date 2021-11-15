@@ -22,7 +22,7 @@ export default class SurveyParticipant {
 
   @ManyToOne(
     () => AppointmentSurvey,
-    (appointmentSurvey) => appointmentSurvey.participants,
+    (appointmentSurvey) => appointmentSurvey.indisposedParticipants,
     {
       onDelete: 'CASCADE',
       eager: true,

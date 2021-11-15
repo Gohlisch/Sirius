@@ -18,7 +18,7 @@ export function mapSurveyDto(dto: AppointmentSurveyDto): AppointmentSurvey {
     [],
     dto.id,
   );
-  survey.participants = mapSurveyParticipantDtos(dto.participants, survey);
+  survey.indisposedParticipants = mapSurveyParticipantDtos(dto.indisposedParticipants, survey);
   survey.slots = mapTimeSlotDtos(dto.slots, survey);
   return survey;
 }
@@ -43,7 +43,7 @@ export function mapSurveyEntity(
     entity.repetition,
     entity.description,
     mapTimeSlotEntities(entity.slots),
-    mapSurveyParticipantEntities(entity.participants),
+    mapSurveyParticipantEntities(entity.indisposedParticipants),
     entity.id,
   );
 }

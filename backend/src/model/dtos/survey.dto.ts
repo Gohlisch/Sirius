@@ -32,21 +32,21 @@ export class AppointmentSurveyDto {
   @IsOptional()
   @Type(() => SurveyParticipantDto)
   @ApiPropertyOptional({ type: [SurveyParticipantDto] })
-  participants: SurveyParticipantDto[];
+  indisposedParticipants: SurveyParticipantDto[];
 
   constructor(
     title: string,
     repetition: Repetition,
     description: string,
     slots: TimeSlotDto[],
-    participants: SurveyParticipantDto[],
+    indisposedParticipants: SurveyParticipantDto[],
     id?: string,
   ) {
     this.title = title;
     this.repetition = repetition;
     this.description = description;
     this.slots = slots;
-    this.participants = participants;
+    this.indisposedParticipants = indisposedParticipants;
     this.id = id;
   }
 }

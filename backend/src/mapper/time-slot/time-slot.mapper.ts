@@ -1,6 +1,7 @@
 import { TimeSlot } from '../../model/entities/time-slot.entity';
 import { TimeSlotDto } from '../../model/dtos/time-slot.dto';
 import { AppointmentSurvey } from '../../model/entities/survey.entity';
+import { mapSurveyParticipantDtos, mapSurveyParticipantEntities } from '../survey-participant/survey-participant.mapper';
 
 export function mapTimeSlotDto(
   dto: TimeSlotDto,
@@ -26,6 +27,7 @@ export function mapTimeSlotEntity(timeSlot: TimeSlot): TimeSlotDto {
     timeSlot.start.toISOString(),
     timeSlot.end.toISOString(),
     timeSlot.appointmentSurvey.id,
+    mapSurveyParticipantEntities(timeSlot.participants),
     timeSlot.id,
   );
 }

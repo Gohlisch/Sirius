@@ -37,8 +37,10 @@ export function mapSurveyParticipantEntities(
 ): SurveyParticipantDto[] {
   const participantDtos: SurveyParticipantDto[] = [];
 
-  for (const entity of entities) {
-    participantDtos.push(mapSurveyParticipantEntity(entity));
+  if(entities) {
+    for (const entity of entities) {
+      participantDtos.push(mapSurveyParticipantEntity(entity));
+    }
   }
 
   return participantDtos;
