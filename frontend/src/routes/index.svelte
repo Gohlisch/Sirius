@@ -1,9 +1,5 @@
 <script lang="ts">
-import { onMount } from "svelte";
-
     import { surveyApiStore } from "./survey/_SurveyApiStore";
-
-    onMount(() => surveyApiStore.subscribe((instances) => console.log(instances) ));
 </script>
 
 <svelte:head>
