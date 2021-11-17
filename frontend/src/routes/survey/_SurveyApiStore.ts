@@ -1,4 +1,4 @@
-import { ApiStore } from "../../lib/ApiStore";
+import { ApiStore } from "../_ApiStore";
 import type { AppointmentSurvey } from "../../model/appointment_survey"
 
 function dtoToEntity(dto): AppointmentSurvey {
