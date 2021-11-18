@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { appointmentRepository } from "../model/appointment_repository";
+    import { surveyApiStore } from "./survey/_SurveyApiStore";
 </script>
 
 <svelte:head>
@@ -8,7 +8,7 @@
 <main>
     <h2>Meine Terminumfragen</h2>
     <ul>
-        {#each appointmentRepository.getSurveys() as survey} 
+        {#each $surveyApiStore as survey} 
         <li>
         <a href="survey/{survey.id}">{survey.title}</a>
         </li>

@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class SurveyService {
+  static surveyIdLength = 10;
   constructor(
     @InjectRepository(AppointmentSurvey)
     private surveyRepository: Repository<AppointmentSurvey>,
@@ -13,8 +14,8 @@ export class SurveyService {
   /**
    * returns all saved surveys.
    */
-  async getAll(): Promise<AppointmentSurvey[]> {
-    return this.surveyRepository.find();
+  getAll(): Promise<AppointmentSurvey[]> {
+    return this.surveyRepository.find({ relations: ['slots', 'indisposedParticipants'] });
   }
 
   /**
@@ -26,6 +27,7 @@ export class SurveyService {
       where: {
         id,
       },
+      relations: ['slots', 'indisposedParticipants'],
     });
   }
 
@@ -48,7 +50,37 @@ export class SurveyService {
     return this.surveyRepository.remove(survey);
   }
 
-  create(survey: AppointmentSurvey): Promise<AppointmentSurvey> {
+  async create(survey: AppointmentSurvey): Promise<AppointmentSurvey> {
+    if (survey.id === undefined) {
+      survey.id = await this.generateSurveyId();
+    }
     return this.surveyRepository.save(survey);
+  }
+
+  async checkIfIdExists(id: string): Promise<boolean> {
+    return !!(await this.surveyRepository.findOne({ where: { id } }));
+  }
+
+  private async generateSurveyId(): Promise<string> {
+    let generatedId = '';
+    do {
+      generatedId = SurveyService.generateRandomString();
+    } while (await this.checkIfIdExists(generatedId));
+
+    return generatedId;
+  }
+
+  private static generateRandomString(): string {
+    const urlAllowedChars =
+      'ABCDEFGHIJKLNMOPQRSTUVWXYZabcdefghijklnmopqrstuvwxyz1234567890-_~.';
+    let string = '';
+
+    for (let i = 0; i < SurveyService.surveyIdLength; ++i) {
+      string = string.concat(
+        urlAllowedChars[Math.floor(urlAllowedChars.length * Math.random())],
+      );
+    }
+
+    return string;
   }
 }

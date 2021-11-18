@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { AppointmentSurvey } from './survey.entity';
 
 @Entity()
@@ -16,7 +22,24 @@ export default class SurveyParticipant {
 
   @ManyToOne(
     () => AppointmentSurvey,
-    (appointmentSurvey) => appointmentSurvey.participants,
+    (appointmentSurvey) => appointmentSurvey.indisposedParticipants,
+    {
+      onDelete: 'CASCADE',
+      eager: true,
+    },
   )
+  @JoinTable()
   appointmentSurvey: AppointmentSurvey;
+
+  constructor(
+    name: string,
+    voteDate: Date,
+    survey: AppointmentSurvey,
+    id?: number,
+  ) {
+    this.name = name;
+    this.voteDate = voteDate;
+    this.appointmentSurvey = survey;
+    this.id = id;
+  }
 }

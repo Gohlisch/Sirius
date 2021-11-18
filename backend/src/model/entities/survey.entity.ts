@@ -1,11 +1,11 @@
 import { TimeSlot } from './time-slot.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import SurveyParticipant from './survey-participant.entity';
 import { Repetition } from '../enum/repitition.enum';
 
 @Entity()
 export class AppointmentSurvey {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   id: string;
 
   @Column()
@@ -20,28 +20,33 @@ export class AppointmentSurvey {
   @Column()
   description: string;
 
-  @OneToMany(() => TimeSlot, (timeSlot) => timeSlot.appointmentSurveys)
+  @OneToMany(() => TimeSlot, (timeSlot) => timeSlot.appointmentSurvey, {
+    cascade: true,
+  })
   slots: TimeSlot[];
 
   @OneToMany(
     () => SurveyParticipant,
     (surveyParticipant) => surveyParticipant.appointmentSurvey,
+    {
+      cascade: true,
+    },
   )
-  participants: SurveyParticipant[];
+  indisposedParticipants: SurveyParticipant[];
 
   constructor(
     title: string,
-    id: string,
     repetition: Repetition,
     description: string,
     slots: TimeSlot[],
-    participants: SurveyParticipant[],
+    indisposedParticipants: SurveyParticipant[],
+    id?: string,
   ) {
     this.title = title;
     this.id = id;
     this.repetition = repetition;
     this.description = description;
     this.slots = slots;
-    this.participants = participants;
+    this.indisposedParticipants = indisposedParticipants;
   }
 }

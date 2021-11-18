@@ -1,40 +1,52 @@
 import { Repetition } from '../enum/repitition.enum';
-import { TimeSlot } from '../entities/time-slot.entity';
-import SurveyParticipant from '../entities/survey-participant.entity';
-import { IsString, ValidateNested } from 'class-validator';
+import { IsEnum, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { TimeSlotDto } from './time-slot.dto';
+import SurveyParticipantDto from './survey-participant.dto';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 export class AppointmentSurveyDto {
+  @IsOptional()
   @IsString()
+  @ApiPropertyOptional({ example: undefined })
   id?: string;
 
   @IsString()
+  @ApiProperty()
   title: string;
 
-  @ValidateNested()
+  @IsEnum(Repetition)
+  @ApiProperty({ enum: [0, 1, 2] })
   repetition: Repetition;
 
   @IsString()
+  @ApiProperty()
   description: string;
 
   @ValidateNested()
-  slots: TimeSlot[];
+  @Type(() => TimeSlotDto)
+  @ApiProperty({ type: [TimeSlotDto] })
+  slots: TimeSlotDto[];
 
   @ValidateNested()
-  participants: SurveyParticipant[];
+  @IsOptional()
+  @Type(() => SurveyParticipantDto)
+  @ApiPropertyOptional({ type: [SurveyParticipantDto] })
+  indisposedParticipants: SurveyParticipantDto[];
 
   constructor(
     title: string,
-    id: string,
     repetition: Repetition,
     description: string,
-    slots: TimeSlot[],
-    participants: SurveyParticipant[],
+    slots: TimeSlotDto[],
+    indisposedParticipants: SurveyParticipantDto[],
+    id?: string,
   ) {
     this.title = title;
-    this.id = id;
     this.repetition = repetition;
     this.description = description;
     this.slots = slots;
-    this.participants = participants;
+    this.indisposedParticipants = indisposedParticipants;
+    this.id = id;
   }
 }

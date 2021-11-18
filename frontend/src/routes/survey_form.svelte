@@ -1,7 +1,12 @@
 <script lang="ts">
-	import type { Repetition } from "src/model/survey_dto";
+	import { Repetition } from "../model/survey_dto";
+	import type { TimeSlot } from "../model/time_slot";
+	import { weekdayToNumber } from "../util/util";
+	import { surveyApiStore } from "./survey/_SurveyApiStore"
 
-	let repititon: Repetition;
+	let title: string;
+	let description: string;
+	let repetition: Repetition;
 	let dailySlots: Array<{start: string, end: string}> = [{start:"", end:""}];
 	let weeklySlots: Array<{weekday: string, start: string, end: string}> = [{weekday:"", start:"", end:""}];
 	let neverSlots: Array<{day: string, start: string, end: string}> = [{day:"", start:"", end:""}];
@@ -55,6 +60,63 @@
 		return (Array.from(document.getElementById(`inputgroup${inputGroupNumber}`).querySelectorAll("input, select")) as Array<HTMLInputElement>)
 			.every(s => s.checkValidity());
 	}
+
+	function submitAppointmentSurvey(e: Event&{ currentTarget: EventTarget&HTMLFormElement; }): void {
+		surveyApiStore.post({
+			title: title,
+			repetition: repetition,
+			description: description,
+			slots: getSlotsAsTimeSlotDto(),
+			indisposedParticipants: []
+		});
+	}
+
+	function getSlotsAsTimeSlotDto(): Array<TimeSlot> {
+		console.log(neverSlots.slice(0, -1));
+
+		if(repetition === Repetition.NEVER) {
+			return neverSlots.slice(0, -1).map(slot => {
+				const startDate = new Date(slot.day);
+				setTime(startDate, slot.start);
+				const endDate = new Date(slot.day);
+				setTime(endDate, slot.end);
+
+				return {start: startDate, end: endDate }
+			});
+		} else if(repetition === Repetition.DAILY) {
+			return dailySlots.slice(0, -1).map(slot => {
+				const startDate = new Date(0,0,0);
+				setTime(startDate, slot.start);
+				const endDate = new Date(0,0,0);
+				setTime(endDate, slot.end);
+
+				return {start: startDate, end: endDate }
+			});
+		} else if(repetition === Repetition.WEEKLY) {
+			return weeklySlots.slice(0, -1).map(slot => {
+				const startDate = new Date(0,0,weekdayToNumber(slot.weekday));
+				setTime(startDate, slot.start);
+				const endDate = new Date(0,0,weekdayToNumber(slot.weekday));
+				setTime(endDate, slot.end);
+				
+				return {start: startDate, end: endDate }
+			});
+		} else {
+			return [];
+		}
+	}
+
+	/**
+	 * @param date - Date object, of which the time will be set
+	 * @param time - Time to be set in hh:mm format
+	 */
+	function setTime(date: Date, time: string): void {
+		const timeFormatRegex = /(\d\d):(\d\d)/;
+		const timeFormatGroups = timeFormatRegex.exec(time) ;
+
+		date.setHours(timeFormatGroups[1] as unknown as number);
+		date.setMinutes(timeFormatGroups[2] as unknown as number);
+	}
 </script>
 <style>
     #slots :invalid {
@@ -81,7 +143,7 @@
 <main>
     <section>
         <h2>Neue Umfrage erstellen</h2>
-        <form action="/survey" method="post">
+        <form action="/survey" method="post" on:submit|preventDefault={(e => submitAppointmentSurvey(e))}>
             <fieldset>
                 <legend>Informationen</legend>
                 <label for="title" class="required">Titel:
@@ -91,6 +153,7 @@
                             id="title"
                             placeholder="max. 256 Zeichen"
                             maxlength="256"
+							bind:value={title}
                             required>
                 </label>
                 <label for="description">Beschreibung:
@@ -99,19 +162,20 @@
                             id="description"
                             placeholder="optional, max. 1024 Zeichen"
                             maxlength="1024"
+							bind:value={description}
                     ></textarea>
                 </label>
             </fieldset>
             <fieldset>
                 <legend>Wiederholung des Termins</legend>
-                <label for="never"><input id="never" name="repetition" value="never" type="radio" required bind:group={repititon}>niemals</label>
-                <label for="daily"><input id="daily" name="repetition" value="daily" type="radio" required bind:group={repititon}>täglich</label>
-                <label for="weekly"><input id="weekly" name="repetition" value="weekly" type="radio" required bind:group={repititon}>wöchentlich</label>
+                <label for="never"><input id="never" name="repetition" value={Repetition.NEVER} type="radio" required bind:group={repetition}>niemals</label>
+                <label for="daily"><input id="daily" name="repetition" value={Repetition.DAILY} type="radio" required bind:group={repetition}>täglich</label>
+                <label for="weekly"><input id="weekly" name="repetition" value={Repetition.WEEKLY} type="radio" required bind:group={repetition}>wöchentlich</label>
             </fieldset>
             <fieldset>
                 <legend>Auswählbare Slots</legend>
                 <div id="slots">
-					{#if repititon === "daily"}
+					{#if repetition === Repetition.DAILY}
 					{#each dailySlots as slot, i}
                     <div id="inputgroup{i}" class:newly_generated={i !== 0 && !slot.start && !slot.end}>
 						<label class="required">Startzeit:
@@ -134,7 +198,7 @@
 						</label>
 						</div>
 					{/each}
-					{:else if repititon === "weekly"}
+					{:else if repetition === Repetition.WEEKLY}
 					{#each weeklySlots as slot, i}
                     <div id="inputgroup{i}" class:newly_generated={i !== 0 && !slot.weekday && !slot.start && !slot.end}>
 						<label class="required">Wochentag:
@@ -172,7 +236,7 @@
 						</label>
 						</div>
 						{/each}
-						{:else if repititon === "never"}
+						{:else if repetition === Repetition.NEVER}
 						{#each neverSlots as slot, i}
 						<div id="inputgroup{i}" class:newly_generated={i !== 0 && !slot.day && !slot.start && !slot.end}>
 							<label class="required">Datum:
