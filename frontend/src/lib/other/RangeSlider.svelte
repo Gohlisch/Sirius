@@ -25,8 +25,8 @@
     function dragThumbStart(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): void {
         const thumbStart = e.currentTarget;
 
-        actionOnMouseMove = (mouseUpEvent: MouseEvent) => {
-            thumbStart.style.setProperty("left", `${mouseUpEvent.x % (RANGE_WIDTH_PX - thumbStart.getBoundingClientRect().width)}px`)
+        actionOnMouseMove = (mouseMoveEvent: MouseEvent) => {
+            thumbStart.style.setProperty("left", `${mouseMoveEvent.x % (RANGE_WIDTH_PX - thumbStart.getBoundingClientRect().width)}px`)
         };
 
         actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
@@ -38,8 +38,8 @@
     function dragThumbEnd(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): void {
         const thumbEnd = e.currentTarget;
 
-        actionOnMouseMove = (mouseUpEvent: MouseEvent) => {
-            thumbEnd.style.setProperty("left", `${mouseUpEvent.x % (RANGE_WIDTH_PX - thumbEnd.getBoundingClientRect().width)}px`)
+        actionOnMouseMove = (mouseMoveEvent: MouseEvent) => {
+            thumbEnd.style.setProperty("left", `${mouseMoveEvent.x % (RANGE_WIDTH_PX - thumbEnd.getBoundingClientRect().width)}px`)
         };
 
         actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
@@ -50,9 +50,26 @@
 
     function dragThumbBody(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): void {
         const thumbBody = e.currentTarget;
+        const thumbBodyLeftPropertyPx = thumbBody.getBoundingClientRect().left;
+        const thumbParts = Array.from(thumbBody.parentElement.children);
+        const thumbStart = thumbParts.find(e => e.classList.contains("left_thumb")) as HTMLDivElement;
+        const thumbStartLeftPropertyPx = thumbStart.getBoundingClientRect().left;
+        const thumbEnd = thumbParts.find(e => e.classList.contains("right_thumb")) as HTMLDivElement;
+        const thumbEndLeftPropertyPx = thumbEnd.getBoundingClientRect().left;
+        const dragStartX = e.x;
 
         actionOnMouseMove = (mouseUpEvent: MouseEvent) => {
-            thumbBody.style.setProperty("left", `${mouseUpEvent.x % (RANGE_WIDTH_PX - thumbBody.getBoundingClientRect().width)}px`)
+            let thumbBodyPosX = (mouseUpEvent.x - dragStartX + thumbBodyLeftPropertyPx) % (RANGE_WIDTH_PX - thumbBody.getBoundingClientRect().width);
+            thumbBodyPosX = thumbBodyPosX >= 0 ? thumbBodyPosX : RANGE_WIDTH_PX-thumbBodyPosX;
+            thumbBody.style.setProperty("left", `${thumbBodyPosX}px`);
+
+            let thumbStartPosX = (mouseUpEvent.x - dragStartX + thumbStartLeftPropertyPx) % (RANGE_WIDTH_PX - thumbStart.getBoundingClientRect().width);
+            thumbStartPosX = thumbStartPosX >= 0 ? thumbStartPosX : RANGE_WIDTH_PX-thumbStartPosX;
+            thumbStart.style.setProperty("left", `${thumbStartPosX}px`)
+
+            let thumbEndPosX = (mouseUpEvent.x - dragStartX + thumbEndLeftPropertyPx) % (RANGE_WIDTH_PX - thumbEnd.getBoundingClientRect().width);
+            thumbEndPosX = thumbEndPosX >= 0 ? thumbEndPosX : RANGE_WIDTH_PX-thumbEndPosX;
+            thumbEnd.style.setProperty("left", `${thumbEndPosX}px`)
         };
 
         actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
