@@ -17,19 +17,47 @@
         endBeforeStartAllowed: false
     };
 
-    let actionOnMouseUp = null;
+    const RANGE_WIDTH_PX = 200;
 
-    function dragThumbStart(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): any {
+    let actionOnMouseUp = null;
+    let actionOnMouseMove = null;
+    let thumbStartIsGrabbed = false;
+
+    function dragThumbStart(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): void {
         const thumbStart = e.currentTarget;
         const thumbStartLeft = thumbStart.style.getPropertyValue("left");
         const thumbStartPixelsLeft = thumbStartLeft.slice(0, thumbStartLeft.length-2) as unknown as number;
         const xOnDragStart = e.x;
         console.log("resize start");
+        thumbStartIsGrabbed = true;
+
+        actionOnMouseMove = (mouseUpEvent: MouseEvent) => {
+            thumbStart.style.setProperty("left", `${mouseUpEvent.x % RANGE_WIDTH_PX}px`)
+        };
 
         actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
-            console.log(`${mouseUpEvent.x} - ${xOnDragStart}`)
-            thumbStart.style.setProperty("left", `${ thumbStartPixelsLeft + mouseUpEvent.x - xOnDragStart}px`)
             actionOnMouseUp = null;
+            actionOnMouseMove = null;
+            thumbStartIsGrabbed = false;
+        };
+    }
+
+    function dragThumbEnd(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): void {
+        const thumbStart = e.currentTarget;
+        const thumbStartLeft = thumbStart.style.getPropertyValue("left");
+        const thumbStartPixelsLeft = thumbStartLeft.slice(0, thumbStartLeft.length-2) as unknown as number;
+        const xOnDragStart = e.x;
+        console.log("resize start");
+        thumbStartIsGrabbed = true;
+
+        actionOnMouseMove = (mouseUpEvent: MouseEvent) => {
+            thumbStart.style.setProperty("left", `${mouseUpEvent.x % RANGE_WIDTH_PX}px`)
+        };
+
+        actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
+            actionOnMouseUp = null;
+            actionOnMouseMove = null;
+            thumbStartIsGrabbed = false;
         };
     }
 
@@ -79,11 +107,14 @@
     }
 </style>
 
-<svelte:body on:mouseup={(e) => {if(actionOnMouseUp) actionOnMouseUp(e);}} />
+<svelte:body
+    on:mouseup={(e) => {if(actionOnMouseUp) actionOnMouseUp(e);}}
+    on:mousemove={(e) => {if(actionOnMouseMove) actionOnMouseMove(e);}}
+/>
 
 <div aria-hidden="true" class="slider_container">
     <div class="left_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbStart(e)}>◀</div>
-    <!--<div class="middle_thumb not_selectable">:::</div>
-    <div class="right_thumb not_selectable">▶</div>-->
+    <!--<div class="middle_thumb not_selectable">:::</div>-->
+    <div class="right_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbEnd(e)}>▶</div>
 </div>
 
