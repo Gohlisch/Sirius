@@ -83,7 +83,7 @@
 
 <div aria-hidden="true" class="slider_container">
     <div class="left_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbStart(e)}>◀</div>
-    <div class="middle_thumb not_selectable">:::</div>
-    <div class="right_thumb not_selectable">▶</div>
+    <!--<div class="middle_thumb not_selectable">:::</div>
+    <div class="right_thumb not_selectable">▶</div>-->
 </div>
 
