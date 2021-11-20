@@ -21,43 +21,43 @@
 
     let actionOnMouseUp = null;
     let actionOnMouseMove = null;
-    let thumbStartIsGrabbed = false;
 
     function dragThumbStart(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): void {
         const thumbStart = e.currentTarget;
-        const thumbStartLeft = thumbStart.style.getPropertyValue("left");
-        const thumbStartPixelsLeft = thumbStartLeft.slice(0, thumbStartLeft.length-2) as unknown as number;
-        const xOnDragStart = e.x;
-        console.log("resize start");
-        thumbStartIsGrabbed = true;
 
         actionOnMouseMove = (mouseUpEvent: MouseEvent) => {
-            thumbStart.style.setProperty("left", `${mouseUpEvent.x % RANGE_WIDTH_PX}px`)
+            thumbStart.style.setProperty("left", `${mouseUpEvent.x % (RANGE_WIDTH_PX - thumbStart.getBoundingClientRect().width)}px`)
         };
 
         actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
             actionOnMouseUp = null;
             actionOnMouseMove = null;
-            thumbStartIsGrabbed = false;
         };
     }
 
     function dragThumbEnd(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): void {
-        const thumbStart = e.currentTarget;
-        const thumbStartLeft = thumbStart.style.getPropertyValue("left");
-        const thumbStartPixelsLeft = thumbStartLeft.slice(0, thumbStartLeft.length-2) as unknown as number;
-        const xOnDragStart = e.x;
-        console.log("resize start");
-        thumbStartIsGrabbed = true;
+        const thumbEnd = e.currentTarget;
 
         actionOnMouseMove = (mouseUpEvent: MouseEvent) => {
-            thumbStart.style.setProperty("left", `${mouseUpEvent.x % RANGE_WIDTH_PX}px`)
+            thumbEnd.style.setProperty("left", `${mouseUpEvent.x % (RANGE_WIDTH_PX - thumbEnd.getBoundingClientRect().width)}px`)
         };
 
         actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
             actionOnMouseUp = null;
             actionOnMouseMove = null;
-            thumbStartIsGrabbed = false;
+        };
+    }
+
+    function dragThumbBody(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): void {
+        const thumbBody = e.currentTarget;
+
+        actionOnMouseMove = (mouseUpEvent: MouseEvent) => {
+            thumbBody.style.setProperty("left", `${mouseUpEvent.x % (RANGE_WIDTH_PX - thumbBody.getBoundingClientRect().width)}px`)
+        };
+
+        actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
+            actionOnMouseUp = null;
+            actionOnMouseMove = null;
         };
     }
 
@@ -113,8 +113,8 @@
 />
 
 <div aria-hidden="true" class="slider_container">
+    <div class="middle_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbBody(e)}>:::</div>
     <div class="left_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbStart(e)}>◀</div>
-    <!--<div class="middle_thumb not_selectable">:::</div>-->
     <div class="right_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbEnd(e)}>▶</div>
 </div>
 
