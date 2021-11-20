@@ -24,9 +24,16 @@
 
     function dragThumbStart(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): void {
         const thumbStart = e.currentTarget;
+        const containerLeftPropertyPx = thumbStart.parentElement.getBoundingClientRect().left;
+        const thumbStartLeftPropertyPx = thumbStart.getBoundingClientRect().left - containerLeftPropertyPx;
+        const dragStartX = e.x;
 
         actionOnMouseMove = (mouseMoveEvent: MouseEvent) => {
-            thumbStart.style.setProperty("left", `${mouseMoveEvent.x % (RANGE_WIDTH_PX - thumbStart.getBoundingClientRect().width)}px`)
+            const draggedPixels = mouseMoveEvent.x - dragStartX;
+
+            let thumbStartPosX = (draggedPixels + thumbStartLeftPropertyPx) % (RANGE_WIDTH_PX - thumbStart.getBoundingClientRect().width);
+            thumbStartPosX = thumbStartPosX >= 0 ? thumbStartPosX : RANGE_WIDTH_PX-thumbStartPosX;
+            thumbStart.style.setProperty("left", `${thumbStartPosX}px`)
         };
 
         actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
