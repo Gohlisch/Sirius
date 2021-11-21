@@ -88,13 +88,11 @@ import { onMount } from "svelte";
 
     function setXOffeset(draggedPixels: number, originalPixelOffset: number, element: HTMLElement) {
         const elementWidth = element.getBoundingClientRect().width;
+        const minimalValue = element.dataset.direction === "left" ? 0 : elementWidth;
         let elementXPosition = (draggedPixels + originalPixelOffset) % (rangeWidthPixel - elementWidth);
 
-        if(element.dataset.direction === "left") {
-            elementXPosition = elementXPosition >= 0 ? elementXPosition : rangeWidthPixel + elementXPosition - elementWidth;
-        } else {
-            elementXPosition = elementXPosition >= elementWidth ? elementXPosition : rangeWidthPixel + elementXPosition - elementWidth;
-        }
+        elementXPosition = elementXPosition >= minimalValue ? elementXPosition : rangeWidthPixel + elementXPosition - elementWidth;
+  
         element.style.setProperty("left", `${elementXPosition}px`);
     }
 </script>
