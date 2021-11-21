@@ -95,8 +95,6 @@
             actionOnMouseMove = null;
         };
     }
-
-
 </script>
 
 <style>
@@ -115,11 +113,21 @@
     }
 
     .slider_container {
-        background-color: var(--brighter_color);
         position: relative;
         width: calc(200px);
         height: 2em;
         margin: 0 2px;
+    }
+
+    .drag_range_indicator{
+        position: absolute;
+        background-color: var(--brighter_color);
+        height: calc(1em + 14px);
+        line-height: calc(1em + 14px);
+        text-align: center;
+        top: 1px;
+        left: 1em;
+        width: calc(200px - 2*1em);
     }
 
     .left_thumb {
@@ -148,6 +156,7 @@
 />
 
 <div aria-hidden="true" class="slider_container">
+    <div class="drag_range_indicator"></div>
     <div class="middle_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbBody(e)}>:::</div>
     <div class="left_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbStart(e)}>◀</div>
     <div class="right_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbEnd(e)}>▶</div>
