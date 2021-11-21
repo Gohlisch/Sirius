@@ -96,12 +96,18 @@
         elementXPosition = elementXPosition >= minimalValue ? elementXPosition : rangeWidthPixel + elementXPosition - elementWidth;
 
         if(element.dataset.direction === "left") {
-            options.start = elementXPosition;
+            options.start = calculateValueFromOffeset(elementXPosition, minimalValue);
         } else {
-            options.end = elementXPosition;
+            options.end = calculateValueFromOffeset(elementXPosition, minimalValue);
         }
   
         element.style.setProperty("left", `${elementXPosition}px`);
+    }
+
+    function calculateValueFromOffeset(offset, minimalValue) {
+        let value = offset - minimalValue;
+        value = value / options.steps;
+        return Math.trunc(value);
     }
 </script>
 
@@ -129,7 +135,7 @@
 
     .drag_range_indicator{
         position: absolute;
-        background-color: var(--primary_color);
+        background-color: var(--brighter_color);
         height: calc(1em + 14px + 2px);
         line-height: calc(1em + 14px);
         text-align: center;
@@ -165,7 +171,7 @@
 
 <div aria-hidden="true" class="slider_container">
     <div class="drag_range_indicator"></div>
-    <div class="middle_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbBody(e)}>:::</div>
+    <!-- <div class="middle_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbBody(e)}>:::</div> -->
     <div class="left_thumb not_selectable" data-direction="left" on:mousedown|preventDefault={(e) => dragThumbStart(e)}>◀</div>
     <div class="right_thumb not_selectable" data-direction="right" on:mousedown|preventDefault={(e) => dragThumbEnd(e)}>▶</div>
 </div>
