@@ -1,4 +1,7 @@
 <script lang="ts">
+import { onMount } from "svelte";
+
+
     type RangeSliderProps = {
         start: number,
         end: number,
@@ -17,7 +20,10 @@
         endBeforeStartAllowed: false
     };
 
-    const RANGE_WIDTH_PX = 200;
+    let rangeWidthPixel = 0;
+    onMount(()=>{
+        rangeWidthPixel = parseInt(window.getComputedStyle(window.document.querySelector(".slider_container").parentElement).fontSize) * 10;
+    });
 
     let actionOnMouseUp = null;
     let actionOnMouseMove = null;
@@ -59,14 +65,13 @@
     function dragThumbBody(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): void {
         const thumbBody = e.currentTarget;
         const containerOriginalXOffset = thumbBody.parentElement.getBoundingClientRect().left;
-
+        const dragStartX = e.x;
         const thumbBodyOriginalXOffset = thumbBody.getBoundingClientRect().left - containerOriginalXOffset;
         const thumbParts = Array.from(thumbBody.parentElement.children);
         const thumbStart = thumbParts.find(e => e.classList.contains("left_thumb")) as HTMLDivElement;
         const thumbStartOriginalXOffset = thumbStart.getBoundingClientRect().left - containerOriginalXOffset;
         const thumbEnd = thumbParts.find(e => e.classList.contains("right_thumb")) as HTMLDivElement;
         const thumbEndOriginalXOffset = thumbEnd.getBoundingClientRect().left - containerOriginalXOffset;
-        const dragStartX = e.x;
 
         actionOnMouseMove = (mouseMoveEvent: MouseEvent) => {
             const draggedPixels = mouseMoveEvent.x - dragStartX;
@@ -83,9 +88,13 @@
 
     function setXOffeset(draggedPixels: number, originalPixelOffset: number, element: HTMLElement) {
         const elementWidth = element.getBoundingClientRect().width;
+        let elementXPosition = (draggedPixels + originalPixelOffset) % (rangeWidthPixel - elementWidth);
 
-        let elementXPosition = (draggedPixels + originalPixelOffset) % (RANGE_WIDTH_PX - elementWidth);
-        elementXPosition = elementXPosition >= 0 ? elementXPosition : RANGE_WIDTH_PX + elementXPosition - elementWidth;
+        if(element.dataset.direction === "left") {
+            elementXPosition = elementXPosition >= 0 ? elementXPosition : rangeWidthPixel + elementXPosition - elementWidth;
+        } else {
+            elementXPosition = elementXPosition >= elementWidth ? elementXPosition : rangeWidthPixel + elementXPosition - elementWidth;
+        }
         element.style.setProperty("left", `${elementXPosition}px`);
     }
 </script>
@@ -98,7 +107,7 @@
         height: calc(1em + 14px);
         line-height: calc(1em + 14px);
         text-align: center;
-        top: 1px;
+        top: 2px;
     }
 
     .left_thumb, .right_thumb {
@@ -107,20 +116,20 @@
 
     .slider_container {
         position: relative;
-        width: calc(200px);
+        width: calc(10em);
         height: 2em;
         margin: 0 2px;
     }
 
     .drag_range_indicator{
         position: absolute;
-        background-color: var(--brighter_color);
-        height: calc(1em + 14px);
+        background-color: var(--primary_color);
+        height: calc(1em + 14px + 2px);
         line-height: calc(1em + 14px);
         text-align: center;
         top: 1px;
         left: 1em;
-        width: calc(200px - 2*1em);
+        width: calc(9em);
     }
 
     .left_thumb {
@@ -151,7 +160,7 @@
 <div aria-hidden="true" class="slider_container">
     <div class="drag_range_indicator"></div>
     <div class="middle_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbBody(e)}>:::</div>
-    <div class="left_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbStart(e)}>◀</div>
-    <div class="right_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbEnd(e)}>▶</div>
+    <div class="left_thumb not_selectable" data-direction="left" on:mousedown|preventDefault={(e) => dragThumbStart(e)}>◀</div>
+    <div class="right_thumb not_selectable" data-direction="right" on:mousedown|preventDefault={(e) => dragThumbEnd(e)}>▶</div>
 </div>
 
