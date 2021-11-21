@@ -1,6 +1,5 @@
 <script lang="ts">
-import { onMount } from "svelte";
-
+    import { onMount } from "svelte";
 
     type RangeSliderProps = {
         start: number,
@@ -24,7 +23,6 @@ import { onMount } from "svelte";
     onMount(()=>{
         rangeWidthPixel = parseInt(window.getComputedStyle(window.document.querySelector(".slider_container").parentElement).fontSize) * 10;
     });
-
     let actionOnMouseUp = null;
     let actionOnMouseMove = null;
 
@@ -86,12 +84,22 @@ import { onMount } from "svelte";
         };
     }
 
+    function keepThumbBodysAttachedToResizers() {
+
+    }
+
     function setXOffeset(draggedPixels: number, originalPixelOffset: number, element: HTMLElement) {
         const elementWidth = element.getBoundingClientRect().width;
         const minimalValue = element.dataset.direction === "left" ? 0 : elementWidth;
         let elementXPosition = (draggedPixels + originalPixelOffset) % (rangeWidthPixel - elementWidth);
 
         elementXPosition = elementXPosition >= minimalValue ? elementXPosition : rangeWidthPixel + elementXPosition - elementWidth;
+
+        if(element.dataset.direction === "left") {
+            options.start = elementXPosition;
+        } else {
+            options.end = elementXPosition;
+        }
   
         element.style.setProperty("left", `${elementXPosition}px`);
     }
