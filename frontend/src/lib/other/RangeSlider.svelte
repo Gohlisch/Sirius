@@ -106,8 +106,7 @@
 
     function calculateValueFromOffeset(offset, minimalValue) {
         let value = offset - minimalValue;
-        value = value / options.steps;
-        return Math.trunc(value);
+        return Math.trunc(value / options.steps) * options.steps;
     }
 </script>
 
