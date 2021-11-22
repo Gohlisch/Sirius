@@ -10,6 +10,13 @@
         endBeforeStartAllowed?: boolean
     };
 
+    let sliderContainer: HTMLElement = null;
+    let thumbBody1: HTMLElement = null;
+    let thumbBody2: HTMLElement = null;
+    let dragRangeIndicator: HTMLElement = null;
+    let thumbStart: HTMLElement = null;
+    let thumbEnd: HTMLElement = null;
+
     export let options: RangeSliderProps = {
         start: 0,
         end: 100,
@@ -18,17 +25,18 @@
         steps: 1,
         endBeforeStartAllowed: false
     };
-
+    let fontWidth = 0;
     let rangeWidthPixel = 0;
     onMount(()=>{
-        rangeWidthPixel = parseInt(window.getComputedStyle(window.document.querySelector(".slider_container").parentElement).fontSize) * 10;
+        fontWidth = parseInt(window.getComputedStyle(window.document.querySelector(".slider_container").parentElement).fontSize);
+        rangeWidthPixel = fontWidth * 10;
     });
     let actionOnMouseUp = null;
     let actionOnMouseMove = null;
 
     function dragThumbStart(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): void {
-        const thumbStart = e.currentTarget;
-        const containerOriginalXOffset = thumbStart.parentElement.getBoundingClientRect().left;
+        cacheSliderElements(e.currentTarget);
+        const containerOriginalXOffset = sliderContainer.getBoundingClientRect().left;
         const thumbStartOriginalXOffset = thumbStart.getBoundingClientRect().left - containerOriginalXOffset;
         const dragStartX = e.x;
 
@@ -44,8 +52,8 @@
     }
 
     function dragThumbEnd(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): void {
-        const thumbEnd = e.currentTarget;
-        const containerOriginalXOffset = thumbEnd.parentElement.getBoundingClientRect().left;
+        cacheSliderElements(e.currentTarget);
+        const containerOriginalXOffset = sliderContainer.getBoundingClientRect().left;
         const thumbEndOriginalXOffset = thumbEnd.getBoundingClientRect().left - containerOriginalXOffset;
         const dragStartX = e.x;
 
@@ -61,21 +69,18 @@
     }
 
     function dragThumbBody(e: MouseEvent&{ currentTarget: EventTarget&HTMLDivElement; }): void {
-        const thumbBody = e.currentTarget;
-        const containerOriginalXOffset = thumbBody.parentElement.getBoundingClientRect().left;
+        cacheSliderElements(e.currentTarget);
+
+        const containerOriginalXOffset = sliderContainer.getBoundingClientRect().left;
         const dragStartX = e.x;
-        const thumbBodyOriginalXOffset = thumbBody.getBoundingClientRect().left - containerOriginalXOffset;
-        const thumbParts = Array.from(thumbBody.parentElement.children);
-        const thumbStart = thumbParts.find(e => e.classList.contains("left_thumb")) as HTMLDivElement;
         const thumbStartOriginalXOffset = thumbStart.getBoundingClientRect().left - containerOriginalXOffset;
-        const thumbEnd = thumbParts.find(e => e.classList.contains("right_thumb")) as HTMLDivElement;
         const thumbEndOriginalXOffset = thumbEnd.getBoundingClientRect().left - containerOriginalXOffset;
 
         actionOnMouseMove = (mouseMoveEvent: MouseEvent) => {
             const draggedPixels = mouseMoveEvent.x - dragStartX;
-            setXOffeset(draggedPixels, thumbBodyOriginalXOffset, thumbBody);
             setXOffeset(draggedPixels, thumbStartOriginalXOffset, thumbStart);
             setXOffeset(draggedPixels, thumbEndOriginalXOffset, thumbEnd);
+            keepThumbBodysAttachedToResizers();
         };
 
         actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
@@ -85,7 +90,18 @@
     }
 
     function keepThumbBodysAttachedToResizers() {
-
+        const containerOffset = sliderContainer.getBoundingClientRect().left;
+        if(options.start < options.end) {
+            thumbBody2.style.setProperty("display", "none");
+            thumbBody1.style.setProperty("left", thumbStart.getBoundingClientRect().right - dragRangeIndicator.getBoundingClientRect().left + "px");
+            thumbBody1.style.setProperty("width", thumbEnd.getBoundingClientRect().left - thumbStart.getBoundingClientRect().right + "px");
+        } else {/*
+            thumbBody2.style.setProperty("display", "block");
+            thumbBody2.style.setProperty("left", containerOffset + "px");
+            thumbBody2.style.setProperty("width", thumbEnd.getBoundingClientRect().left - containerOffset + "px");*/
+            thumbBody1.style.setProperty("left", thumbStart.getBoundingClientRect().right - containerOffset + "px");
+            thumbBody1.style.setProperty("width", thumbStart.getBoundingClientRect().right - containerOffset + "px");
+        }
     }
 
     function setXOffeset(draggedPixels: number, originalPixelOffset: number, element: HTMLElement) {
@@ -108,10 +124,22 @@
         let value = offset - minimalValue;
         return Math.trunc(value / options.steps) * options.steps;
     }
+
+    function cacheSliderElements(element: HTMLElement) {
+        if(!(thumbBody1 && thumbBody2 && dragRangeIndicator && thumbStart && thumbEnd)) {
+            sliderContainer = element.parentElement;
+            const sliderElements = Array.from(sliderContainer.children);
+            thumbBody1 = sliderElements.find(e => e.classList.contains("middle_thumb1")) as HTMLDivElement;
+            thumbBody2 = sliderElements.find(e => e.classList.contains("middle_thumb2")) as HTMLDivElement;
+            dragRangeIndicator = sliderElements.find(e => e.classList.contains("drag_range_indicator")) as HTMLDivElement;
+            thumbStart = sliderElements.find(e => e.classList.contains("left_thumb")) as HTMLDivElement;
+            thumbEnd = sliderElements.find(e => e.classList.contains("right_thumb")) as HTMLDivElement;
+        }
+    }
 </script>
 
 <style>
-    .left_thumb, .middle_thumb, .right_thumb {
+    .left_thumb, .middle_thumb1, .middle_thumb2, .right_thumb {
         position: absolute;
         background-color: var(--secondary_color);
         color: var(--brightest_color);
@@ -119,6 +147,10 @@
         line-height: calc(1em + 14px);
         text-align: center;
         top: 2px;
+    }
+
+    .middle_thumb2 {
+        display: none;
     }
 
     .left_thumb, .right_thumb {
@@ -150,7 +182,7 @@
         left: 0;
     }
 
-    .middle_thumb {
+    .middle_thumb1, .middle_thumb2 {
         width: 50px;
         left: calc(1em + 1px);
     }
@@ -170,7 +202,8 @@
 
 <div aria-hidden="true" class="slider_container">
     <div class="drag_range_indicator"></div>
-    <!-- <div class="middle_thumb not_selectable" on:mousedown|preventDefault={(e) => dragThumbBody(e)}>:::</div> -->
+    <div class="middle_thumb1 not_selectable" on:mousedown|preventDefault={(e) => dragThumbBody(e)}></div>
+    <div class="middle_thumb2 not_selectable" on:mousedown|preventDefault={(e) => dragThumbBody(e)}></div>
     <div class="left_thumb not_selectable" data-direction="left" on:mousedown|preventDefault={(e) => dragThumbStart(e)}>◀</div>
     <div class="right_thumb not_selectable" data-direction="right" on:mousedown|preventDefault={(e) => dragThumbEnd(e)}>▶</div>
 </div>
