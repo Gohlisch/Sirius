@@ -25,6 +25,7 @@
         steps: 1,
         endBeforeStartAllowed: false
     };
+    
     let fontWidth = 0;
     let rangeWidthPixel = 0;
     onMount(()=>{
@@ -43,6 +44,7 @@
         actionOnMouseMove = (mouseMoveEvent: MouseEvent) => {
             const draggedPixels = mouseMoveEvent.x - dragStartX;
             setXOffeset(draggedPixels, thumbStartOriginalXOffset, thumbStart);
+            keepThumbBodysAttachedToResizers();
         };
 
         actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
@@ -60,6 +62,7 @@
         actionOnMouseMove = (mouseMoveEvent: MouseEvent) => {
             const draggedPixels = mouseMoveEvent.x - dragStartX;
             setXOffeset(draggedPixels, thumbEndOriginalXOffset, thumbEnd);
+            keepThumbBodysAttachedToResizers();
         };
 
         actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
@@ -91,16 +94,22 @@
 
     function keepThumbBodysAttachedToResizers() {
         const containerOffset = sliderContainer.getBoundingClientRect().left;
+        const thumbStartRight = thumbStart.getBoundingClientRect().right;
+        const thumbEndLeft =  thumbEnd.getBoundingClientRect().left;
         if(options.start < options.end) {
             thumbBody2.style.setProperty("display", "none");
-            thumbBody1.style.setProperty("left", thumbStart.getBoundingClientRect().right - dragRangeIndicator.getBoundingClientRect().left + "px");
-            thumbBody1.style.setProperty("width", thumbEnd.getBoundingClientRect().left - thumbStart.getBoundingClientRect().right + "px");
-        } else {/*
+            thumbBody1.style.setProperty("left", thumbStartRight - containerOffset + "px");
+            thumbBody1.style.setProperty("width", thumbEndLeft - thumbStartRight + "px");
+        } else {
+            const dragRangeBoundingClientRect = dragRangeIndicator.getBoundingClientRect();
+            const dragRangeRight = dragRangeBoundingClientRect.right;
+            const dragRangeLeft = dragRangeBoundingClientRect.left;
+
             thumbBody2.style.setProperty("display", "block");
-            thumbBody2.style.setProperty("left", containerOffset + "px");
-            thumbBody2.style.setProperty("width", thumbEnd.getBoundingClientRect().left - containerOffset + "px");*/
-            thumbBody1.style.setProperty("left", thumbStart.getBoundingClientRect().right - containerOffset + "px");
-            thumbBody1.style.setProperty("width", thumbStart.getBoundingClientRect().right - containerOffset + "px");
+            thumbBody2.style.setProperty("left", dragRangeLeft - containerOffset + "px");
+            thumbBody2.style.setProperty("width", thumbEndLeft - dragRangeLeft + "px");
+            thumbBody1.style.setProperty("left", thumbStartRight - containerOffset + "px");
+            thumbBody1.style.setProperty("width", dragRangeRight - thumbStartRight + "px");
         }
     }
 
@@ -126,12 +135,12 @@
     }
 
     function cacheSliderElements(element: HTMLElement) {
-        if(!(thumbBody1 && thumbBody2 && dragRangeIndicator && thumbStart && thumbEnd)) {
+        if(!(sliderContainer && dragRangeIndicator && thumbBody1 && thumbBody2 && thumbStart && thumbEnd)) {
             sliderContainer = element.parentElement;
             const sliderElements = Array.from(sliderContainer.children);
+            dragRangeIndicator = sliderElements.find(e => e.classList.contains("drag_range_indicator")) as HTMLDivElement;
             thumbBody1 = sliderElements.find(e => e.classList.contains("middle_thumb1")) as HTMLDivElement;
             thumbBody2 = sliderElements.find(e => e.classList.contains("middle_thumb2")) as HTMLDivElement;
-            dragRangeIndicator = sliderElements.find(e => e.classList.contains("drag_range_indicator")) as HTMLDivElement;
             thumbStart = sliderElements.find(e => e.classList.contains("left_thumb")) as HTMLDivElement;
             thumbEnd = sliderElements.find(e => e.classList.contains("right_thumb")) as HTMLDivElement;
         }
