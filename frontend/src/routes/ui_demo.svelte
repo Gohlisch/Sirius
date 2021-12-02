@@ -4,9 +4,24 @@
     const colors = ["red", "orange", "yellow", "green", "mint", "teal", "cyan", "blue", "indigo", "purple", "pink", "brown"];
     const shades_of_grey = ["darkest", "darker", "dark", "bright", "brighter", "brightest"]
     const purpose_color = ["font", "primary", "secondary", "important_signifier"];
+
+    let sliderOptions = {
+        start: 0,
+        end: 100,
+        min: 0,
+        max: 100,
+        steps: 1,
+        endBeforeStartAllowed: false
+    };
 </script>
 
 <style>
+    article {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .colors {
         display: flex;
     }
@@ -16,6 +31,11 @@
         width: 100px;
         color: var(--brightest_color);
         border: 1px solid var(--darkest_color);
+    }
+
+    .centered {
+        margin-left: auto;
+        margin-right: auto;
     }
 </style>
 
@@ -47,6 +67,7 @@
     <article>
         <h1>Inputs</h1>
         <button>button</button>
-        <RangeSlider></RangeSlider>
+        <p>start: {sliderOptions.start} end: {sliderOptions.end}</p>
+        <RangeSlider bind:options={sliderOptions}></RangeSlider>
     </article>
 </div>
