@@ -6,8 +6,8 @@
     const purpose_color = ["font", "primary", "secondary", "important_signifier"];
 
     let sliderOptions = {
-        start: 0,
-        end: 100,
+        start: 20,
+        end: 80,
         min: 0,
         max: 100,
         steps: 1,
@@ -67,6 +67,10 @@
     <article>
         <h1>Inputs</h1>
         <button>button</button>
+        <div>
+            <label>Start:<input type="number" bind:value={sliderOptions.start}></label>
+            <label>End:<input type="number" bind:value={sliderOptions.end}></label>
+        </div>
         <p>start: {sliderOptions.start} end: {sliderOptions.end}</p>
         <RangeSlider bind:options={sliderOptions}></RangeSlider>
     </article>

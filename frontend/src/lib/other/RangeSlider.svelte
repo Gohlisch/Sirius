@@ -10,6 +10,7 @@
         endBeforeStartAllowed?: boolean
     };
 
+    let thisComponent: HTMLElement;
     let sliderContainer: HTMLElement = null;
     let thumbBody1: HTMLElement = null;
     let thumbBody2: HTMLElement = null;
@@ -31,6 +32,8 @@
     onMount(()=>{
         fontWidth = parseInt(window.getComputedStyle(window.document.querySelector(".slider_container").parentElement).fontSize);
         rangeWidthPixel = fontWidth * 16;
+        setXOffesetByValue("left");
+        setXOffesetByValue("right");
     });
     let actionOnMouseUp = null;
     let actionOnMouseMove = null;
@@ -138,6 +141,33 @@
         return Math.trunc(xToContainerWidthRelation * valueRange / options.steps) * options.steps + options.min;
     }
 
+    function setXOffesetByValue(direction: "left"|"right") {
+        if(!thisComponent) {
+            return;
+        }
+        const element = thisComponent.querySelector(`.${direction}_thumb`) as HTMLDivElement;
+        cacheSliderElements(element);
+        const elementWidth = element.getBoundingClientRect().width;
+        const drageRangeWidth = dragRangeIndicator.getBoundingClientRect().width;
+        const elementValueProbeOffset = element.dataset.direction === "left" ? 0 : elementWidth;
+
+        const value = direction === "left" ? options.start : options.end;
+  
+        element.style.setProperty("left", `${calculateOffsetFromValue(value, elementValueProbeOffset, drageRangeWidth)}px`);
+        keepThumbBodysAttachedToResizers();
+    }
+
+    /**
+     * Inverse function of calculateValueFromOffeset.
+     * @param value
+     * @param elementValueProbeOffset
+     * @param drageRangeWidth
+     */
+    function calculateOffsetFromValue(value, elementValueProbeOffset, drageRangeWidth) {
+        const UNACCESSIBLE_DRAG_RANGE_PIXELS = 2;
+        return (value + options.min) * drageRangeWidth / (options.max - options.min) + elementValueProbeOffset - UNACCESSIBLE_DRAG_RANGE_PIXELS;
+    }
+
     function cacheSliderElements(element: HTMLElement) {
         if(!(sliderContainer && dragRangeIndicator && thumbBody1 && thumbBody2 && thumbStart && thumbEnd)) {
             sliderContainer = element.parentElement;
@@ -149,6 +179,9 @@
             thumbEnd = sliderElements.find(e => e.classList.contains("right_thumb")) as HTMLDivElement;
         }
     }
+
+    $: { options.start+0; setXOffesetByValue("left"); }
+    $: { options.end+0; setXOffesetByValue("right"); }
 </script>
 
 <style>
@@ -172,7 +205,7 @@
 
     .slider_container {
         position: relative;
-        width: calc(16em); /* WARNING: On resize the rangeWidthPixel variable has to be resized as well! */
+        width: calc(16em); /* WARNING: If you resize this rangeWidthPixel variable has to be resized as well! */
         height: 2em;
         margin: 0 2px;
     }
@@ -213,7 +246,7 @@
     on:mousemove={(e) => {if(actionOnMouseMove) actionOnMouseMove(e);}}
 />
 
-<div aria-hidden="true" class="slider_container">
+<div aria-hidden="true" class="slider_container" bind:this={thisComponent}>
     <div class="drag_range_indicator"></div>
     <div class="middle_thumb1 not_selectable" on:mousedown|preventDefault={(e) => dragThumbBody(e)}></div>
     <div class="middle_thumb2 not_selectable" on:mousedown|preventDefault={(e) => dragThumbBody(e)}></div>
