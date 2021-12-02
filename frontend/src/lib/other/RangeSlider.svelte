@@ -135,7 +135,7 @@
         const trueXValue = Math.trunc(elementXPosition - elementValueProbeOffset + UNACCESSIBLE_DRAG_RANGE_PIXELS);
         const xToContainerWidthRelation = trueXValue / drageRangeWidth;
         const valueRange = options.max - options.min;
-        return Math.trunc(xToContainerWidthRelation * valueRange)+ options.min;
+        return Math.trunc(xToContainerWidthRelation * valueRange / options.steps) * options.steps + options.min;
     }
 
     function cacheSliderElements(element: HTMLElement) {
