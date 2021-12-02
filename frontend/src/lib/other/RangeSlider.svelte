@@ -115,23 +115,31 @@
 
     function setXOffeset(draggedPixels: number, originalPixelOffset: number, element: HTMLElement) {
         const elementWidth = element.getBoundingClientRect().width;
-        const minimalValue = element.dataset.direction === "left" ? 0 : elementWidth;
+        const drageRangeWidth = dragRangeIndicator.getBoundingClientRect().width;
+        const elementValueProbeOffset = element.dataset.direction === "left" ? 0 : elementWidth;
         let elementXPosition = (draggedPixels + originalPixelOffset) % (rangeWidthPixel - elementWidth);
 
-        elementXPosition = elementXPosition >= minimalValue ? elementXPosition : rangeWidthPixel + elementXPosition - elementWidth;
+        elementXPosition = elementXPosition >= elementValueProbeOffset ? elementXPosition : rangeWidthPixel + elementXPosition - elementWidth;
 
         if(element.dataset.direction === "left") {
-            options.start = calculateValueFromOffeset(elementXPosition, minimalValue);
+            options.start = calculateValueFromOffeset(elementXPosition, elementValueProbeOffset, drageRangeWidth);
         } else {
-            options.end = calculateValueFromOffeset(elementXPosition, minimalValue);
+            options.end = calculateValueFromOffeset(elementXPosition, elementValueProbeOffset, drageRangeWidth);
         }
   
         element.style.setProperty("left", `${elementXPosition}px`);
     }
 
-    function calculateValueFromOffeset(offset, minimalValue) {
-        let value = offset - minimalValue;
-        return Math.trunc(value / options.steps) * options.steps;
+    function calculateValueFromOffeset(elementXPosition, elementValueProbeOffset, drageRangeWidth) {
+        const UNACCESSIBLE_DRAG_RANGE_PIXELS = 1;
+        const trueXValue = Math.trunc(elementXPosition - elementValueProbeOffset + UNACCESSIBLE_DRAG_RANGE_PIXELS);
+        console.log(`trueXValue(${trueXValue}) = Math.round(elementXPosition(${elementXPosition}) - elementValueProbeOffset(${elementValueProbeOffset}) + 1);`)
+        const xToContainerWidthRelation = trueXValue / drageRangeWidth;
+        console.log(`txToContainerWidthRelation(${xToContainerWidthRelation}) = trueXValue(${trueXValue}) / drageRangeWidth(${drageRangeWidth});`)
+        const valueRange = options.max - options.min;
+        console.log(`valueRange(${valueRange}) = options.max(${options.max}) - options.min(${options.min});`)
+        console.log(`return Math.trunc(xToContainerWidthRelation * valueRange)+ options.min;(${Math.trunc(xToContainerWidthRelation * valueRange)+ options.min})`)
+        return Math.trunc(xToContainerWidthRelation * valueRange)+ options.min;
     }
 
     function cacheSliderElements(element: HTMLElement) {
@@ -168,7 +176,7 @@
 
     .slider_container {
         position: relative;
-        width: calc(10em);
+        width: calc(10em); /* WARNING: On resize the rangeWidthPixel variable has to be resized as well! */
         height: 2em;
         margin: 0 2px;
     }
