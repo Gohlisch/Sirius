@@ -68,8 +68,8 @@
         <h1>Inputs</h1>
         <button>button</button>
         <div>
-            <label>Start:<input type="number" bind:value={sliderOptions.start}></label>
-            <label>End:<input type="number" bind:value={sliderOptions.end}></label>
+            <label>Start:<input type="number" bind:value={sliderOptions.start} min={sliderOptions.min} max={sliderOptions.max}></label>
+            <label>End:<input type="number" bind:value={sliderOptions.end} min={sliderOptions.min} max={sliderOptions.max}></label>
         </div>
         <p>start: {sliderOptions.start} end: {sliderOptions.end}</p>
         <RangeSlider bind:options={sliderOptions}></RangeSlider>
