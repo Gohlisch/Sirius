@@ -2,12 +2,13 @@
 	import { Repetition } from "../model/survey_dto";
 	import type { TimeSlot } from "../model/time_slot";
 	import { weekdayToNumber } from "../util/util";
-	import { surveyApiStore } from "./survey/_SurveyApiStore"
+	import { surveyApiStore } from "./survey/_SurveyApiStore";
+	import TimeRangeSlider from "$lib/appointment_surveys/TimeRangeSlider.svelte"
 
 	let title: string;
 	let description: string;
 	let repetition: Repetition;
-	let dailySlots: Array<{start: string, end: string}> = [{start:"", end:""}];
+	let dailySlots: Array<{start: string, end: string }> = [{start:"", end:""}];
 	let weeklySlots: Array<{weekday: string, start: string, end: string}> = [{weekday:"", start:"", end:""}];
 	let neverSlots: Array<{day: string, start: string, end: string}> = [{day:"", start:"", end:""}];
 
@@ -46,8 +47,8 @@
 	 * @property {HTMLDivElement} groupDiv
 	 */
 	 function slotIsEmpty(slot) {
-		for(const value in slot) {
-			if(slot[value] !== "") return false;
+		if(slot["start"] !== "" || slot["end"] !== "") {
+			return false;
 		}
 		return true;
 	}
@@ -72,8 +73,6 @@
 	}
 
 	function getSlotsAsTimeSlotDto(): Array<TimeSlot> {
-		console.log(neverSlots.slice(0, -1));
-
 		if(repetition === Repetition.NEVER) {
 			return neverSlots.slice(0, -1).map(slot => {
 				const startDate = new Date(slot.day);
@@ -136,6 +135,11 @@
         width: 100%;
         resize: vertical;
     }
+
+	.input_wrapper {
+		display: flex;
+		justify-content: space-between;
+	}
 </style>
 <svelte:head>
     <title>Sirius – Neue Umfrage</title>
@@ -177,25 +181,12 @@
                 <div id="slots">
 					{#if repetition === Repetition.DAILY}
 					{#each dailySlots as slot, i}
-                    <div id="inputgroup{i}" class:newly_generated={i !== 0 && !slot.start && !slot.end}>
-						<label class="required">Startzeit:
-						<input  type="time"
-								name="start"
-								min="00:00"
-								max="23:59"
-								required={!!(i === 0 || slot.start || slot.end)}
-								bind:value={slot["start"]}
-								on:input={(e) => handleDailySlotInput(i)}>
-						</label>
-						<label class="required">Endzeit:
-						<input  type="time"
-								name="end"
-								min="00:00"
-								max="23:59"
-								required={!!(i === 0 || slot.start || slot.end)}
-								bind:value={slot["end"]}
-								on:input={(e) => handleDailySlotInput(i)}>
-						</label>
+                    	<div id="inputgroup{i}" class:newly_generated={i !== 0 && !slot.start && !slot.end}>
+							<TimeRangeSlider bind:startTime={slot["start"]}
+											bind:endTime={slot["end"]}
+											required={!!(i === 0 || slot.start || slot.end)}
+											on:input={(e) => handleDailySlotInput(i)}>>
+							</TimeRangeSlider>
 						</div>
 					{/each}
 					{:else if repetition === Repetition.WEEKLY}
