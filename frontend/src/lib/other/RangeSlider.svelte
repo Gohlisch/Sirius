@@ -1,14 +1,15 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import { createEventDispatcher } from "svelte";
+    const dispatch: ((name: string, detail?: any) => void) = createEventDispatcher();
 
-    type RangeSliderProps = {
-        start: number,
-        end: number,
-        min: number,
-        max: number,
-        steps: number,
-        endBeforeStartAllowed?: boolean
-    };
+    function dispatchInputEvent() {
+        if(options) {
+            dispatch("input", {
+                state: options
+            });
+        }
+    }
 
     let thisComponent: HTMLElement;
     let sliderContainer: HTMLElement = null;
@@ -48,6 +49,7 @@
             const draggedPixels = mouseMoveEvent.x - dragStartX;
             setXOffeset(draggedPixels, thumbStartOriginalXOffset, thumbStart);
             keepThumbBodysAttachedToResizers();
+            dispatchInputEvent();
         };
 
         actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
@@ -66,6 +68,7 @@
             const draggedPixels = mouseMoveEvent.x - dragStartX;
             setXOffeset(draggedPixels, thumbEndOriginalXOffset, thumbEnd);
             keepThumbBodysAttachedToResizers();
+            dispatchInputEvent();
         };
 
         actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
@@ -87,6 +90,7 @@
             setXOffeset(draggedPixels, thumbStartOriginalXOffset, thumbStart);
             setXOffeset(draggedPixels, thumbEndOriginalXOffset, thumbEnd);
             keepThumbBodysAttachedToResizers();
+            dispatchInputEvent();
         };
 
         actionOnMouseUp = (mouseUpEvent: MouseEvent) => {
@@ -132,7 +136,7 @@
   
         element.style.setProperty("left", `${elementXPosition}px`);
     }
-
+    
     function calculateValueFromOffeset(elementXPosition, elementValueProbeOffset, drageRangeWidth) {
         const UNACCESSIBLE_DRAG_RANGE_PIXELS = 2;
         const trueXValue = Math.trunc(elementXPosition - elementValueProbeOffset + UNACCESSIBLE_DRAG_RANGE_PIXELS);
