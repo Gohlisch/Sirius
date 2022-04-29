@@ -13,53 +13,63 @@
 	let neverSlots: Array<{day: string, start: string, end: string}> = [{day:"", start:"", end:""}];
 
 	function handleDailySlotInput(slotNumber: number) {
-		if(slotIsEmpty(dailySlots[slotNumber]) && dailySlots.length > 0) {
+		if(dailySlotIsEmpty(dailySlots[slotNumber]) && dailySlots.length > 0) {
 			dailySlots.splice(slotNumber, 1);
 		}
-		if (dailySlots.every(s => !slotIsEmpty(s) && slotIsValid(slotNumber))) {
+		if(dailySlots.every(s => !dailySlotIsEmpty(s) && slotIsValid(slotNumber))) {
 			dailySlots.push({start:"", end:""});
 		}
 		dailySlots = dailySlots; // Inform Svelte that changes occured
 	}
 
 	function handleWeeklySlotInput(slotNumber: number) {
-		if(slotIsEmpty(weeklySlots[slotNumber]) && weeklySlots.length > 0) {
+		if(weeklySlotIsEmpty(weeklySlots[slotNumber]) && weeklySlots.length > 0) {
 			weeklySlots.splice(slotNumber, 1);
 		}
-		if (weeklySlots.every(s => !slotIsEmpty(s) && slotIsValid(slotNumber))) {
+		if(weeklySlots.every(s => !weeklySlotIsEmpty(s) && slotIsValid(slotNumber))) {
 			weeklySlots.push({weekday:"", start:"", end:""});
 		}
 		weeklySlots = weeklySlots; // Inform Svelte that changes occured
 	}
 
 	function handleNeverSlotInput(slotNumber: number) {
-		if(slotIsEmpty(neverSlots[slotNumber]) && neverSlots.length > 0) {
+		console.log(neverSlots)
+		if(neverSlotIsEmpty(neverSlots[slotNumber]) && neverSlots.length > 0) {
 			neverSlots.splice(slotNumber, 1);
 		}
-		if (neverSlots.every(s => !slotIsEmpty(s) && slotIsValid(slotNumber))) {
+		if(neverSlots.every(s => !neverSlotIsEmpty(s) && slotIsValid(slotNumber))) {
 			neverSlots.push({day:"", start:"", end:""});
 		}
 		neverSlots = neverSlots; // Inform Svelte that changes occured
 	}
-
-	/**
-	 * @typedef Slot
-	 * @property {HTMLDivElement} groupDiv
-	 */
-	 function slotIsEmpty(slot) {
+	
+	function dailySlotIsEmpty(slot) {
 		if(slot["start"] !== "" || slot["end"] !== "") {
 			return false;
 		}
 		return true;
 	}
+	
+	function weeklySlotIsEmpty(slot) {
+		if(slot["start"] !== "" || slot["end"] !== "" || slot["weekday"] !== "") {
+			return false;
+		}
+		return true;
+	}
+	
+	function neverSlotIsEmpty(slot) {
+		if(slot["start"] !== "" || slot["end"] !== "" || slot["day"] !== "") {
+			return false;
+		}
+		return true;
+	}
 
-	/**
-	 * @param {Slot} slot
-	 * @return {boolean}
-	 */
 	function slotIsValid(inputGroupNumber: number) {
-		return (Array.from(document.getElementById(`inputgroup${inputGroupNumber}`).querySelectorAll("input, select")) as Array<HTMLInputElement>)
-			.every(s => s.checkValidity());
+		const inputGroup = document.getElementById(`inputgroup${inputGroupNumber}`);
+		if(!inputGroup)
+			return false;
+		return (Array.from(inputGroup.querySelectorAll("input, select")) as Array<HTMLInputElement>)
+			.every(s => {console.log(s);s.checkValidity();});
 	}
 
 	function submitAppointmentSurvey(e: Event&{ currentTarget: EventTarget&HTMLFormElement; }): void {
@@ -183,9 +193,9 @@
 					{#each dailySlots as slot, i}
                     	<div id="inputgroup{i}" class:newly_generated={i !== 0 && !slot.start && !slot.end}>
 							<TimeRangeSlider bind:startTime={slot["start"]}
-											bind:endTime={slot["end"]}
-											required={!!(i === 0 || slot.start || slot.end)}
-											on:input={(e) => handleDailySlotInput(i)}>>
+											 bind:endTime={slot["end"]}
+										 	 required={!!(i === 0 || slot.start || slot.end)}
+											 on:input={(e) => handleDailySlotInput(i)}>
 							</TimeRangeSlider>
 						</div>
 					{/each}
@@ -207,24 +217,11 @@
 								<option value="sunday">Sonntag</option>
 							</select>
 						</label>
-						<label class="required">Startzeit:
-						<input  type="time"
-								name="start"
-								min="00:00"
-								max="23:59"
-								required={!!(i === 0 || slot.weekday || slot.start || slot.end)}
-								bind:value={slot["start"]}
-								on:input={(e) => handleWeeklySlotInput(i)}>
-						</label>
-						<label class="required">Endzeit:
-						<input  type="time"
-								name="end"
-								min="00:00"
-								max="23:59"
-								required={!!(i === 0 || slot.weekday || slot.start || slot.end)}
-								bind:value={slot["end"]}
-								on:input={(e) => handleWeeklySlotInput(i)}>
-						</label>
+						<TimeRangeSlider bind:startTime={slot["start"]}
+										bind:endTime={slot["end"]}
+										required={!!(i === 0 || slot.start || slot.end)}
+										on:input={(e) => handleWeeklySlotInput(i)}>
+						</TimeRangeSlider>
 						</div>
 						{/each}
 						{:else if repetition === Repetition.NEVER}
@@ -237,24 +234,11 @@
 									bind:value={slot["day"]}
 									on:input={(e) => handleNeverSlotInput(i)}>
 							</label>
-							<label class="required">Startzeit:
-							<input  type="time"
-									name="start"
-									min="00:00"
-									max="23:59"
-									required={!!(i === 0 || slot.day || slot.start || slot.end)}
-									bind:value={slot["start"]}
-									on:input={(e) => handleNeverSlotInput(i)}>
-							</label>
-							<label class="required">Endzeit:
-							<input  type="time"
-									name="end"
-									min="00:00"
-									max="23:59"
-									required={!!(i === 0 || slot.day || slot.start || slot.end)}
-									bind:value={slot["end"]}
-									on:input={(e) => handleNeverSlotInput(i)}>
-							</label>
+							<TimeRangeSlider bind:startTime={slot["start"]}
+											bind:endTime={slot["end"]}
+											required={!!(i === 0 || slot.start || slot.end)}
+											on:input={(e) => handleNeverSlotInput(i)}>
+							</TimeRangeSlider>
 							</div>
 						{/each}
 						{:else}
