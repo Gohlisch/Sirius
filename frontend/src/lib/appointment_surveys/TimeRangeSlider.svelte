@@ -1,6 +1,6 @@
 <script lang="ts">
-    import RangeSlider from "$lib/other/RangeSlider.svelte"
     import type {RangeSliderProps} from "$lib/other/RangeSliderProps"
+    import RangeSlider from "$lib/other/RangeSlider.svelte"
     import { createEventDispatcher, onMount } from "svelte";
 
     const dispatch: ((name: string, detail?: any) => void) = createEventDispatcher();
@@ -56,8 +56,8 @@
         const result = timeRegex.exec(timeString);
         
         if(result && result[0]) {
-            const hours = +result.groups["hours"] as unknown as number;
-            const minutes = +result.groups["minutes"] as unknown as number;
+            const hours = +result.groups["hours"];
+            const minutes = +result.groups["minutes"];
             return 60*hours + minutes;
         }
 
@@ -70,7 +70,6 @@
         endTime = minutesToTimeString(state.end);
         dispatchInputEvent();
     }
-
 </script>
 
 <div class="input_wrapper">
@@ -79,14 +78,14 @@
                 name="start"
                 required={required}
                 bind:value={startTime}
-                on:input={e => updateSlider()}>
+                on:input={updateSlider}>
     </label>
     <label class="required">Endzeit:
         <input  type="time"
                 name="end"
                 required={required}
                 bind:value={endTime}
-                on:input={e => updateSlider()}>
+                on:input={updateSlider}>
     </label>
 </div>
 <RangeSlider options={sliderOptions} on:input={e => handleSliderInput(e.detail.state)}></RangeSlider>
