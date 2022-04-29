@@ -33,7 +33,6 @@
 	}
 
 	function handleNeverSlotInput(slotNumber: number) {
-		console.log(neverSlots)
 		if(neverSlotIsEmpty(neverSlots[slotNumber]) && neverSlots.length > 0) {
 			neverSlots.splice(slotNumber, 1);
 		}
@@ -69,7 +68,7 @@
 		if(!inputGroup)
 			return false;
 		return (Array.from(inputGroup.querySelectorAll("input, select")) as Array<HTMLInputElement>)
-			.every(s => {console.log(s);s.checkValidity();});
+			.every(s => s.checkValidity());
 	}
 
 	function submitAppointmentSurvey(e: Event&{ currentTarget: EventTarget&HTMLFormElement; }): void {
