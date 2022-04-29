@@ -1,6 +1,9 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { createEventDispatcher } from "svelte";
+
+    import type { RangeSliderProps } from "./RangeSliderProps"
+
     const dispatch: ((name: string, detail?: any) => void) = createEventDispatcher();
 
     function dispatchInputEvent() {
@@ -122,25 +125,25 @@
 
     function setXOffeset(draggedPixels: number, originalPixelOffset: number, element: HTMLElement) {
         const elementWidth = element.getBoundingClientRect().width;
-        const drageRangeWidth = dragRangeIndicator.getBoundingClientRect().width;
+        const dragRangeWidth = dragRangeIndicator.getBoundingClientRect().width;
         const elementValueProbeOffset = element.dataset.direction === "left" ? 0 : elementWidth;
         let elementXPosition = (draggedPixels + originalPixelOffset) % (rangeWidthPixel - elementWidth);
 
         elementXPosition = elementXPosition >= elementValueProbeOffset ? elementXPosition : rangeWidthPixel + elementXPosition - elementWidth;
 
         if(element.dataset.direction === "left") {
-            options.start = calculateValueFromOffeset(elementXPosition, elementValueProbeOffset, drageRangeWidth);
+            options.start = calculateValueFromOffeset(elementXPosition, elementValueProbeOffset, dragRangeWidth);
         } else {
-            options.end = calculateValueFromOffeset(elementXPosition, elementValueProbeOffset, drageRangeWidth);
+            options.end = calculateValueFromOffeset(elementXPosition, elementValueProbeOffset, dragRangeWidth);
         }
   
         element.style.setProperty("left", `${elementXPosition}px`);
     }
     
-    function calculateValueFromOffeset(elementXPosition, elementValueProbeOffset, drageRangeWidth) {
-        const UNACCESSIBLE_DRAG_RANGE_PIXELS = 2;
+    function calculateValueFromOffeset(elementXPosition, elementValueProbeOffset, dragRangeWidth) {
+        const UNACCESSIBLE_DRAG_RANGE_PIXELS = 1;
         const trueXValue = Math.trunc(elementXPosition - elementValueProbeOffset + UNACCESSIBLE_DRAG_RANGE_PIXELS);
-        const xToContainerWidthRelation = trueXValue / drageRangeWidth;
+        const xToContainerWidthRelation = trueXValue / dragRangeWidth;
         const valueRange = options.max - options.min;
         return Math.trunc(xToContainerWidthRelation * valueRange / options.steps) * options.steps + options.min;
     }
@@ -152,12 +155,12 @@
         const element = thisComponent.querySelector(`.${direction}_thumb`) as HTMLDivElement;
         cacheSliderElements(element);
         const elementWidth = element.getBoundingClientRect().width;
-        const drageRangeWidth = dragRangeIndicator.getBoundingClientRect().width;
+        const dragRangeWidth = dragRangeIndicator.getBoundingClientRect().width;
         const elementValueProbeOffset = element.dataset.direction === "left" ? 0 : elementWidth;
 
         const value = direction === "left" ? options.start : options.end;
   
-        element.style.setProperty("left", `${calculateOffsetFromValue(value, elementValueProbeOffset, drageRangeWidth)}px`);
+        element.style.setProperty("left", `${calculateOffsetFromValue(value, elementValueProbeOffset, dragRangeWidth)}px`);
         keepThumbBodysAttachedToResizers();
     }
 
@@ -165,11 +168,11 @@
      * Inverse function of calculateValueFromOffeset.
      * @param value
      * @param elementValueProbeOffset
-     * @param drageRangeWidth
+     * @param dragRangeWidth
      */
-    function calculateOffsetFromValue(value, elementValueProbeOffset, drageRangeWidth) {
+    function calculateOffsetFromValue(value, elementValueProbeOffset, dragRangeWidth) {
         const UNACCESSIBLE_DRAG_RANGE_PIXELS = 2;
-        return (value + options.min) * drageRangeWidth / (options.max - options.min) + elementValueProbeOffset - UNACCESSIBLE_DRAG_RANGE_PIXELS;
+        return (value + options.min) * dragRangeWidth / (options.max - options.min) + elementValueProbeOffset - UNACCESSIBLE_DRAG_RANGE_PIXELS;
     }
 
     function cacheSliderElements(element: HTMLElement) {
